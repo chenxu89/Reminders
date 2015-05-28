@@ -7,9 +7,7 @@
 //
 
 #import "ListViewController.h"
-#import "ListTitleCell.h"
 
-static NSString * const ListTitleCellIdentifier = @"ListTitleCell";
 
 @interface ListViewController ()
 
@@ -17,72 +15,52 @@ static NSString * const ListTitleCellIdentifier = @"ListTitleCell";
 
 @implementation ListViewController
 
-- (void)viewDidLoad {
+
+
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    
+    //add a seperator at the top of the table view and seperate the top view with the table view
+    //if put these lines in viewDidLoad, then self.tableview.frame.size will not work
+    CGRect seperatorFrame = CGRectMake(15, self.tableview.frame.origin.y - 1, self.view.bounds.size.width, 1);
+    UIView *seperatorView = [[UIView alloc] initWithFrame:seperatorFrame];
+    seperatorView.backgroundColor = [self.tableview separatorColor];
+    [self.view addSubview:seperatorView];
+    
+    CGRect statusViewFrame = CGRectMake(0, 0, self.view.bounds.size.width, 20);
+    UIView *statusView = [[UIView alloc] initWithFrame:statusViewFrame];
+    statusView.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:statusView];
+
+}
+
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
-    UINib *listTitleCellNib = [UINib nibWithNibName:@"ListTitleCell" bundle:nil];
-    [self.tableView registerNib:listTitleCellNib forCellReuseIdentifier:ListTitleCellIdentifier];
-    
-    self.tableView.rowHeight = 80;
-    self.tableView.contentInset = UIEdgeInsetsMake(20.0f, 0.0f, 0.0f, 0.0f);
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
 }
 
-#pragma mark - Table view data source
+
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ListTitleCell *cell = (ListTitleCell *)[tableView dequeueReusableCellWithIdentifier:ListTitleCellIdentifier forIndexPath:indexPath];
     
-    return cell;
+    return nil;
 }
-
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 /*
 #pragma mark - Navigation

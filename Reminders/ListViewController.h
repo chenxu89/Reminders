@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ListViewController : UITableViewController
+@class ListHeadView;
+
+@interface ListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, weak) IBOutlet UITableView *tableview;
+
+@property (nonatomic, weak) IBOutlet UILabel *listTitleLabel;
+@property (nonatomic, weak) IBOutlet UILabel *itemsCountLabel;
+@property (nonatomic, weak) IBOutlet UIButton *listEditButton;
+
 
 @end

@@ -13,9 +13,7 @@
 		2DD74E3B1B169F78009373AE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DD74E3A1B169F78009373AE /* Images.xcassets */; };
 		2DD74E3E1B169F78009373AE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DD74E3C1B169F78009373AE /* LaunchScreen.xib */; };
 		2DD74E4A1B169F78009373AE /* RemindersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD74E491B169F78009373AE /* RemindersTests.m */; };
-		2DD74E541B16A0CD009373AE /* ListTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DD74E531B16A0CD009373AE /* ListTitleCell.xib */; };
-		2DD74E571B16A531009373AE /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD74E561B16A531009373AE /* ListViewController.m */; };
-		2DD74E5A1B16A5CA009373AE /* ListTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD74E591B16A5CA009373AE /* ListTitleCell.m */; };
+		2DD74E5D1B16DDD9009373AE /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD74E5C1B16DDD9009373AE /* ListViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,11 +38,8 @@
 		2DD74E431B169F78009373AE /* RemindersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RemindersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DD74E481B169F78009373AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2DD74E491B169F78009373AE /* RemindersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemindersTests.m; sourceTree = "<group>"; };
-		2DD74E531B16A0CD009373AE /* ListTitleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListTitleCell.xib; sourceTree = "<group>"; };
-		2DD74E551B16A531009373AE /* ListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListViewController.h; sourceTree = "<group>"; };
-		2DD74E561B16A531009373AE /* ListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListViewController.m; sourceTree = "<group>"; };
-		2DD74E581B16A5CA009373AE /* ListTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListTitleCell.h; sourceTree = "<group>"; };
-		2DD74E591B16A5CA009373AE /* ListTitleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListTitleCell.m; sourceTree = "<group>"; };
+		2DD74E5B1B16DDD9009373AE /* ListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListViewController.h; sourceTree = "<group>"; };
+		2DD74E5C1B16DDD9009373AE /* ListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,11 +87,8 @@
 				2DD74E371B169F78009373AE /* Main.storyboard */,
 				2DD74E3C1B169F78009373AE /* LaunchScreen.xib */,
 				2DD74E3A1B169F78009373AE /* Images.xcassets */,
-				2DD74E551B16A531009373AE /* ListViewController.h */,
-				2DD74E561B16A531009373AE /* ListViewController.m */,
-				2DD74E531B16A0CD009373AE /* ListTitleCell.xib */,
-				2DD74E581B16A5CA009373AE /* ListTitleCell.h */,
-				2DD74E591B16A5CA009373AE /* ListTitleCell.m */,
+				2DD74E5B1B16DDD9009373AE /* ListViewController.h */,
+				2DD74E5C1B16DDD9009373AE /* ListViewController.m */,
 			);
 			path = Reminders;
 			sourceTree = "<group>";
@@ -207,7 +199,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DD74E541B16A0CD009373AE /* ListTitleCell.xib in Resources */,
 				2DD74E391B169F78009373AE /* Main.storyboard in Resources */,
 				2DD74E3E1B169F78009373AE /* LaunchScreen.xib in Resources */,
 				2DD74E3B1B169F78009373AE /* Images.xcassets in Resources */,
@@ -228,10 +219,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DD74E5A1B16A5CA009373AE /* ListTitleCell.m in Sources */,
 				2DD74E331B169F78009373AE /* AppDelegate.m in Sources */,
+				2DD74E5D1B16DDD9009373AE /* ListViewController.m in Sources */,
 				2DD74E301B169F78009373AE /* main.m in Sources */,
-				2DD74E571B16A531009373AE /* ListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,6 +416,7 @@
 				2DD74E4F1B169F78009373AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2DD74E501B169F78009373AE /* Build configuration list for PBXNativeTarget "RemindersTests" */ = {
 			isa = XCConfigurationList;
@@ -434,6 +425,7 @@
 				2DD74E521B169F78009373AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
