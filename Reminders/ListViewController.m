@@ -7,6 +7,9 @@
 //
 
 #import "ListViewController.h"
+#import "List.h"
+#import "ItemCell.h"
+#import "Item.h"
 
 
 @interface ListViewController ()
@@ -14,8 +17,14 @@
 @end
 
 @implementation ListViewController
+{
+    List *_list;
+}
 
-
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
 
 - (void)viewWillLayoutSubviews
 {
@@ -39,27 +48,162 @@
 {
     [super viewDidLoad];
     
+    UINib *ItemCell = [UINib nibWithNibName:@"ItemCell" bundle:nil];
+    [self.tableview registerNib:ItemCell forCellReuseIdentifier:@"ItemCell"];
+    
+    
+    _list = [[List alloc] init];
+    _list.name = @"Study";
+    _list.uncheckedItemsCount = 1;
+    _list.isEditting = NO;
+    _list.items = [[NSMutableArray alloc] initWithCapacity:10];
+    
+    Item *item1 = [[Item alloc] init];
+    item1.text = @"text1";
+    item1.isChecked = NO;
+    Item *item2 = [[Item alloc] init];
+    item2.text = @"text2";
+    item2.isChecked = YES;
+    
+    [_list.items addObject:item1];
+    [_list.items addObject:item2];
+    
+    [self updateNameLabel];
+    [self updateItemsCountLabel];
+    [self updateDoneOrEditButton];
+    
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle
+- (void)updateNameLabel
 {
-    return UIStatusBarStyleLightContent;
+    self.nameLabel.text = _list.name;
 }
 
+- (void)updateItemsCountLabel
+{
+    [_list countUncheckedItems];
+    
+    if (_list.uncheckedItemsCount > 0) {
+        self.itemsCountLabel.text = [NSString stringWithFormat:@"%ld items", (long)_list.uncheckedItemsCount];
+    }else{
+        self.itemsCountLabel.text = @"No items";
+    }
+}
+
+- (void)updateDoneOrEditButton
+{
+    if (_list.isEditting) {
+        [self.doneOrEditButton setTitle:@"Done" forState:UIControlStateNormal];
+    }else{
+        [self.doneOrEditButton setTitle:@"Edit" forState:UIControlStateNormal];
+    }
+}
+
+- (IBAction)clickCheckButton:(id)sender
+{
+    UIButton *button = (UIButton *)sender;
+    ItemCell *cell = (ItemCell *)button.superview.superview;
+    NSIndexPath *indexPath = [self.tableview indexPathForCell:cell];
+    Item *item = _list.items[indexPath.row];
+    
+    [item toggleChecked];
+    [self configureCheckButtonForCell:cell withItem:item];
+    [self updateItemsCountLabel];
+}
+
+- (IBAction)doneOrEdit:(id)sender
+{
+    [self.tableview endEditing:YES];
+    _list.isEditting = NO;
+    [self updateDoneOrEditButton];
+}
 
 #pragma mark - UITableViewDataSource
+
+- (void)configureCheckButtonForCell:(ItemCell *)cell
+                           withItem:(Item *)item
+{
+    if (item.isChecked) {
+        [cell.checkButton setImage:[UIImage imageNamed:@"RadioButtonSelected"] forState:UIControlStateNormal];
+    }else{
+        [cell.checkButton setImage:[UIImage imageNamed:@"RadioButton"] forState:UIControlStateNormal];
+    }
+    
+    cell.checkButton.imageEdgeInsets = UIEdgeInsetsMake(8, 8, 8, 8);
+}
+
+- (void)configureTextForCell:(ItemCell *)cell
+                    withItem:(Item *)item
+{
+    [cell.textView setText:item.text];
+}
+
+
 
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return [_list.items count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    ItemCell *cell = (ItemCell *)[tableView dequeueReusableCellWithIdentifier:@"ItemCell" forIndexPath:indexPath];
+    [self configureCheckButtonForCell:cell withItem:_list.items[indexPath.row]];
+    [self configureTextForCell:cell withItem:_list.items[indexPath.row]];
+    cell.accessoryType = UITableViewCellAccessoryNone;
     
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    cell.textView.delegate = self;
+    
+   // cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (NSIndexPath *)tableView:(UITableView *)tableView
+  willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     return nil;
+}
+
+#pragma mark - UITextViewDelegate
+
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if (!_list.isEditting) {
+        _list.isEditting = YES;
+        [self updateDoneOrEditButton];
+    }
+    
+    ItemCell *cell = (ItemCell *)textView.superview.superview;
+    cell.accessoryType = UITableViewCellAccessoryDetailButton;
+    
+    [textView becomeFirstResponder];
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    ItemCell *cell = (ItemCell *)textView.superview.superview;
+    cell.accessoryType = UITableViewCellAccessoryNone;
+}
+
+- (BOOL)textView:(UITextView *)textView
+shouldChangeTextInRange:(NSRange)range
+ replacementText:(NSString *)text
+{
+    if ([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];//dismiss the keyboard
+        _list.isEditting = NO;
+        [self updateDoneOrEditButton];
+        return NO;//don't insert return into textView.text
+    }
+    return YES;
 }
 
 /*

@@ -10,13 +10,15 @@
 
 @class ListHeadView;
 
-@interface ListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface ListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate,UITextViewDelegate>
 
 @property (nonatomic, weak) IBOutlet UITableView *tableview;
 
-@property (nonatomic, weak) IBOutlet UILabel *listTitleLabel;
+@property (nonatomic, weak) IBOutlet UILabel *nameLabel;
 @property (nonatomic, weak) IBOutlet UILabel *itemsCountLabel;
-@property (nonatomic, weak) IBOutlet UIButton *listEditButton;
+@property (nonatomic, weak) IBOutlet UIButton *doneOrEditButton;
 
+- (IBAction)clickCheckButton:(id)sender;
+- (IBAction)doneOrEdit:(id)sender;
 
 @end
