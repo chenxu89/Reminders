@@ -17,7 +17,15 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dCb-RB-cmv">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="3fg-kj-BUh">
+                                <rect key="frame" x="0.0" y="100" width="320" height="468"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Ld5-by-czX" id="xA8-om-XmZ"/>
+                                    <outlet property="delegate" destination="Ld5-by-czX" id="7li-4j-WLS"/>
+                                </connections>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dCb-RB-cmv" userLabel="headView">
                                 <rect key="frame" x="0.0" y="20" width="320" height="80"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ItemsCount" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4yY-Hj-Bz7">
@@ -53,14 +61,6 @@
                                     <constraint firstAttribute="bottom" secondItem="4yY-Hj-Bz7" secondAttribute="bottom" id="n4C-sq-wge"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="3fg-kj-BUh">
-                                <rect key="frame" x="0.0" y="100" width="320" height="468"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="Ld5-by-czX" id="xA8-om-XmZ"/>
-                                    <outlet property="delegate" destination="Ld5-by-czX" id="7li-4j-WLS"/>
-                                </connections>
-                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -87,9 +87,10 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="doneOrEditButton" destination="sfK-Yv-k2c" id="kWP-xU-xEv"/>
+                        <outlet property="headView" destination="dCb-RB-cmv" id="nLX-L4-37a"/>
                         <outlet property="itemsCountLabel" destination="4yY-Hj-Bz7" id="6ZW-3V-GBS"/>
                         <outlet property="nameLabel" destination="kSr-hw-XN2" id="uMh-aH-MUS"/>
-                        <outlet property="tableview" destination="3fg-kj-BUh" id="Dzo-Qw-7gS"/>
+                        <outlet property="tableView" destination="3fg-kj-BUh" id="XWD-44-3y3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cO4-uv-O7G" userLabel="First Responder" sceneMemberID="firstResponder"/>

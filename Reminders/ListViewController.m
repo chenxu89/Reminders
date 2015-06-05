@@ -32,25 +32,28 @@
     
     //add a seperator at the top of the table view and seperate the top view with the table view
     //if put these lines in viewDidLoad, then self.tableview.frame.size will not work
-    CGRect seperatorFrame = CGRectMake(15, self.tableview.frame.origin.y - 1, self.view.bounds.size.width, 1);
+    CGRect seperatorFrame = CGRectMake(15, self.tableView.frame.origin.y - 1, self.view.bounds.size.width, 1);
     UIView *seperatorView = [[UIView alloc] initWithFrame:seperatorFrame];
-    seperatorView.backgroundColor = [self.tableview separatorColor];
+    seperatorView.backgroundColor = [self.tableView separatorColor];
     [self.view addSubview:seperatorView];
     
     CGRect statusViewFrame = CGRectMake(0, 0, self.view.bounds.size.width, 20);
     UIView *statusView = [[UIView alloc] initWithFrame:statusViewFrame];
     statusView.backgroundColor = [UIColor blackColor];
-    [self.view addSubview:statusView];
-
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    UINib *ItemCell = [UINib nibWithNibName:@"ItemCell" bundle:nil];
-    [self.tableview registerNib:ItemCell forCellReuseIdentifier:@"ItemCell"];
+    //change the background color of status bar to black
+    CGRect statusViewFrame = CGRectMake(0, 0, self.view.bounds.size.width, 20);
+    UIView *statusView = [[UIView alloc] initWithFrame:statusViewFrame];
+    statusView.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:statusView];
     
+    UINib *ItemCell = [UINib nibWithNibName:@"ItemCell" bundle:nil];
+    [self.tableView registerNib:ItemCell forCellReuseIdentifier:@"ItemCell"];
     
     _list = [[List alloc] init];
     _list.name = @"Study";
@@ -71,7 +74,6 @@
     [self updateNameLabel];
     [self updateItemsCountLabel];
     [self updateDoneOrEditButton];
-    
 }
 
 - (void)updateNameLabel
@@ -103,7 +105,7 @@
 {
     UIButton *button = (UIButton *)sender;
     ItemCell *cell = (ItemCell *)button.superview.superview;
-    NSIndexPath *indexPath = [self.tableview indexPathForCell:cell];
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     Item *item = _list.items[indexPath.row];
     
     [item toggleChecked];
@@ -113,7 +115,7 @@
 
 - (IBAction)doneOrEdit:(id)sender
 {
-    [self.tableview endEditing:YES];
+    [self.tableView endEditing:YES];
     _list.isEditting = NO;
     [self updateDoneOrEditButton];
 }

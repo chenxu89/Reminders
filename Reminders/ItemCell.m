@@ -12,8 +12,9 @@
 
 //@synthesize textView;
 
-- (void)awakeFromNib {
-    
+- (void)awakeFromNib
+{
+    //self.textView.scrollEnabled = NO;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

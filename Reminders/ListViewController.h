@@ -12,7 +12,8 @@
 
 @interface ListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate,UITextViewDelegate>
 
-@property (nonatomic, weak) IBOutlet UITableView *tableview;
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
+@property (nonatomic, weak) IBOutlet UIView *headView;
 
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;
 @property (nonatomic, weak) IBOutlet UILabel *itemsCountLabel;
