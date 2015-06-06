@@ -15,6 +15,7 @@
 
 @interface ListViewController ()
 
+
 @end
 
 @implementation ListViewController
@@ -77,6 +78,38 @@
     [self updateNameLabel];
     [self updateItemsCountLabel];
     [self updateDoneOrEditButtonTitle];
+    
+    //tap anywhere below the existing rows will insert a new row
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(insertOneRow:)];
+    gestureRecognizer.cancelsTouchesInView = NO;
+    [self.tableView addGestureRecognizer:gestureRecognizer];
+}
+
+- (void)insertOneRow:(UIGestureRecognizer *)gestureRecognizer
+{
+    CGPoint point = [gestureRecognizer locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
+    
+    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:[_list.items count] inSection:0];
+    Item *lastItem = [_list.items lastObject];
+    
+    if (indexPath) {
+        // tap was on existing row
+        return;
+    }else if([lastItem.text isEqualToString:@""]){
+        return;
+    }else{
+        Item *item = [[Item alloc] init];
+        item.text = @"";
+        item.isChecked = NO;
+        [_list.items addObject:item];
+        
+        NSLog(@"rowCount: %lu", (unsigned long)[_list.items count]);
+        [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+        
+        ItemCell *newCell = (ItemCell *)[self.tableView cellForRowAtIndexPath:newIndexPath];
+        [newCell.textView becomeFirstResponder];
+    }
 }
 
 - (void)updateNameLabel
@@ -212,14 +245,15 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 
 #pragma mark - UITextViewDelegate
 
-
+//click a row, then
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
     if (!_list.isEditting) {
         _list.isEditting = YES;
         [self updateDoneOrEditButtonTitle];
+
     }
-    
+
     ItemCell *cell = (ItemCell *)textView.superview.superview;
     cell.accessoryType = UITableViewCellAccessoryDetailButton;
     
