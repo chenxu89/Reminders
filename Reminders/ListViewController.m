@@ -20,6 +20,8 @@
 @implementation ListViewController
 {
     List *_list;
+    NSString *_text;
+    NSMutableArray *_texts;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
@@ -74,7 +76,7 @@
     
     [self updateNameLabel];
     [self updateItemsCountLabel];
-    [self updateDoneOrEditButton];
+    [self updateDoneOrEditButtonTitle];
 }
 
 - (void)updateNameLabel
@@ -93,7 +95,7 @@
     }
 }
 
-- (void)updateDoneOrEditButton
+- (void)updateDoneOrEditButtonTitle
 {
     if (_list.isEditting) {
         [self.doneOrEditButton setTitle:@"Done" forState:UIControlStateNormal];
@@ -116,9 +118,29 @@
 
 - (IBAction)doneOrEdit:(id)sender
 {
-    [self.tableView endEditing:YES];
+    //finish edit
+    if (_list.isEditting) {
+        [self finishEditing];
+    
+    //begin edit
+    }else{
+        _list.isEditting = YES;
+    }
+    
+    [self updateDoneOrEditButtonTitle];
+}
+
+- (void)finishEditing
+{
     _list.isEditting = NO;
-    [self updateDoneOrEditButton];
+    
+    [self.tableView endEditing:YES];//dismiss the keyboard
+    
+    for (Item *item in _list.items) {
+        NSUInteger index = [_list.items indexOfObject:item];
+        ItemCell *cell = (ItemCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+        item.text = cell.textView.text;
+    }
 }
 
 //open ItemDetailViewController programmatically
@@ -152,7 +174,7 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 - (void)configureTextForCell:(ItemCell *)cell
                     withItem:(Item *)item
 {
-    [cell.textView setText:item.text];
+    cell.textView.text = item.text;
 }
 
 
@@ -195,7 +217,7 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     if (!_list.isEditting) {
         _list.isEditting = YES;
-        [self updateDoneOrEditButton];
+        [self updateDoneOrEditButtonTitle];
     }
     
     ItemCell *cell = (ItemCell *)textView.superview.superview;
@@ -204,6 +226,7 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     [textView becomeFirstResponder];
 }
 
+//change from one row editing to another row or finish editing
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
     ItemCell *cell = (ItemCell *)textView.superview.superview;
@@ -215,13 +238,18 @@ shouldChangeTextInRange:(NSRange)range
  replacementText:(NSString *)text
 {
     if ([text isEqualToString:@"\n"]) {
-        [textView resignFirstResponder];//dismiss the keyboard
-        _list.isEditting = NO;
-        [self updateDoneOrEditButton];
+        
+        [textView resignFirstResponder];
+        [self finishEditing];
+        [self updateDoneOrEditButtonTitle];
         return NO;//don't insert return into textView.text
+        
+    }else if (text != nil){
+        [textView.text stringByReplacingCharactersInRange:range withString:text];
     }
     return YES;
 }
+
 
 /*
 #pragma mark - Navigation
