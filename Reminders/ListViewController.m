@@ -21,8 +21,7 @@
 @implementation ListViewController
 {
     List *_list;
-    NSString *_text;
-    NSMutableArray *_texts;
+    NSIndexPath *_editingIndexPath;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
@@ -104,7 +103,6 @@
         item.isChecked = NO;
         [_list.items addObject:item];
         
-        NSLog(@"rowCount: %lu", (unsigned long)[_list.items count]);
         [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationNone];
         
         ItemCell *newCell = (ItemCell *)[self.tableView cellForRowAtIndexPath:newIndexPath];
@@ -165,16 +163,27 @@
 
 - (void)finishEditing
 {
+    //dismiss the keyboard which you can't figure out which row it belongs to
+    [self.tableView endEditing:YES];
+    
+    [self saveItemTextChangeAndReloadRow];
+    
     _list.isEditting = NO;
+
+    _editingIndexPath = nil;
+}
+
+- (void)saveItemTextChangeAndReloadRow
+{
+    ItemCell *cell = (ItemCell *)[self.tableView cellForRowAtIndexPath:_editingIndexPath];
+    Item *item = _list.items[_editingIndexPath.row];
     
-    [self.tableView endEditing:YES];//dismiss the keyboard
-    
-    for (Item *item in _list.items) {
-        NSUInteger index = [_list.items indexOfObject:item];
-        ItemCell *cell = (ItemCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+    if (![cell.textView.text isEqualToString:@""]) {
         item.text = cell.textView.text;
     }
+    [self.tableView reloadRowsAtIndexPaths:@[_editingIndexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
+
 
 //open ItemDetailViewController programmatically
 - (void)tableView:(UITableView *)tableView
@@ -245,17 +254,20 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 
 #pragma mark - UITextViewDelegate
 
-//click a row, then
+//click a row and begin editing
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
+    //the first time editing
     if (!_list.isEditting) {
         _list.isEditting = YES;
         [self updateDoneOrEditButtonTitle];
-
     }
-
+    
+    //the first time editing or change editing row
     ItemCell *cell = (ItemCell *)textView.superview.superview;
     cell.accessoryType = UITableViewCellAccessoryDetailButton;
+    
+    _editingIndexPath = [self.tableView indexPathForCell:cell];
     
     [textView becomeFirstResponder];
 }
@@ -265,6 +277,9 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     ItemCell *cell = (ItemCell *)textView.superview.superview;
     cell.accessoryType = UITableViewCellAccessoryNone;
+    
+    [self saveItemTextChangeAndReloadRow];
+
 }
 
 - (BOOL)textView:(UITextView *)textView
