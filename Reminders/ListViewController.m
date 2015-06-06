@@ -10,6 +10,7 @@
 #import "List.h"
 #import "ItemCell.h"
 #import "Item.h"
+#import "ItemDetailViewController.h"
 
 
 @interface ListViewController ()
@@ -118,6 +119,20 @@
     [self.tableView endEditing:YES];
     _list.isEditting = NO;
     [self updateDoneOrEditButton];
+}
+
+//open ItemDetailViewController programmatically
+- (void)tableView:(UITableView *)tableView
+accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"ItemNavigationController"];
+//    ItemDetailViewController *controller = (ItemDetailViewController *)navigationController.topViewController;
+//    
+//    controller.delegate = self;
+//    Checklist *checklist = self.dataModel.lists[indexPath.row];
+//    controller.checklistToEdit = checklist;
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource

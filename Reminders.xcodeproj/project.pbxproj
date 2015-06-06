@@ -18,6 +18,7 @@
 		2DD74E4A1B169F78009373AE /* RemindersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD74E491B169F78009373AE /* RemindersTests.m */; };
 		2DD74E5D1B16DDD9009373AE /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD74E5C1B16DDD9009373AE /* ListViewController.m */; };
 		2DD74E6F1B174E52009373AE /* List.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD74E6E1B174E52009373AE /* List.m */; };
+		2DDF9CAB1B21D25F005F53BB /* ItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DDF9CAA1B21D25F005F53BB /* ItemDetailViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,8 @@
 		2DD74E5C1B16DDD9009373AE /* ListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListViewController.m; sourceTree = "<group>"; };
 		2DD74E6D1B174E52009373AE /* List.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = List.h; sourceTree = "<group>"; };
 		2DD74E6E1B174E52009373AE /* List.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = List.m; sourceTree = "<group>"; };
+		2DDF9CA91B21D25F005F53BB /* ItemDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemDetailViewController.h; sourceTree = "<group>"; };
+		2DDF9CAA1B21D25F005F53BB /* ItemDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemDetailViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +110,8 @@
 				2DD51EBC1B17E15700584A51 /* ItemCell.h */,
 				2DD51EBD1B17E15700584A51 /* ItemCell.m */,
 				2DD51EBE1B17E15700584A51 /* ItemCell.xib */,
+				2DDF9CA91B21D25F005F53BB /* ItemDetailViewController.h */,
+				2DDF9CAA1B21D25F005F53BB /* ItemDetailViewController.m */,
 			);
 			path = Reminders;
 			sourceTree = "<group>";
@@ -244,6 +249,7 @@
 				2DD74E6F1B174E52009373AE /* List.m in Sources */,
 				2DD74E5D1B16DDD9009373AE /* ListViewController.m in Sources */,
 				2DD74E301B169F78009373AE /* main.m in Sources */,
+				2DDF9CAB1B21D25F005F53BB /* ItemDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
