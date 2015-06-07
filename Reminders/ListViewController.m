@@ -142,11 +142,9 @@
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     Item *item = _list.items[indexPath.row];
     
-    if (!_list.isEditting) {
-        [item toggleChecked];
-        [self configureCheckButtonForCell:cell withItem:item];
-        [self updateItemsCountLabel];
-    }
+    [item toggleChecked];
+    [self configureCheckButtonForCell:cell withItem:item];
+    [self updateItemsCountLabel];
 }
 
 - (IBAction)doneOrEdit:(id)sender
@@ -166,15 +164,13 @@
 - (void)finishEditing
 {
     //dismiss the keyboard which you can't figure out which row it belongs to
-    //[self.tableView endEditing:YES];
+    [self.tableView endEditing:YES];
     
-    //[self saveItemTextChangeAndReloadRow];
-    NSLog(@"test3");
+    [self saveItemTextChangeAndReloadRow];
+    
     _list.isEditting = NO;
-    
-    ItemCell *cell = (ItemCell *)[self.tableView cellForRowAtIndexPath:_editingIndexPath];
-    [self textViewDidEndEditing:cell.textView];
-    //_editingIndexPath = nil;
+
+    _editingIndexPath = nil;
 }
 
 - (void)saveItemTextChangeAndReloadRow
@@ -183,17 +179,11 @@
     Item *item = _list.items[_editingIndexPath.row];
     
     if ([cell.textView.text isEqualToString:@""] && [item.text isEqualToString:@""]) {
-        NSLog(@"test4");
-
-        [self.tableView beginUpdates];
-        [_list.items removeObject:item];
-        NSLog(@"test5");
-        [self.tableView deleteRowsAtIndexPaths:@[_editingIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-        NSLog(@"test6");
         
+        [_list.items removeObject:item];
+        [self.tableView deleteRowsAtIndexPaths:@[_editingIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableView beginUpdates];
         [self.tableView endUpdates];
-        NSLog(@"test7");
-       // NSLog(@"_editingIndexPath.row: %ld", _editingIndexPath.row);
         
     }else if (![cell.textView.text isEqualToString:@""]){
         item.text = cell.textView.text;
@@ -229,7 +219,6 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
         [cell.checkButton setImage:[UIImage imageNamed:@"RadioButton"] forState:UIControlStateNormal];
     }
     
-    //the distance between button edge and image edge
     cell.checkButton.imageEdgeInsets = UIEdgeInsetsMake(8, 8, 8, 8);
 }
 
@@ -290,7 +279,6 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     _editingIndexPath = [self.tableView indexPathForCell:cell];
     
     [textView becomeFirstResponder];
-    NSLog(@"test1");
 }
 
 //change from one row editing to another row or finish editing
@@ -300,7 +288,6 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     cell.accessoryType = UITableViewCellAccessoryNone;
     
     [self saveItemTextChangeAndReloadRow];
-    NSLog(@"test2");
 }
 
 - (BOOL)textView:(UITextView *)textView
