@@ -69,7 +69,7 @@
     item1.text = @"text1";
     item1.isChecked = NO;
     Item *item2 = [[Item alloc] init];
-    item2.text = @"if";
+    item2.text = @"//if put these lines in viewDidLoad, then self.tableview.frame.size will not work//if put these lines in viewDidLoad, then self.tableview.frame.size will not work";
     item2.isChecked = YES;
     
     [_list.items addObject:item1];
@@ -83,6 +83,17 @@
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(insertOneRow:)];
     gestureRecognizer.cancelsTouchesInView = NO;
     [self.tableView addGestureRecognizer:gestureRecognizer];
+    
+    self.tableView.estimatedRowHeight = 44.0;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.tableView setNeedsLayout];
+    [self.tableView layoutIfNeeded];
+    [self.tableView reloadData];
 }
 
 - (void)insertOneRow:(UIGestureRecognizer *)gestureRecognizer
@@ -189,14 +200,20 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 - (void)configureCheckButtonForCell:(ItemCell *)cell
                            withItem:(Item *)item
 {
+
     if (item.isChecked) {
         [cell.checkButton setImage:[UIImage imageNamed:@"RadioButtonSelected"] forState:UIControlStateNormal];
     }else{
         [cell.checkButton setImage:[UIImage imageNamed:@"RadioButton"] forState:UIControlStateNormal];
     }
     
+    cell.checkButton.imageEdgeInsets = UIEdgeInsetsMake((cell.checkButton.frame.size.height - 44.0) / 2.0 + 8.0, 8, (cell.checkButton.frame.size.height - 44.0) / 2.0 + 8.0, 8);
+    
+    NSLog(@"%f", cell.checkButton.frame.size.height );
     //the distance between button edge and image edge
-    cell.checkButton.imageEdgeInsets = UIEdgeInsetsMake(8, 8, 8, 8);
+
+    //cell.checkButton.imageEdgeInsets = UIEdgeInsetsMake(8, 8, 8, 8);
+
 }
 
 - (void)configureTextForCell:(ItemCell *)cell
@@ -210,9 +227,7 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"rows: %ld", [_list.items count]);
     return [_list.items count];
-
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -225,9 +240,11 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    cell.textView.scrollEnabled = NO;
+    
     cell.textView.delegate = self;
     
-   // cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }
@@ -307,6 +324,44 @@ shouldChangeTextInRange:(NSRange)range
     return YES;
 }
 
+//- (void)textViewDidChange:(UITextView *)textView
+//{
+//    //CGFloat oldHeight = textView.frame.size.height;
+//    CGFloat fixedWidth = textView.frame.size.width;
+//    CGSize newSize = [textView sizeThatFits:CGSizeMake(fixedWidth, CGFLOAT_MAX)];
+//    CGRect newFrame = textView.frame;
+//    newFrame.size = CGSizeMake(fixedWidth, newSize.height);
+//    textView.frame = newFrame;
+//    
+//    //    ItemCell *cell = (ItemCell *)textView.superview.superview;
+//    //    CGRect cellFrame = cell.frame;
+//    //    cellFrame.size.height = textView.frame.size.height;
+//    //    cell.frame = cellFrame;
+//    //
+//    //    _editingRowHeight = cellFrame.size.height;
+//    //    [self.tableView beginUpdates];
+//    //    [self.tableView endUpdates];
+//}
+
+//- (CGFloat)tableView:(UITableView *)tableView
+//heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    //    if (indexPath.row == _editingIndexPath.row) {
+//    //        NSLog(@"test1");
+//    //        NSLog(@"height %f", _editingRowHeight);
+//    //        NSLog(@"row %ld", _editingIndexPath.row);
+//    //        return _editingRowHeight;
+//    //
+//    //    }else{
+//    //        NSLog(@"test2");
+//    //        //return UITableViewAutomaticDimension;
+//    //        return 44.0f;
+//    //    }
+//    NSLog(@"test2");
+//    NSLog(@"row %ld",indexPath.row);
+//    //return UITableViewAutomaticDimension;
+//    return 44.0f;
+//}
 
 
 /*
