@@ -178,10 +178,19 @@
     ItemCell *cell = (ItemCell *)[self.tableView cellForRowAtIndexPath:_editingIndexPath];
     Item *item = _list.items[_editingIndexPath.row];
     
-    if (![cell.textView.text isEqualToString:@""]) {
+    if ([cell.textView.text isEqualToString:@""] && [item.text isEqualToString:@""]) {
+        
+        [_list.items removeObject:item];
+        [self.tableView deleteRowsAtIndexPaths:@[_editingIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableView beginUpdates];
+        [self.tableView endUpdates];
+        
+    }else if (![cell.textView.text isEqualToString:@""]){
         item.text = cell.textView.text;
+        [self.tableView reloadRowsAtIndexPaths:@[_editingIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }else{
+        [self.tableView reloadRowsAtIndexPaths:@[_editingIndexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
-    [self.tableView reloadRowsAtIndexPaths:@[_editingIndexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 
@@ -279,7 +288,6 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     cell.accessoryType = UITableViewCellAccessoryNone;
     
     [self saveItemTextChangeAndReloadRow];
-
 }
 
 - (BOOL)textView:(UITextView *)textView
