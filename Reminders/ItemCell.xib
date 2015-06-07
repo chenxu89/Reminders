@@ -15,23 +15,15 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="100" contentMode="scaleToFill" text="textView" translatesAutoresizingMaskIntoConstraints="NO" id="pMl-nz-k18">
-                        <rect key="frame" x="45" y="0.0" width="236" height="44"/>
+                        <rect key="frame" x="43" y="0.0" width="236" height="44"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="236" id="rI2-7c-rkl"/>
-                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="rI2-7c-rkl"/>
-                            </mask>
-                        </variation>
                     </textView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zbK-2p-zQN">
-                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="43" height="43"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="44" id="UIO-uQ-3M4"/>
+                            <constraint firstAttribute="width" constant="43" id="i2y-f9-dqA"/>
                         </constraints>
                         <state key="normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -42,13 +34,13 @@
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottomMargin" secondItem="zbK-2p-zQN" secondAttribute="bottom" constant="-9" id="2TC-s6-WAj"/>
-                    <constraint firstItem="zbK-2p-zQN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="7ld-pj-fyz"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="pMl-nz-k18" secondAttribute="trailing" constant="-16" id="CFh-fc-Abh"/>
-                    <constraint firstItem="zbK-2p-zQN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="OLP-Ks-m8N"/>
-                    <constraint firstItem="pMl-nz-k18" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="bD2-Vm-TWv"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="pMl-nz-k18" secondAttribute="bottom" constant="-9" id="nuo-d7-jQi"/>
-                    <constraint firstItem="pMl-nz-k18" firstAttribute="leading" secondItem="zbK-2p-zQN" secondAttribute="trailing" constant="1" id="tHE-SF-z7E"/>
+                    <constraint firstItem="zbK-2p-zQN" firstAttribute="top" secondItem="pMl-nz-k18" secondAttribute="top" id="BSZ-Dc-MDG"/>
+                    <constraint firstItem="pMl-nz-k18" firstAttribute="leading" secondItem="zbK-2p-zQN" secondAttribute="trailing" id="EFF-jK-6yN"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="pMl-nz-k18" secondAttribute="bottom" constant="-9" id="FuS-dA-TKX"/>
+                    <constraint firstItem="zbK-2p-zQN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="U8o-ER-KBC"/>
+                    <constraint firstItem="zbK-2p-zQN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Xe7-pr-ctV"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="pMl-nz-k18" secondAttribute="trailing" constant="-14" id="w0J-DT-c4F"/>
+                    <constraint firstAttribute="bottom" secondItem="zbK-2p-zQN" secondAttribute="bottom" id="wGH-oM-ciU"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
