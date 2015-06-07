@@ -22,6 +22,8 @@
 {
     List *_list;
     NSIndexPath *_editingIndexPath;
+    BOOL _isEditing;
+    CGFloat _editingRowHeight;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
@@ -61,14 +63,13 @@
     _list = [[List alloc] init];
     _list.name = @"Study";
     _list.uncheckedItemsCount = 1;
-    _list.isEditting = NO;
     _list.items = [[NSMutableArray alloc] initWithCapacity:10];
     
     Item *item1 = [[Item alloc] init];
     item1.text = @"text1";
     item1.isChecked = NO;
     Item *item2 = [[Item alloc] init];
-    item2.text = @"text2";
+    item2.text = @"if";
     item2.isChecked = YES;
     
     [_list.items addObject:item1];
@@ -128,7 +129,7 @@
 
 - (void)updateDoneOrEditButtonTitle
 {
-    if (_list.isEditting) {
+    if (_isEditing) {
         [self.doneOrEditButton setTitle:@"Done" forState:UIControlStateNormal];
     }else{
         [self.doneOrEditButton setTitle:@"Edit" forState:UIControlStateNormal];
@@ -142,7 +143,7 @@
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     Item *item = _list.items[indexPath.row];
     
-    if (!_list.isEditting) {
+    if (!_isEditing) {
         [item toggleChecked];
         [self configureCheckButtonForCell:cell withItem:item];
         [self updateItemsCountLabel];
@@ -152,12 +153,12 @@
 - (IBAction)doneOrEdit:(id)sender
 {
     //finish edit
-    if (_list.isEditting) {
+    if (_isEditing) {
         [self finishEditing];
     
     //begin edit
     }else{
-        _list.isEditting = YES;
+        _isEditing = YES;
     }
     
     [self updateDoneOrEditButtonTitle];
@@ -165,44 +166,9 @@
 
 - (void)finishEditing
 {
-    //dismiss the keyboard which you can't figure out which row it belongs to
-    //[self.tableView endEditing:YES];
-    
-    //[self saveItemTextChangeAndReloadRow];
-    NSLog(@"test3");
-    _list.isEditting = NO;
-    
-    ItemCell *cell = (ItemCell *)[self.tableView cellForRowAtIndexPath:_editingIndexPath];
-    [self textViewDidEndEditing:cell.textView];
-    //_editingIndexPath = nil;
+    //invoke textViewDidEndEditing:
+    [self.tableView endEditing:YES];
 }
-
-- (void)saveItemTextChangeAndReloadRow
-{
-    ItemCell *cell = (ItemCell *)[self.tableView cellForRowAtIndexPath:_editingIndexPath];
-    Item *item = _list.items[_editingIndexPath.row];
-    
-    if ([cell.textView.text isEqualToString:@""] && [item.text isEqualToString:@""]) {
-        NSLog(@"test4");
-
-        [self.tableView beginUpdates];
-        [_list.items removeObject:item];
-        NSLog(@"test5");
-        [self.tableView deleteRowsAtIndexPaths:@[_editingIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-        NSLog(@"test6");
-        
-        [self.tableView endUpdates];
-        NSLog(@"test7");
-       // NSLog(@"_editingIndexPath.row: %ld", _editingIndexPath.row);
-        
-    }else if (![cell.textView.text isEqualToString:@""]){
-        item.text = cell.textView.text;
-        [self.tableView reloadRowsAtIndexPaths:@[_editingIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-    }else{
-        [self.tableView reloadRowsAtIndexPaths:@[_editingIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-    }
-}
-
 
 //open ItemDetailViewController programmatically
 - (void)tableView:(UITableView *)tableView
@@ -244,7 +210,9 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@"rows: %ld", [_list.items count]);
     return [_list.items count];
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -264,6 +232,7 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     return cell;
 }
 
+
 #pragma mark - UITableViewDelegate
 
 - (NSIndexPath *)tableView:(UITableView *)tableView
@@ -278,8 +247,8 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
     //the first time editing
-    if (!_list.isEditting) {
-        _list.isEditting = YES;
+    if (!_isEditing) {
+        _isEditing = YES;
         [self updateDoneOrEditButtonTitle];
     }
     
@@ -288,9 +257,6 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     cell.accessoryType = UITableViewCellAccessoryDetailButton;
     
     _editingIndexPath = [self.tableView indexPathForCell:cell];
-    
-    [textView becomeFirstResponder];
-    NSLog(@"test1");
 }
 
 //change from one row editing to another row or finish editing
@@ -298,9 +264,31 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     ItemCell *cell = (ItemCell *)textView.superview.superview;
     cell.accessoryType = UITableViewCellAccessoryNone;
+    Item *item = _list.items[_editingIndexPath.row];
     
-    [self saveItemTextChangeAndReloadRow];
-    NSLog(@"test2");
+    if ([cell.textView.text isEqualToString:@""]) {
+        //new text is empty
+        if ([item.text isEqualToString:@""]) {
+            //old text is also empty
+            [_list.items removeObject:item];
+            [self.tableView deleteRowsAtIndexPaths:@[_editingIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+            [self.tableView beginUpdates];
+            [self.tableView endUpdates];
+        }else{
+            //old text is not empty
+            [self.tableView reloadRowsAtIndexPaths:@[_editingIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+        }
+    }else{
+        //new text is not empty
+        if (![cell.textView.text isEqualToString:item.text]) {
+            //new text is not equal to old text
+            item.text = cell.textView.text;
+            [self.tableView reloadRowsAtIndexPaths:@[_editingIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+        }
+    }
+    
+    _isEditing = NO;
+    _editingIndexPath = nil;
 }
 
 - (BOOL)textView:(UITextView *)textView
@@ -309,7 +297,6 @@ shouldChangeTextInRange:(NSRange)range
 {
     if ([text isEqualToString:@"\n"]) {
         
-        [textView resignFirstResponder];
         [self finishEditing];
         [self updateDoneOrEditButtonTitle];
         return NO;//don't insert return into textView.text
@@ -319,6 +306,7 @@ shouldChangeTextInRange:(NSRange)range
     }
     return YES;
 }
+
 
 
 /*
