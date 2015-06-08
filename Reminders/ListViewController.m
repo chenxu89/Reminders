@@ -24,6 +24,8 @@
     NSIndexPath *_editingIndexPath;
     BOOL _isEditing;
     CGFloat _editingRowHeight;
+    NSMutableDictionary *_textViews;
+    
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
@@ -69,7 +71,7 @@
     item1.text = @"text1";
     item1.isChecked = NO;
     Item *item2 = [[Item alloc] init];
-    item2.text = @"if";
+    item2.text = @"if  you build and run now it almost works. Unfortunately the cells displayed on the initial screen are still incorrect. If you scroll the table view you will see that the height is fine for new cells as they appear on screen. I suspect the problem is that the initial cells load before we have a valid row height. The workaround is to force a table reload when the view appears";
     item2.isChecked = YES;
     
     [_list.items addObject:item1];
@@ -84,8 +86,10 @@
     gestureRecognizer.cancelsTouchesInView = NO;
     [self.tableView addGestureRecognizer:gestureRecognizer];
     
-    _editingRowHeight = 44.0;
+    //_editingRowHeight = 44.0;
+    //hide empty rows
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    //_editingIndexPath = nil;
 }
 
 - (void)insertOneRow:(UIGestureRecognizer *)gestureRecognizer
@@ -222,6 +226,7 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ItemCell *cell = (ItemCell *)[tableView dequeueReusableCellWithIdentifier:@"ItemCell" forIndexPath:indexPath];
+
     [self configureCheckButtonForCell:cell withItem:_list.items[indexPath.row]];
     [self configureTextForCell:cell withItem:_list.items[indexPath.row]];
     cell.accessoryType = UITableViewCellAccessoryNone;
@@ -231,13 +236,12 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    cell.textView.delegate = self;
+    [_textViews setObject:cell.textView forKey:indexPath];
     
-   // cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.textView.delegate = self;
     
     return cell;
 }
-
 
 #pragma mark - UITableViewDelegate
 
@@ -295,7 +299,7 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     
     _isEditing = NO;
     _editingIndexPath = nil;
-    _editingRowHeight = 0.0f;
+    //_editingRowHeight = 0.0f;
 }
 
 - (BOOL)textView:(UITextView *)textView
@@ -314,6 +318,8 @@ shouldChangeTextInRange:(NSRange)range
     return YES;
 }
 
+#pragma mark - dynamic row height
+
 - (void)textViewDidChange:(UITextView *)textView
 {
     CGFloat oldHeight = textView.frame.size.height;
@@ -331,7 +337,7 @@ shouldChangeTextInRange:(NSRange)range
         cellFrame.size.height = textView.frame.size.height;
         cell.frame = cellFrame;
         
-        _editingRowHeight = textView.frame.size.height;
+        //_editingRowHeight = textView.frame.size.height;
         //解决同步更新问题
         [self.tableView beginUpdates];
         [self.tableView endUpdates];
@@ -341,11 +347,13 @@ shouldChangeTextInRange:(NSRange)range
 - (CGFloat)tableView:(UITableView *)tableView
 heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == _editingIndexPath.row) {
-        return _editingRowHeight;
-    }else{
-        return 44.0f;
-    }
+    UITextView *textView = [_textViews objectForKey:indexPath];
+    CGFloat oldHeight = textView.frame.size.height;
+    CGFloat fixedWidth = textView.frame.size.width;
+    CGSize newSize = [textView sizeThatFits:CGSizeMake(fixedWidth, CGFLOAT_MAX)];
+    NSLog(@"height %f", newSize.height);
+    
+    return newSize.height;
 }
 
 /*
