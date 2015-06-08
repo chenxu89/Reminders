@@ -69,7 +69,7 @@
     item1.text = @"text1";
     item1.isChecked = NO;
     Item *item2 = [[Item alloc] init];
-    item2.text = @"if";
+    item2.text = @"ifAn assertion is raised if you return nil” means that returning nil instead of a valid UITableViewCell object will crash the app on purpose because you’re doing something you’re not supposed to. An assertion is a special debugging tool that is used to check";
     item2.isChecked = YES;
     
     [_list.items addObject:item1];
@@ -84,7 +84,7 @@
     gestureRecognizer.cancelsTouchesInView = NO;
     [self.tableView addGestureRecognizer:gestureRecognizer];
     
-    _editingRowHeight = 44.0;
+    //_editingRowHeight = 44.0;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
@@ -263,6 +263,8 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     cell.accessoryType = UITableViewCellAccessoryDetailButton;
     
     _editingIndexPath = [self.tableView indexPathForCell:cell];
+    _editingRowHeight = textView.frame.size.height;
+    [self heightFitContentForTextView:textView];
 }
 
 //change from one row editing to another row or finish editing
@@ -296,6 +298,7 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     _isEditing = NO;
     _editingIndexPath = nil;
     _editingRowHeight = 0.0f;
+    [self heightFitContentForTextView:textView];
 }
 
 - (BOOL)textView:(UITextView *)textView
@@ -314,7 +317,14 @@ shouldChangeTextInRange:(NSRange)range
     return YES;
 }
 
+
 - (void)textViewDidChange:(UITextView *)textView
+{
+    [self heightFitContentForTextView:textView];
+}
+
+//when content change, we should adjust the height for the textView to fit it
+- (void)heightFitContentForTextView:(UITextView *)textView
 {
     CGFloat oldHeight = textView.frame.size.height;
     CGFloat fixedWidth = textView.frame.size.width;
@@ -341,7 +351,7 @@ shouldChangeTextInRange:(NSRange)range
 - (CGFloat)tableView:(UITableView *)tableView
 heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == _editingIndexPath.row) {
+    if ([indexPath isEqual:_editingIndexPath]) {
         return _editingRowHeight;
     }else{
         return 44.0f;
