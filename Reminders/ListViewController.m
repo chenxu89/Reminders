@@ -261,6 +261,8 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     _editingIndexPath = [self.tableView indexPathForCell:cell];
     _editingRowHeight = textView.frame.size.height;
     [self changeTextViewHeightAndCellHeightToFitContent:textView];
+    
+    [self performSelector:@selector(setCursorToEndOfTextView:) withObject:textView afterDelay:0.01];
 }
 
 //change from one row editing to another row or finish editing
@@ -352,6 +354,12 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     }else{
         return 44.0f;
     }
+}
+
+- (void)setCursorToEndOfTextView:(UITextView *)textView
+{
+    //you can change first parameter in NSMakeRange to wherever you want the cursor to move
+    textView.selectedRange = NSMakeRange([textView.text length], 0);
 }
 
 /*
