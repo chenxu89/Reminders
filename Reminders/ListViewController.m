@@ -83,6 +83,9 @@
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(insertOneRow:)];
     gestureRecognizer.cancelsTouchesInView = NO;
     [self.tableView addGestureRecognizer:gestureRecognizer];
+    
+    _editingRowHeight = 44.0;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)insertOneRow:(UIGestureRecognizer *)gestureRecognizer
@@ -223,6 +226,9 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     [self configureTextForCell:cell withItem:_list.items[indexPath.row]];
     cell.accessoryType = UITableViewCellAccessoryNone;
     
+    //解决换行时候行往上跳的问题
+    cell.textView.scrollEnabled = NO;
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     cell.textView.delegate = self;
@@ -289,6 +295,7 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     
     _isEditing = NO;
     _editingIndexPath = nil;
+    _editingRowHeight = 0.0f;
 }
 
 - (BOOL)textView:(UITextView *)textView
@@ -307,7 +314,39 @@ shouldChangeTextInRange:(NSRange)range
     return YES;
 }
 
+- (void)textViewDidChange:(UITextView *)textView
+{
+    CGFloat oldHeight = textView.frame.size.height;
+    CGFloat fixedWidth = textView.frame.size.width;
+    CGSize newSize = [textView sizeThatFits:CGSizeMake(fixedWidth, CGFLOAT_MAX)];
+    NSLog(@"height %f", newSize.height);
+    
+    if (fabs((newSize.height - oldHeight)) > 1.0f) {
+        CGRect newFrame = textView.frame;
+        newFrame.size = CGSizeMake(fixedWidth, newSize.height);
+        textView.frame = newFrame;
+        
+        ItemCell *cell = (ItemCell *)textView.superview.superview;
+        CGRect cellFrame = cell.frame;
+        cellFrame.size.height = textView.frame.size.height;
+        cell.frame = cellFrame;
+        
+        _editingRowHeight = textView.frame.size.height;
+        //解决同步更新问题
+        [self.tableView beginUpdates];
+        [self.tableView endUpdates];
+    }
+}
 
+- (CGFloat)tableView:(UITableView *)tableView
+heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == _editingIndexPath.row) {
+        return _editingRowHeight;
+    }else{
+        return 44.0f;
+    }
+}
 
 /*
 #pragma mark - Navigation
