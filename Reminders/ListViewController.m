@@ -327,7 +327,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     CGFloat newHeight = newSize.height;
     if (newSize.height > DefaltRowHeight) {
         [self textViewFitForContent:textView withFixedWidth:fixedWidth withNewHeight:newHeight];
-        _editingRowHeight = newHeight;
         [self cellFitForTextView:textView];
     }
 }
