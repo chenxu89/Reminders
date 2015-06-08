@@ -275,10 +275,16 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     ItemCell *cell = (ItemCell *)textView.superview.superview;
     cell.accessoryType = UITableViewCellAccessoryDetailButton;
     
+    //dynamic height
     _editingIndexPath = [self.tableView indexPathForCell:cell];
-    [self changeTextViewHeightAndCellHeightToFitContent:textView];
-    _editingRowHeight = textView.frame.size.height;
-    NSLog(@"beginheight: %f", textView.frame.size.height);
+    CGFloat fixedWidth = _notEditingTextViewWidth - DetailButtonWidth;
+    CGSize newSize = [textView sizeThatFits:CGSizeMake(fixedWidth, CGFLOAT_MAX)];
+    CGFloat newHeight = newSize.height;
+    if (newSize.height > DefaltRowHeight) {
+        [self textViewFitForContent:textView withFixedWidth:fixedWidth withNewHeight:newHeight];
+        _editingRowHeight = newHeight;
+        [self cellFitForTextView:textView];
+    }
     
     [self performSelector:@selector(setCursorToEndOfTextView:) withObject:textView afterDelay:0.01];
 }
@@ -311,12 +317,16 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         }
     }
     
+    //dynamic height
     _isEditing = NO;
     _editingIndexPath = nil;
     _editingRowHeight = 0.0f;
-    NSLog(@"endheight1: %f", textView.frame.size.height);
-    [self changeTextViewHeightAndCellHeightToFitContent:textView];
-    NSLog(@"endheight2: %f", textView.frame.size.height);
+    
+    CGFloat fixedWidth = _notEditingTextViewWidth;
+    CGSize newSize = [textView sizeThatFits:CGSizeMake(fixedWidth, CGFLOAT_MAX)];
+    CGFloat newHeight = newSize.height;
+    [self textViewFitForContent:textView withFixedWidth:fixedWidth withNewHeight:newHeight];
+    [self cellFitForTextView:textView];
 }
 
 - (BOOL)textView:(UITextView *)textView
@@ -335,41 +345,40 @@ shouldChangeTextInRange:(NSRange)range
     return YES;
 }
 
-
 - (void)textViewDidChange:(UITextView *)textView
 {
-    [self changeTextViewHeightAndCellHeightToFitContent:textView];
-    NSLog(@"changeheight: %f", textView.frame.size.height);
+    //dynamic height
+    CGFloat fixedWidth = _notEditingTextViewWidth - DetailButtonWidth;
+    CGFloat oldHeight = textView.frame.size.height;
+    CGSize newSize = [textView sizeThatFits:CGSizeMake(fixedWidth, CGFLOAT_MAX)];
+    CGFloat newHeight = newSize.height;
+    if (newHeight > DefaltRowHeight && fabs((newHeight - oldHeight)) > 5.0f){
+        //when text rows > 1 and rows increase
+        [self textViewFitForContent:textView withFixedWidth:fixedWidth withNewHeight:newHeight];
+        _editingRowHeight = newHeight;
+        [self cellFitForTextView:textView];
+    }
 }
 
 //when content change, we should adjust the height for the textView to fit it
-- (void)changeTextViewHeightAndCellHeightToFitContent:(UITextView *)textView
+- (void)textViewFitForContent:(UITextView *)textView
+               withFixedWidth:(CGFloat)fixedWidth
+                withNewHeight:(CGFloat)newHeight
 {
-    CGFloat fixedWidth;
-    if (_isEditing) {
-        fixedWidth = _notEditingTextViewWidth - DetailButtonWidth;
-    }else{
-        fixedWidth = _notEditingTextViewWidth;
-    }
+    CGRect newFrame = textView.frame;
+    newFrame.size = CGSizeMake(fixedWidth, newHeight);
+    textView.frame = newFrame;
+}
+
+- (void)cellFitForTextView:(UITextView *)textView
+{
+    ItemCell *cell = (ItemCell *)textView.superview.superview;
+    CGRect cellFrame = cell.frame;
+    cellFrame.size.height = textView.frame.size.height;
+    cell.frame = cellFrame;
     
-    CGFloat oldHeight = textView.frame.size.height;
-    CGSize newSize = [textView sizeThatFits:CGSizeMake(fixedWidth, CGFLOAT_MAX)];
-    
-    if (fabs((newSize.height - oldHeight)) > 5.0f && newSize.height > DefaltRowHeight){
-        CGRect newFrame = textView.frame;
-        newFrame.size = CGSizeMake(fixedWidth, newSize.height);
-        textView.frame = newFrame;
-        
-        ItemCell *cell = (ItemCell *)textView.superview.superview;
-        CGRect cellFrame = cell.frame;
-        cellFrame.size.height = textView.frame.size.height;
-        cell.frame = cellFrame;
-        
-        _editingRowHeight = textView.frame.size.height;
-        //解决同步更新问题
-        [self.tableView beginUpdates];
-        [self.tableView endUpdates];
-    }
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
 }
 
 - (void)setCursorToEndOfTextView:(UITextView *)textView

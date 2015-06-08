@@ -14,12 +14,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="100" contentMode="scaleToFill" text="textView" translatesAutoresizingMaskIntoConstraints="NO" id="pMl-nz-k18">
-                        <rect key="frame" x="43" y="0.0" width="236" height="44"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
-                    </textView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zbK-2p-zQN">
                         <rect key="frame" x="0.0" y="0.0" width="43" height="43"/>
                         <constraints>
@@ -32,6 +26,12 @@
                             <action selector="clickCheckButton:" destination="-2" eventType="touchUpInside" id="4l6-7Q-HXh"/>
                         </connections>
                     </button>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="100" contentMode="scaleToFill" text="textView" translatesAutoresizingMaskIntoConstraints="NO" id="pMl-nz-k18">
+                        <rect key="frame" x="43" y="0.0" width="230" height="44"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                    </textView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="zbK-2p-zQN" firstAttribute="top" secondItem="pMl-nz-k18" secondAttribute="top" id="BSZ-Dc-MDG"/>
@@ -39,7 +39,7 @@
                     <constraint firstAttribute="bottomMargin" secondItem="pMl-nz-k18" secondAttribute="bottom" constant="-9" id="FuS-dA-TKX"/>
                     <constraint firstItem="zbK-2p-zQN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="U8o-ER-KBC"/>
                     <constraint firstItem="zbK-2p-zQN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Xe7-pr-ctV"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="pMl-nz-k18" secondAttribute="trailing" constant="-14" id="w0J-DT-c4F"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="pMl-nz-k18" secondAttribute="trailing" constant="-8" id="w0J-DT-c4F"/>
                     <constraint firstAttribute="bottom" secondItem="zbK-2p-zQN" secondAttribute="bottom" id="wGH-oM-ciU"/>
                 </constraints>
             </tableViewCellContentView>
