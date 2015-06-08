@@ -213,9 +213,7 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"rows: %ld", [_list.items count]);
     return [_list.items count];
-
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -232,8 +230,6 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     cell.textView.delegate = self;
-    
-   // cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }
@@ -264,7 +260,7 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     
     _editingIndexPath = [self.tableView indexPathForCell:cell];
     _editingRowHeight = textView.frame.size.height;
-    [self heightFitContentForTextView:textView];
+    [self changeTextViewHeightAndCellHeightToFitContent:textView];
 }
 
 //change from one row editing to another row or finish editing
@@ -298,7 +294,7 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     _isEditing = NO;
     _editingIndexPath = nil;
     _editingRowHeight = 0.0f;
-    [self heightFitContentForTextView:textView];
+    [self changeTextViewHeightAndCellHeightToFitContent:textView];
 }
 
 - (BOOL)textView:(UITextView *)textView
@@ -320,11 +316,11 @@ shouldChangeTextInRange:(NSRange)range
 
 - (void)textViewDidChange:(UITextView *)textView
 {
-    [self heightFitContentForTextView:textView];
+    [self changeTextViewHeightAndCellHeightToFitContent:textView];
 }
 
 //when content change, we should adjust the height for the textView to fit it
-- (void)heightFitContentForTextView:(UITextView *)textView
+- (void)changeTextViewHeightAndCellHeightToFitContent:(UITextView *)textView
 {
     CGFloat oldHeight = textView.frame.size.height;
     CGFloat fixedWidth = textView.frame.size.width;
