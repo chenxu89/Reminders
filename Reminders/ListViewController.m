@@ -21,8 +21,8 @@
 @implementation ListViewController
 {
     List *_list;
-    NSIndexPath *_editingIndexPath;
     BOOL _isEditing;
+    NSIndexPath *_editingIndexPath;
     CGFloat _editingRowHeight;
 }
 
@@ -84,7 +84,7 @@
     gestureRecognizer.cancelsTouchesInView = NO;
     [self.tableView addGestureRecognizer:gestureRecognizer];
     
-    //_editingRowHeight = 44.0;
+    //hide the empty rows
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
@@ -234,6 +234,15 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView
+heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([indexPath isEqual:_editingIndexPath]) {
+        return _editingRowHeight;
+    }else{
+        return 44.0f;
+    }
+}
 
 #pragma mark - UITableViewDelegate
 
@@ -259,8 +268,8 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     cell.accessoryType = UITableViewCellAccessoryDetailButton;
     
     _editingIndexPath = [self.tableView indexPathForCell:cell];
-    _editingRowHeight = textView.frame.size.height;
     [self changeTextViewHeightAndCellHeightToFitContent:textView];
+    _editingRowHeight = textView.frame.size.height;
     
     [self performSelector:@selector(setCursorToEndOfTextView:) withObject:textView afterDelay:0.01];
 }
@@ -343,16 +352,6 @@ shouldChangeTextInRange:(NSRange)range
         //解决同步更新问题
         [self.tableView beginUpdates];
         [self.tableView endUpdates];
-    }
-}
-
-- (CGFloat)tableView:(UITableView *)tableView
-heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if ([indexPath isEqual:_editingIndexPath]) {
-        return _editingRowHeight;
-    }else{
-        return 44.0f;
     }
 }
 
