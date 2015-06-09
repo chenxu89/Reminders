@@ -34,6 +34,24 @@ static CGFloat const DetailButtonWidth = 40.0f;
     return UIStatusBarStyleLightContent;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    // register for keyboard notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    // unregister for keyboard notifications
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];;
+}
+
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
@@ -72,7 +90,7 @@ static CGFloat const DetailButtonWidth = 40.0f;
     item1.text = @"text1";
     item1.isChecked = NO;
     Item *item2 = [[Item alloc] init];
-    item2.text = @"ifAn assertion is raised if you return nil” means that returning nil instead of a valid UITableViewCell object will crash the app on purpose because you’re doing something you’re not supposed to. An assertion is a special debugging tool that is used to check";
+    item2.text = @"ifAn assertion is raised if you return nil” means that returning nil instead of a valid UITableViewCell object will crash the app on purpose because you’re doing something you’re not supposed to. An assertion is a special debugging tool that is used to check rpose because you’re doing something you’re not supposed to. An assertion is a special debugging tool that is used to check";
     item2.isChecked = YES;
     
     [_list.items addObject:item1];
@@ -291,6 +309,8 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     }
     
     [self performSelector:@selector(setCursorToEndOfTextView:) withObject:textView afterDelay:0.01];
+    
+
 }
 
 //change from one row editing to another row or finish editing
@@ -396,6 +416,26 @@ shouldChangeTextInRange:(NSRange)range
     //you can change first parameter in NSMakeRange to wherever you want the cursor to move
     textView.selectedRange = NSMakeRange([textView.text length], 0);
 }
+
+#pragma mark - keep keyboard not hidden editing text
+- (void)keyboardWillShow:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(self.tableView.contentInset.top, 0.0, kbSize.height + DefaltRowHeight, 0.0);
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
+}
+
+- (void)keyboardWillHide:(NSNotification*)aNotification
+{
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(self.tableView.contentInset.top, 0.0, 0.0, 0.0);
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
+}
+
+
 
 /*
 #pragma mark - Navigation
