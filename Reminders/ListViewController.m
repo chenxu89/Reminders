@@ -234,6 +234,10 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     
     cell.textView.delegate = self;
     
+    //Ellipsis at the end of UITextView for truncate text
+    cell.textView.textContainer.maximumNumberOfLines = 0;
+    cell.textView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
+    
     return cell;
 }
 
@@ -329,6 +333,10 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         [self textViewFitForContent:textView withFixedWidth:fixedWidth withNewHeight:newHeight];
         [self cellFitForTextView:textView];
     }
+    
+    //Ellipsis at the end of UITextView for truncate text
+    textView.textContainer.maximumNumberOfLines = 0;
+    textView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
 }
 
 - (BOOL)textView:(UITextView *)textView
