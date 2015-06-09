@@ -382,10 +382,15 @@ shouldChangeTextInRange:(NSRange)range
     CGFloat oldHeight = textView.frame.size.height;
     CGSize newSize = [textView sizeThatFits:CGSizeMake(fixedWidth, CGFLOAT_MAX)];
     CGFloat newHeight = newSize.height;
-    if (newHeight > DefaltRowHeight && fabs((newHeight - oldHeight)) > 5.0f){
-        //when text rows > 1 and rows increase
+    if (newHeight > DefaltRowHeight){
+        //when text rows > 1
         [self textViewFitForContent:textView withFixedWidth:fixedWidth withNewHeight:newHeight];
         _editingRowHeight = newHeight;
+        [self cellFitForTextView:textView];
+    }else if (newHeight < DefaltRowHeight && oldHeight - DefaltRowHeight > 1.0f){
+        //when text rows from 2 to 1, and not the first row
+        //[self textViewFitForContent:textView withFixedWidth:fixedWidth withNewHeight:newHeight];
+        _editingRowHeight = DefaltRowHeight;
         [self cellFitForTextView:textView];
     }
 }
