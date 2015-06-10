@@ -194,19 +194,7 @@ static CGFloat const DetailButtonWidth = 40.0f;
     [self.tableView endEditing:YES];
 }
 
-//open ItemDetailViewController programmatically
-- (void)tableView:(UITableView *)tableView
-accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-    UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"ItemNavigationController"];
-//    ItemDetailViewController *controller = (ItemDetailViewController *)navigationController.topViewController;
-//    
-//    controller.delegate = self;
-//    Checklist *checklist = self.dataModel.lists[indexPath.row];
-//    controller.checklistToEdit = checklist;
-    
-    [self presentViewController:navigationController animated:YES completion:nil];
-}
+
 
 #pragma mark - UITableViewDataSource
 
@@ -228,8 +216,6 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     cell.textView.text = item.text;
 }
-
-
 
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section
@@ -259,6 +245,28 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     return cell;
 }
 
+#pragma mark - UITableViewDelegate
+
+- (NSIndexPath *)tableView:(UITableView *)tableView
+  willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return nil;
+}
+
+//open ItemDetailViewController programmatically
+- (void)tableView:(UITableView *)tableView
+accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"ItemNavigationController"];
+    //    ItemDetailViewController *controller = (ItemDetailViewController *)navigationController.topViewController;
+    //
+    //    controller.delegate = self;
+    //    Checklist *checklist = self.dataModel.lists[indexPath.row];
+    //    controller.checklistToEdit = checklist;
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView
 heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -273,12 +281,14 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     }
 }
 
-#pragma mark - UITableViewDelegate
 
-- (NSIndexPath *)tableView:(UITableView *)tableView
-  willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView
+commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return nil;
+    [_list.items removeObjectAtIndex:indexPath.row];
+    NSArray *indexPaths = @[indexPath];
+    [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 #pragma mark - UITextViewDelegate
