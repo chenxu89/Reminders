@@ -108,6 +108,8 @@ static CGFloat const DetailButtonWidth = 40.0f;
     
     //hide the empty rows
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    [self.tableView setAllowsMultipleSelectionDuringEditing:YES];
 }
 
 - (void)insertOneRow:(UIGestureRecognizer *)gestureRecognizer
@@ -157,7 +159,7 @@ static CGFloat const DetailButtonWidth = 40.0f;
     if (_isItemEditing) {
         [self.doneOrEditButton setTitle:@"Done" forState:UIControlStateNormal];
     }else if(_isListEditing){
-        [self.doneOrEditButton setTitle:@"Cancel" forState:UIControlStateNormal];
+        [self.doneOrEditButton setTitle:@"Delete" forState:UIControlStateNormal];
     }else{
         [self.doneOrEditButton setTitle:@"Edit" forState:UIControlStateNormal];
     }
@@ -167,18 +169,20 @@ static CGFloat const DetailButtonWidth = 40.0f;
 {
     //finish item edit
     if (_isItemEditing) {
-        [self finishEditing];
         _isItemEditing = NO;
-    
+        [self finishEditing];
+        
     //begin list edit
     }else if(!_isListEditing){
-        [self.tableView reloadData];
         _isListEditing = YES;
+        [self.tableView setEditing:YES animated:YES];
+        [self.tableView reloadData];
         
     //finish list edit
     }else{
-        [self.tableView reloadData];
         _isListEditing = NO;
+        [self.tableView setEditing:NO animated:YES];
+        [self.tableView reloadData];
     }
     
     [self updateDoneOrEditButtonTitle];
@@ -244,7 +248,16 @@ static CGFloat const DetailButtonWidth = 40.0f;
     //解决换行时候行往上跳的问题
     cell.textView.scrollEnabled = NO;
     
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    if (_isListEditing) {
+        cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+        //make textview unselectable while cell selectable
+        cell.textView.userInteractionEnabled = NO;
+        cell.checkButton.hidden = YES;
+    }else{
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textView.userInteractionEnabled = YES;
+        cell.checkButton.hidden = NO;
+    }
     
     cell.textView.delegate = self;
     
@@ -260,7 +273,11 @@ static CGFloat const DetailButtonWidth = 40.0f;
 - (NSIndexPath *)tableView:(UITableView *)tableView
   willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return nil;
+    if (_isListEditing) {
+        return indexPath;
+    }else{
+        return nil;
+    }
 }
 
 -(void)openItemDetailViewControllerWithIndexPath:(NSIndexPath *)indexPath
