@@ -87,15 +87,19 @@ static CGFloat const DetailButtonWidth = 40.0f;
     _list.uncheckedItemsCount = 1;
     _list.items = [[NSMutableArray alloc] initWithCapacity:10];
     
-    Item *item1 = [[Item alloc] init];
-    item1.text = @"text1 assertion is raise";
-    item1.isChecked = NO;
-    Item *item2 = [[Item alloc] init];
-    item2.text = @"ifAn assertion is raised if you return nil” means that returning nil instead of a valid UITableViewCell object will crash the app on purpose because you’re doing something you’re not supposed to. An assertion is a special debugging tool that is used to check rpose because you’re doing something you’re not supposed to. An assertion is a special debugging tool that is used to check";
-    item2.isChecked = YES;
+    NSUInteger i = 0;
+    Item *item = [[Item alloc] init];
+    item.isChecked = NO;
+    while (i < 15) {
+        item.text = [NSString stringWithFormat:@"text %lu", (unsigned long)i] ;
+        [_list.items addObject:item];
+        i++;
+    }
     
+    Item *item1 = [[Item alloc] init];
+    item1.text = @"ifAn assertion is raised if you return nil” means that returning nil instead of a valid UITableViewCell object will crash the app on purpose because you’re doing something you’re not supposed to. An assertion is a special debugging tool that is used to check rpose because you’re doing something you’re not supposed to. An assertion is a special debugging tool that is used to check";
+    item1.isChecked = YES;
     [_list.items addObject:item1];
-    [_list.items addObject:item2];
     
     [self updateNameLabel];
     [self updateItemsCountLabel];
@@ -109,6 +113,7 @@ static CGFloat const DetailButtonWidth = 40.0f;
     //hide the empty rows
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
+    //in editing row status, change the left button from delete to select
     [self.tableView setAllowsMultipleSelectionDuringEditing:YES];
 }
 
@@ -300,10 +305,12 @@ static CGFloat const DetailButtonWidth = 40.0f;
         //make textview unselectable while cell selectable
         cell.textView.userInteractionEnabled = NO;
         cell.checkButton.hidden = YES;
+        cell.showsReorderControl =YES;  //我们添加一个重新排序控件
     }else{
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.textView.userInteractionEnabled = YES;
         cell.checkButton.hidden = NO;
+        cell.showsReorderControl = NO;
     }
     
     cell.textView.delegate = self;
@@ -311,6 +318,8 @@ static CGFloat const DetailButtonWidth = 40.0f;
     //Ellipsis at the end of UITextView for truncate text
     cell.textView.textContainer.maximumNumberOfLines = 0;
     cell.textView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
+    
+    
     
     return cell;
 }
@@ -370,6 +379,21 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Update the delete button's title based on how many items are selected.
     [self updateDoneOrEditButtonTitle];
+}
+
+- (BOOL)tableView:(UITableView *)tableView
+canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView
+moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
+      toIndexPath:(NSIndexPath *)destinationIndexPath
+{
+    id object = [_list.items objectAtIndex:sourceIndexPath.row];
+    [_list.items removeObjectAtIndex:sourceIndexPath.row];
+    [_list.items insertObject:object atIndex:destinationIndexPath.row];
 }
 
 #pragma mark - Swipe to Delete and the “More” button
