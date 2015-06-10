@@ -125,6 +125,9 @@ static CGFloat const DetailButtonWidth = 40.0f;
         return;
     }else if([lastItem.text isEqualToString:@""]){
         return;
+    }else if(_isListEditing){
+        //when editing list, cannot add a new row
+        return;
     }else{
         Item *item = [[Item alloc] init];
         item.text = @"";
