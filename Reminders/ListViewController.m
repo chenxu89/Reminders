@@ -30,6 +30,8 @@ static CGFloat const DetailButtonWidth = 40.0f;
     BOOL _isListEditing;
 }
 
+#pragma mark - init and load
+
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
@@ -123,34 +125,7 @@ static CGFloat const DetailButtonWidth = 40.0f;
     }
 }
 
-- (void)insertOneRow:(UIGestureRecognizer *)gestureRecognizer
-{
-    CGPoint point = [gestureRecognizer locationInView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
-    
-    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:[_list.items count] inSection:0];
-    Item *lastItem = [_list.items lastObject];
-    
-    if (indexPath) {
-        // tap was on existing row
-        return;
-    }else if([lastItem.text isEqualToString:@""]){
-        return;
-    }else if(_isListEditing){
-        //when editing list, cannot add a new row
-        return;
-    }else{
-        Item *item = [[Item alloc] init];
-        item.text = @"";
-        item.isChecked = NO;
-        [_list.items addObject:item];
-        
-        [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-        
-        ItemCell *newCell = (ItemCell *)[self.tableView cellForRowAtIndexPath:newIndexPath];
-        [newCell.textView becomeFirstResponder];
-    }
-}
+#pragma mark - update
 
 - (void)updateNameLabel
 {
@@ -185,6 +160,37 @@ static CGFloat const DetailButtonWidth = 40.0f;
         self.doneOrEditButton.enabled = YES;
     }
 
+}
+
+#pragma mark - Action
+
+- (void)insertOneRow:(UIGestureRecognizer *)gestureRecognizer
+{
+    CGPoint point = [gestureRecognizer locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
+    
+    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:[_list.items count] inSection:0];
+    Item *lastItem = [_list.items lastObject];
+    
+    if (indexPath) {
+        // tap was on existing row
+        return;
+    }else if([lastItem.text isEqualToString:@""]){
+        return;
+    }else if(_isListEditing){
+        //when editing list, cannot add a new row
+        return;
+    }else{
+        Item *item = [[Item alloc] init];
+        item.text = @"";
+        item.isChecked = NO;
+        [_list.items addObject:item];
+        
+        [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+        
+        ItemCell *newCell = (ItemCell *)[self.tableView cellForRowAtIndexPath:newIndexPath];
+        [newCell.textView becomeFirstResponder];
+    }
 }
 
 - (IBAction)doneOrEdit:(id)sender
@@ -300,7 +306,7 @@ static CGFloat const DetailButtonWidth = 40.0f;
     ItemCell *cell = (ItemCell *)[tableView dequeueReusableCellWithIdentifier:@"ItemCell" forIndexPath:indexPath];
     [self configureCheckButtonForCell:cell withItem:_list.items[indexPath.row]];
     [self configureTextForCell:cell withItem:_list.items[indexPath.row]];
-    
+
     cell.accessoryType = UITableViewCellAccessoryNone;
     
     //解决换行时候行往上跳的问题
