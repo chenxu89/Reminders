@@ -178,9 +178,10 @@ static CGFloat const DetailButtonWidth = 40.0f;
         [self.tableView setEditing:YES animated:YES];
         [self.tableView reloadData];
         
-    //finish list edit
+    //finish list edit and delete the selected rows
     }else{
         _isListEditing = NO;
+        [self deleteMultipleRows];
         [self.tableView setEditing:NO animated:YES];
         [self.tableView reloadData];
     }
@@ -205,6 +206,27 @@ static CGFloat const DetailButtonWidth = 40.0f;
         [item toggleChecked];
         [self configureCheckButtonForCell:cell withItem:item];
         [self updateItemsCountLabel];
+    }
+}
+
+- (void)deleteMultipleRows
+{
+    // Delete what the user selected.
+    NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
+    BOOL deleteSpecificRows = selectedRows.count > 0;
+    if (deleteSpecificRows)
+    {
+        // Build an NSIndexSet of all the objects to delete, so they can all be removed at once.
+        NSMutableIndexSet *indicesOfItemsToDelete = [NSMutableIndexSet new];
+        for (NSIndexPath *selectionIndex in selectedRows)
+        {
+            [indicesOfItemsToDelete addIndex:selectionIndex.row];
+        }
+        // Delete the objects from our data model.
+        [_list.items removeObjectsAtIndexes:indicesOfItemsToDelete];
+        
+        // Tell the tableView that we deleted the objects
+        [self.tableView deleteRowsAtIndexPaths:selectedRows withRowAnimation:UITableViewRowAnimationAutomatic];
     }
 }
 
