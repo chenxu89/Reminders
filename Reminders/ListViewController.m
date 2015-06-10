@@ -123,6 +123,9 @@ static CGFloat const DetailButtonWidth = 40.0f;
         CGPoint offset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height );
         [self.tableView setContentOffset:offset animated:YES];
     }
+    
+    //Add a empty area at the bottom of tableview
+    self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, DefaltRowHeight, 0.0);
 }
 
 #pragma mark - update
@@ -265,7 +268,7 @@ static CGFloat const DetailButtonWidth = 40.0f;
     
     if (selectedRows.count == 0)
     {
-        return NSLocalizedString(@"Cancel", @"");
+        return NSLocalizedString(@"Done", @"");
     }
     else
     {
@@ -587,14 +590,14 @@ shouldChangeTextInRange:(NSRange)range
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(self.tableView.contentInset.top, 0.0, kbSize.height + DefaltRowHeight, 0.0);
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height + DefaltRowHeight, 0.0);
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
 }
 
 - (void)keyboardWillHide:(NSNotification*)aNotification
 {
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(self.tableView.contentInset.top, 0.0, 0.0, 0.0);
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, DefaltRowHeight, 0.0);
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
 }
