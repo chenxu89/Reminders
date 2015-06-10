@@ -150,18 +150,18 @@ static CGFloat const DetailButtonWidth = 40.0f;
     if (_list.uncheckedItemsCount > 0) {
         self.itemsCountLabel.text = [NSString stringWithFormat:@"%ld items", (long)_list.uncheckedItemsCount];
     }else{
-        self.itemsCountLabel.text = @"No items";
+        self.itemsCountLabel.text = NSLocalizedString(@"No items", @"");
     }
 }
 
 - (void)updateDoneOrEditButtonTitle
 {
     if (_isItemEditing) {
-        [self.doneOrEditButton setTitle:@"Done" forState:UIControlStateNormal];
+        [self.doneOrEditButton setTitle:NSLocalizedString(@"Done", @"") forState:UIControlStateNormal];
     }else if(_isListEditing){
-        [self.doneOrEditButton setTitle:@"Delete" forState:UIControlStateNormal];
+        [self.doneOrEditButton setTitle:[self updateDeleteButtonTitle] forState:UIControlStateNormal];
     }else{
-        [self.doneOrEditButton setTitle:@"Edit" forState:UIControlStateNormal];
+        [self.doneOrEditButton setTitle:NSLocalizedString(@"Edit", @"") forState:UIControlStateNormal];
     }
 }
 
@@ -230,6 +230,20 @@ static CGFloat const DetailButtonWidth = 40.0f;
     }
 }
 
+- (NSString *)updateDeleteButtonTitle
+{
+    // Update the delete button's title, based on how many items are selected
+    NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
+    
+    if (selectedRows.count == 0)
+    {
+        return NSLocalizedString(@"Cancel", @"");
+    }
+    else
+    {
+        return [NSString stringWithFormat:NSLocalizedString(@"Delete(%d)",@""), selectedRows.count];
+    }
+}
 
 #pragma mark - UITableViewDataSource
 
@@ -335,6 +349,18 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     }
 }
 
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Update the delete button's title based on how many items are selected.
+    [self updateDoneOrEditButtonTitle];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Update the delete button's title based on how many items are selected.
+    [self updateDoneOrEditButtonTitle];
+}
+
 #pragma mark - Swipe to Delete and the “More” button
 
 - (void)tableView:(UITableView *)tableView
@@ -347,13 +373,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 - (NSArray *)tableView:(UITableView *)tableView
 editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewRowAction *moreAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"More" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+    UITableViewRowAction *moreAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:NSLocalizedString(@"More" , @"") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
         // maybe show an action sheet with more options
         [self openItemDetailViewControllerWithIndexPath:indexPath];
     }];
     moreAction.backgroundColor = [UIColor lightGrayColor];
     
-    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Delete"  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:NSLocalizedString(@"Delete" , @"") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
         //delete a row
         [_list.items removeObjectAtIndex:indexPath.row];
         NSArray *indexPaths = @[indexPath];
