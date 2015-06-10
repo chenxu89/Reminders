@@ -23,10 +23,11 @@ static CGFloat const DetailButtonWidth = 40.0f;
 @implementation ListViewController
 {
     List *_list;
-    BOOL _isEditing;
+    BOOL _isItemEditing;
     NSIndexPath *_editingIndexPath;
     CGFloat _editingRowHeight;
     CGFloat _notEditingTextViewWidth;
+    BOOL _isListEditing;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
@@ -153,36 +154,31 @@ static CGFloat const DetailButtonWidth = 40.0f;
 
 - (void)updateDoneOrEditButtonTitle
 {
-    if (_isEditing) {
+    if (_isItemEditing) {
         [self.doneOrEditButton setTitle:@"Done" forState:UIControlStateNormal];
+    }else if(_isListEditing){
+        [self.doneOrEditButton setTitle:@"Cancel" forState:UIControlStateNormal];
     }else{
         [self.doneOrEditButton setTitle:@"Edit" forState:UIControlStateNormal];
     }
 }
 
-- (IBAction)clickCheckButton:(id)sender
-{
-    UIButton *button = (UIButton *)sender;
-    ItemCell *cell = (ItemCell *)button.superview.superview;
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    Item *item = _list.items[indexPath.row];
-    
-    if (!_isEditing) {
-        [item toggleChecked];
-        [self configureCheckButtonForCell:cell withItem:item];
-        [self updateItemsCountLabel];
-    }
-}
-
 - (IBAction)doneOrEdit:(id)sender
 {
-    //finish edit
-    if (_isEditing) {
+    //finish item edit
+    if (_isItemEditing) {
         [self finishEditing];
+        _isItemEditing = NO;
     
-    //begin edit
+    //begin list edit
+    }else if(!_isListEditing){
+        [self.tableView reloadData];
+        _isListEditing = YES;
+        
+    //finish list edit
     }else{
-        _isEditing = YES;
+        [self.tableView reloadData];
+        _isListEditing = NO;
     }
     
     [self updateDoneOrEditButtonTitle];
@@ -194,6 +190,19 @@ static CGFloat const DetailButtonWidth = 40.0f;
     [self.tableView endEditing:YES];
 }
 
+- (IBAction)clickCheckButton:(id)sender
+{
+    UIButton *button = (UIButton *)sender;
+    ItemCell *cell = (ItemCell *)button.superview.superview;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    Item *item = _list.items[indexPath.row];
+    
+    if (!_isItemEditing) {
+        [item toggleChecked];
+        [self configureCheckButtonForCell:cell withItem:item];
+        [self updateItemsCountLabel];
+    }
+}
 
 
 #pragma mark - UITableViewDataSource
@@ -229,6 +238,7 @@ static CGFloat const DetailButtonWidth = 40.0f;
     ItemCell *cell = (ItemCell *)[tableView dequeueReusableCellWithIdentifier:@"ItemCell" forIndexPath:indexPath];
     [self configureCheckButtonForCell:cell withItem:_list.items[indexPath.row]];
     [self configureTextForCell:cell withItem:_list.items[indexPath.row]];
+    
     cell.accessoryType = UITableViewCellAccessoryNone;
     
     //解决换行时候行往上跳的问题
@@ -323,8 +333,8 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
     //the first time editing
-    if (!_isEditing) {
-        _isEditing = YES;
+    if (!_isItemEditing) {
+        _isItemEditing = YES;
         [self updateDoneOrEditButtonTitle];
         _notEditingTextViewWidth = textView.frame.size.width;
     }
@@ -378,7 +388,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
     }
     
     //dynamic height
-    _isEditing = NO;
+    _isItemEditing = NO;
     _editingIndexPath = nil;
     _editingRowHeight = 0.0f;
     
