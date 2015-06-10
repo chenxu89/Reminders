@@ -89,15 +89,6 @@ static CGFloat const DetailButtonWidth = 40.0f;
     _list.uncheckedItemsCount = 1;
     _list.items = [[NSMutableArray alloc] initWithCapacity:10];
     
-    NSUInteger i = 0;
-    Item *item = [[Item alloc] init];
-    item.isChecked = NO;
-    while (i < 15) {
-        item.text = [NSString stringWithFormat:@"text %lu", (unsigned long)i] ;
-        [_list.items addObject:item];
-        i++;
-    }
-    
     Item *item1 = [[Item alloc] init];
     item1.text = @"ifAn assertion is raised if you return nil” means that returning nil instead of a valid UITableViewCell object will crash the app on purpose because you’re doing something you’re not supposed to. An assertion is a special debugging tool that is used to check rpose because you’re doing something you’re not supposed to. An assertion is a special debugging tool that is used to check";
     item1.isChecked = YES;
@@ -139,10 +130,12 @@ static CGFloat const DetailButtonWidth = 40.0f;
 {
     [_list countUncheckedItems];
     
-    if (_list.uncheckedItemsCount > 0) {
-        self.itemsCountLabel.text = [NSString stringWithFormat:@"%ld items", (long)_list.uncheckedItemsCount];
+    if (_list.uncheckedItemsCount == 1){
+        self.itemsCountLabel.text = NSLocalizedString(@"1 item", @"");
+    }else if (_list.uncheckedItemsCount > 1){
+        self.itemsCountLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%ld items", @""), (long)_list.uncheckedItemsCount];
     }else{
-        self.itemsCountLabel.text = NSLocalizedString(@"No items", @"");
+        self.itemsCountLabel.text = NSLocalizedString(@"No item", @"");
     }
 }
 
@@ -190,7 +183,7 @@ static CGFloat const DetailButtonWidth = 40.0f;
         [_list.items addObject:item];
         
         [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-        
+        [self updateItemsCountLabel];
         ItemCell *newCell = (ItemCell *)[self.tableView cellForRowAtIndexPath:newIndexPath];
         [newCell.textView becomeFirstResponder];
     }
@@ -258,6 +251,7 @@ static CGFloat const DetailButtonWidth = 40.0f;
         
         // Tell the tableView that we deleted the objects
         [self.tableView deleteRowsAtIndexPaths:selectedRows withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self updateItemsCountLabel];
     }
 }
 
@@ -435,6 +429,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
         NSArray *indexPaths = @[indexPath];
         [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
         [self updateDoneOrEditButtonTitle];
+        [self updateItemsCountLabel];
     }];
     
     return @[deleteAction, moreAction];
@@ -488,6 +483,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
             //old text is also empty
             [_list.items removeObject:item];
             [self.tableView deleteRowsAtIndexPaths:@[_editingIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+            [self updateItemsCountLabel];
             [self.tableView beginUpdates];
             [self.tableView endUpdates];
         }else{
