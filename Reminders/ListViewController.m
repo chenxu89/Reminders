@@ -253,9 +253,7 @@ static CGFloat const DetailButtonWidth = 40.0f;
     return nil;
 }
 
-//open ItemDetailViewController programmatically
-- (void)tableView:(UITableView *)tableView
-accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+-(void)openItemDetailViewControllerWithIndexPath:(NSIndexPath *)indexPath
 {
     UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"ItemNavigationController"];
     //    ItemDetailViewController *controller = (ItemDetailViewController *)navigationController.topViewController;
@@ -265,6 +263,13 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     //    controller.checklistToEdit = checklist;
     
     [self presentViewController:navigationController animated:YES completion:nil];
+}
+
+
+- (void)tableView:(UITableView *)tableView
+accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    [self openItemDetailViewControllerWithIndexPath:indexPath];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView
@@ -281,15 +286,36 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     }
 }
 
+#pragma mark - Swipe to Delete and the “More” button
 
 - (void)tableView:(UITableView *)tableView
 commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
 forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [_list.items removeObjectAtIndex:indexPath.row];
-    NSArray *indexPaths = @[indexPath];
-    [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    
 }
+
+- (NSArray *)tableView:(UITableView *)tableView
+editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewRowAction *moreAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"More" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+        // maybe show an action sheet with more options
+        [self openItemDetailViewControllerWithIndexPath:indexPath];
+    }];
+    moreAction.backgroundColor = [UIColor lightGrayColor];
+    
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Delete"  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+        //delete a row
+        [_list.items removeObjectAtIndex:indexPath.row];
+        NSArray *indexPaths = @[indexPath];
+        [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    }];
+    
+    return @[deleteAction, moreAction];
+}
+
+
+
 
 #pragma mark - UITextViewDelegate
 
