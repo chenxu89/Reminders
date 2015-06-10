@@ -88,7 +88,7 @@ static CGFloat const DetailButtonWidth = 40.0f;
     _list.items = [[NSMutableArray alloc] initWithCapacity:10];
     
     Item *item1 = [[Item alloc] init];
-    item1.text = @"text1";
+    item1.text = @"text1 assertion is raise";
     item1.isChecked = NO;
     Item *item2 = [[Item alloc] init];
     item2.text = @"ifAn assertion is raised if you return nil” means that returning nil instead of a valid UITableViewCell object will crash the app on purpose because you’re doing something you’re not supposed to. An assertion is a special debugging tool that is used to check rpose because you’re doing something you’re not supposed to. An assertion is a special debugging tool that is used to check";
@@ -166,6 +166,14 @@ static CGFloat const DetailButtonWidth = 40.0f;
     }else{
         [self.doneOrEditButton setTitle:NSLocalizedString(@"Edit", @"") forState:UIControlStateNormal];
     }
+    
+    // in not editing status, Disable the edit button if there's nothing to edit.
+    if (!_isListEditing && [_list.items count] == 0) {
+        self.doneOrEditButton.enabled = NO;
+    }else{
+        self.doneOrEditButton.enabled = YES;
+    }
+
 }
 
 - (IBAction)doneOrEdit:(id)sender
@@ -387,6 +395,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
         [_list.items removeObjectAtIndex:indexPath.row];
         NSArray *indexPaths = @[indexPath];
         [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self updateDoneOrEditButtonTitle];
     }];
     
     return @[deleteAction, moreAction];
