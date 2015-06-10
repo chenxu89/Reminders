@@ -115,6 +115,12 @@ static CGFloat const DetailButtonWidth = 40.0f;
     
     //in editing row status, change the left button from delete to select
     [self.tableView setAllowsMultipleSelectionDuringEditing:YES];
+    
+    //scroll to the bottom of a UITableView before the view appears
+    if (self.tableView.contentSize.height > self.tableView.frame.size.height) {
+        CGPoint offset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height );
+        [self.tableView setContentOffset:offset animated:YES];
+    }
 }
 
 - (void)insertOneRow:(UIGestureRecognizer *)gestureRecognizer
