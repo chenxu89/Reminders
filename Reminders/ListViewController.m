@@ -541,9 +541,9 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
     cell.accessoryType = UITableViewCellAccessoryNone;
     Item *item = _list.items[_editingIndexPath.row];
     
-    if ([cell.textView.text isEqualToString:@""]) {
+    if ([textView.text length] == 0) {
         //new text is empty
-        if ([item.text isEqualToString:@""]) {
+        if ([textView.text length] == 0) {
             //old text is also empty
             [_list.items removeObject:item];
             [self.tableView deleteRowsAtIndexPaths:@[_editingIndexPath] withRowAnimation:UITableViewRowAnimationNone];
@@ -556,9 +556,9 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
         }
     }else{
         //new text is not empty
-        if (![cell.textView.text isEqualToString:item.text]) {
+        if (![textView.text isEqualToString:item.text]) {
             //new text is not equal to old text
-            item.text = cell.textView.text;
+            item.text = textView.text;
             [self.tableView reloadRowsAtIndexPaths:@[_editingIndexPath] withRowAnimation:UITableViewRowAnimationNone];
         }
     }
