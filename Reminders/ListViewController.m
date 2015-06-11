@@ -172,12 +172,28 @@ static CGFloat const DetailButtonWidth = 40.0f;
     }else{
         self.doneOrEditButton.enabled = YES;
     }
+}
 
+- (NSString *)updateDeleteButtonTitle
+{
+    // Update the delete button's title, based on how many items are selected
+    NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
+    
+    if (selectedRows.count == 0)
+    {
+        return NSLocalizedString(@"Done", @"");
+    }
+    else
+    {
+        return [NSString stringWithFormat:NSLocalizedString(@"Delete(%d)",@""), selectedRows.count];
+    }
 }
 
 - (void)updateCompletedBarButtonTitle
 {
-    if (_isCompletedItemsHidden) {
+    if (_isItemEditing || _isListEditing) {
+        self.completedBarButton.title = @"";
+    }else if(_isCompletedItemsHidden) {
         self.completedBarButton.title = NSLocalizedString(@"Show completed", @"");
     }else{
         self.completedBarButton.title = NSLocalizedString(@"Hide completed", @"");
@@ -237,6 +253,7 @@ static CGFloat const DetailButtonWidth = 40.0f;
     }
     
     [self updateDoneOrEditButtonTitle];
+    [self updateCompletedBarButtonTitle];
 }
 
 - (void)finishEditing
@@ -281,29 +298,17 @@ static CGFloat const DetailButtonWidth = 40.0f;
     }
 }
 
-- (NSString *)updateDeleteButtonTitle
-{
-    // Update the delete button's title, based on how many items are selected
-    NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
-    
-    if (selectedRows.count == 0)
-    {
-        return NSLocalizedString(@"Done", @"");
-    }
-    else
-    {
-        return [NSString stringWithFormat:NSLocalizedString(@"Delete(%d)",@""), selectedRows.count];
-    }
-}
-
 - (IBAction)hideOrShowCompletedItems:(id)sender
 {
-    if (_isCompletedItemsHidden) {
-        _isCompletedItemsHidden = NO;
-    }else{
-        _isCompletedItemsHidden = YES;
+    if (!_isItemEditing && !_isListEditing) {
+        if (_isCompletedItemsHidden) {
+            _isCompletedItemsHidden = NO;
+        }else{
+            _isCompletedItemsHidden = YES;
+        }
+        [self updateCompletedBarButtonTitle];
+        [self.tableView reloadData];
     }
-    [self updateCompletedBarButtonTitle];
 }
 
 
@@ -319,6 +324,12 @@ static CGFloat const DetailButtonWidth = 40.0f;
         [cell.checkButton setImage:[UIImage imageNamed:@"RadioButton"] forState:UIControlStateNormal];
         cell.textView.textColor = [UIColor blackColor];
     }
+    
+//    if (_isCompletedItemsHidden) {
+//        cell.checkButton.hidden = YES;
+//    }else{
+//        cell.checkButton.hidden = NO;
+//    }
     
     //the distance between button edge and image edge
     cell.checkButton.imageEdgeInsets = UIEdgeInsetsMake(8, 8, 8, 8);
@@ -340,13 +351,11 @@ static CGFloat const DetailButtonWidth = 40.0f;
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ItemCell *cell = (ItemCell *)[tableView dequeueReusableCellWithIdentifier:@"ItemCell" forIndexPath:indexPath];
-    [self configureCheckButtonForCell:cell withItem:_list.items[indexPath.row]];
-    [self configureTextForCell:cell withItem:_list.items[indexPath.row]];
-
-    cell.accessoryType = UITableViewCellAccessoryNone;
+    Item *item = _list.items[indexPath.row];
     
-    //解决换行时候行往上跳的问题
-    cell.textView.scrollEnabled = NO;
+    [self configureCheckButtonForCell:cell withItem:item];
+    [self configureTextForCell:cell withItem:item];
+    cell.accessoryType = UITableViewCellAccessoryNone;
     
     if (_isListEditing) {
         cell.selectionStyle = UITableViewCellSelectionStyleDefault;
@@ -361,12 +370,21 @@ static CGFloat const DetailButtonWidth = 40.0f;
         cell.showsReorderControl = NO;
     }
     
+    //解决换行时候行往上跳的问题
+    cell.textView.scrollEnabled = NO;
+    
     cell.textView.delegate = self;
     
     //Ellipsis at the end of UITextView for truncate text
     cell.textView.textContainer.maximumNumberOfLines = 0;
     cell.textView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
     
+    //hide cell
+    if (_isCompletedItemsHidden && item.isChecked) {
+        cell.hidden = YES;
+    }else{
+        cell.hidden = NO;
+    }
     
     
     return cell;
@@ -413,6 +431,13 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
             return _editingRowHeight;
         }
     }else{
+        //hide completed rows
+        if (_isCompletedItemsHidden){
+            Item *item = _list.items[indexPath.row];
+            if (item.isChecked) {
+                return 0.0f;
+            }
+        }
         return DefaltRowHeight;
     }
 }
@@ -506,7 +531,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
     
     [self performSelector:@selector(setCursorToEndOfTextView:) withObject:textView afterDelay:0.01];
     
-
+    [self updateCompletedBarButtonTitle];
 }
 
 //change from one row editing to another row or finish editing
@@ -554,6 +579,8 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
     //Ellipsis at the end of UITextView for truncate text
     textView.textContainer.maximumNumberOfLines = 0;
     textView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
+    
+    [self updateCompletedBarButtonTitle];
 }
 
 - (BOOL)textView:(UITextView *)textView
