@@ -22,11 +22,11 @@ static CGFloat const DetailButtonWidth = 40.0f;
 
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;
 @property (nonatomic, weak) IBOutlet UILabel *itemsCountLabel;
-@property (nonatomic, weak) IBOutlet UIButton *doneOrEditButton;
+@property (nonatomic, weak) IBOutlet UIButton *menuButton;
 
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *completedBarButton;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *ListsBarButton;
-@property (nonatomic, weak) IBOutlet UIBarButtonItem *picBarButton;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *doneOrEditButton;
 
 - (IBAction)clickCheckButton:(id)sender;
 - (IBAction)doneOrEdit:(id)sender;
@@ -169,26 +169,26 @@ static CGFloat const DetailButtonWidth = 40.0f;
 - (void)updateDoneOrEditButtonTitle
 {
     if (_isItemEditing) {
-        [self.doneOrEditButton setTitle:NSLocalizedString(@"Done", @"") forState:UIControlStateNormal];
-        [self.doneOrEditButton setTitleColor:self.doneOrEditButton.tintColor forState:UIControlStateNormal];
+        self.doneOrEditButton.title = NSLocalizedString(@"Done", @"");
+        self.doneOrEditButton.tintColor = self.view.tintColor;
     }else if(_isListEditing){
         // Update the delete button's title, based on how many items are selected
         NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
         if (selectedRows.count == 0)
         {
-            [self.doneOrEditButton setTitle:NSLocalizedString(@"Done", @"") forState:UIControlStateNormal];;
-            [self.doneOrEditButton setTitleColor:self.doneOrEditButton.tintColor forState:UIControlStateNormal];
+            self.doneOrEditButton.title = NSLocalizedString(@"Done", @"");
+            self.doneOrEditButton.tintColor = self.view.tintColor;
         }
         else
         {
             NSString *title = [NSString stringWithFormat:NSLocalizedString(@"Delete(%d)",@""), selectedRows.count];
-            [self.doneOrEditButton setTitle:title forState:UIControlStateNormal];
-            [self.doneOrEditButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+            self.doneOrEditButton.title = title;
+            self.doneOrEditButton.tintColor = [UIColor redColor];
         }
 
     }else{
-        [self.doneOrEditButton setTitle:NSLocalizedString(@"Edit", @"") forState:UIControlStateNormal];
-        [self.doneOrEditButton setTitleColor:self.doneOrEditButton.tintColor forState:UIControlStateNormal];
+        self.doneOrEditButton.title = NSLocalizedString(@"Edit", @"");
+        self.doneOrEditButton.tintColor = self.view.tintColor;
     }
     
     // in not editing status, Disable the edit button if there's nothing to edit.

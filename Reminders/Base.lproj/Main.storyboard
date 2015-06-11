@@ -33,14 +33,11 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sfK-Yv-k2c">
-                                        <rect key="frame" x="213" y="41" width="99" height="33"/>
+                                        <rect key="frame" x="269" y="41" width="43" height="33"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <state key="normal" title="IsListEditting">
+                                        <state key="normal" title="menu">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="doneOrEdit:" destination="Ld5-by-czX" eventType="touchUpInside" id="SWl-pd-7b7"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -65,7 +62,11 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="3WR-Ky-dCi"/>
-                                    <barButtonItem tag="2003" title="Pic" id="YLy-qJ-Pjq"/>
+                                    <barButtonItem tag="2003" title="DoneOfEdit" id="YLy-qJ-Pjq">
+                                        <connections>
+                                            <action selector="doneOrEdit:" destination="Ld5-by-czX" id="rqw-lp-5ux"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem width="13" style="plain" systemItem="fixedSpace" id="UN2-f3-YZ0"/>
                                 </items>
                             </toolbar>
@@ -110,11 +111,11 @@
                     <connections>
                         <outlet property="ListsBarButton" destination="nQm-Hi-bJB" id="Nw2-ZC-svp"/>
                         <outlet property="completedBarButton" destination="zaE-z7-CUD" id="1Qd-q2-c5f"/>
-                        <outlet property="doneOrEditButton" destination="sfK-Yv-k2c" id="kWP-xU-xEv"/>
+                        <outlet property="doneOrEditButton" destination="YLy-qJ-Pjq" id="3Yy-eJ-Jc1"/>
                         <outlet property="headView" destination="dCb-RB-cmv" id="nLX-L4-37a"/>
                         <outlet property="itemsCountLabel" destination="4yY-Hj-Bz7" id="6ZW-3V-GBS"/>
+                        <outlet property="menuButton" destination="sfK-Yv-k2c" id="Gxl-l0-7as"/>
                         <outlet property="nameLabel" destination="kSr-hw-XN2" id="uMh-aH-MUS"/>
-                        <outlet property="picBarButton" destination="YLy-qJ-Pjq" id="fSg-xC-6Zh"/>
                         <outlet property="tableView" destination="3fg-kj-BUh" id="XWD-44-3y3"/>
                     </connections>
                 </viewController>
