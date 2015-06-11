@@ -15,8 +15,17 @@
 static CGFloat const DefaltRowHeight = 44.0f;
 static CGFloat const DetailButtonWidth = 40.0f;
 
-@interface ListViewController ()
+@interface ListViewController () <UITableViewDataSource, UITableViewDelegate,UITextViewDelegate>
 
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
+@property (nonatomic, weak) IBOutlet UIView *headView;
+
+@property (nonatomic, weak) IBOutlet UILabel *nameLabel;
+@property (nonatomic, weak) IBOutlet UILabel *itemsCountLabel;
+@property (nonatomic, weak) IBOutlet UIButton *doneOrEditButton;
+
+- (IBAction)clickCheckButton:(id)sender;
+- (IBAction)doneOrEdit:(id)sender;
 
 @end
 
