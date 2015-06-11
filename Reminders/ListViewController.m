@@ -24,8 +24,13 @@ static CGFloat const DetailButtonWidth = 40.0f;
 @property (nonatomic, weak) IBOutlet UILabel *itemsCountLabel;
 @property (nonatomic, weak) IBOutlet UIButton *doneOrEditButton;
 
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *completedBarButton;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *ListsBarButton;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *picBarButton;
+
 - (IBAction)clickCheckButton:(id)sender;
 - (IBAction)doneOrEdit:(id)sender;
+- (IBAction)hideOrShowCompletedItems:(id)sender;
 
 @end
 
@@ -37,6 +42,7 @@ static CGFloat const DetailButtonWidth = 40.0f;
     CGFloat _editingRowHeight;
     CGFloat _notEditingTextViewWidth;
     BOOL _isListEditing;
+    BOOL _isCompletedItemsHidden;
 }
 
 #pragma mark - init and load
@@ -126,9 +132,11 @@ static CGFloat const DetailButtonWidth = 40.0f;
     
     //Add a empty area at the bottom of tableview
     self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, DefaltRowHeight, 0.0);
+    
+    [self updateCompletedBarButtonTitle];
 }
 
-#pragma mark - update
+#pragma mark - update label and button title
 
 - (void)updateNameLabel
 {
@@ -165,6 +173,15 @@ static CGFloat const DetailButtonWidth = 40.0f;
         self.doneOrEditButton.enabled = YES;
     }
 
+}
+
+- (void)updateCompletedBarButtonTitle
+{
+    if (_isCompletedItemsHidden) {
+        self.completedBarButton.title = NSLocalizedString(@"Show completed", @"");
+    }else{
+        self.completedBarButton.title = NSLocalizedString(@"Hide completed", @"");
+    }
 }
 
 #pragma mark - Action
@@ -278,6 +295,17 @@ static CGFloat const DetailButtonWidth = 40.0f;
         return [NSString stringWithFormat:NSLocalizedString(@"Delete(%d)",@""), selectedRows.count];
     }
 }
+
+- (IBAction)hideOrShowCompletedItems:(id)sender
+{
+    if (_isCompletedItemsHidden) {
+        _isCompletedItemsHidden = NO;
+    }else{
+        _isCompletedItemsHidden = YES;
+    }
+    [self updateCompletedBarButtonTitle];
+}
+
 
 #pragma mark - UITableViewDataSource
 
