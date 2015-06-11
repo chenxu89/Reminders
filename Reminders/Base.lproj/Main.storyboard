@@ -17,14 +17,6 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="3fg-kj-BUh">
-                                <rect key="frame" x="0.0" y="100" width="320" height="468"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="Ld5-by-czX" id="xA8-om-XmZ"/>
-                                    <outlet property="delegate" destination="Ld5-by-czX" id="7li-4j-WLS"/>
-                                </connections>
-                            </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dCb-RB-cmv" userLabel="headView">
                                 <rect key="frame" x="0.0" y="20" width="320" height="80"/>
                                 <subviews>
@@ -61,25 +53,51 @@
                                     <constraint firstAttribute="bottom" secondItem="4yY-Hj-Bz7" secondAttribute="bottom" id="n4C-sq-wge"/>
                                 </constraints>
                             </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AEi-Ou-wo4">
+                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                                <items>
+                                    <barButtonItem width="13" style="plain" systemItem="fixedSpace" id="96h-fd-boR"/>
+                                    <barButtonItem tag="2001" title="Lists" id="nQm-Hi-bJB"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="4Xy-KR-A6U"/>
+                                    <barButtonItem tag="2002" title="Hide" id="zaE-z7-CUD"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="3WR-Ky-dCi"/>
+                                    <barButtonItem tag="2003" title="Pic" id="YLy-qJ-Pjq"/>
+                                    <barButtonItem width="13" style="plain" systemItem="fixedSpace" id="UN2-f3-YZ0"/>
+                                </items>
+                            </toolbar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="3fg-kj-BUh">
+                                <rect key="frame" x="0.0" y="100" width="320" height="424"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Ld5-by-czX" id="xA8-om-XmZ"/>
+                                    <outlet property="delegate" destination="Ld5-by-czX" id="7li-4j-WLS"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="3fg-kj-BUh" secondAttribute="trailing" constant="-16" id="6RO-U2-HAg"/>
                             <constraint firstAttribute="trailingMargin" secondItem="dCb-RB-cmv" secondAttribute="trailing" constant="-16" id="806-nT-WdF"/>
                             <constraint firstItem="3fg-kj-BUh" firstAttribute="top" secondItem="dCb-RB-cmv" secondAttribute="bottom" id="GSv-w5-SCS"/>
+                            <constraint firstItem="AEi-Ou-wo4" firstAttribute="top" secondItem="3fg-kj-BUh" secondAttribute="bottom" id="Gt8-5m-Eyt"/>
                             <constraint firstItem="dCb-RB-cmv" firstAttribute="leading" secondItem="FSr-xb-90C" secondAttribute="leadingMargin" constant="-16" id="H04-eP-xWv"/>
+                            <constraint firstItem="AEi-Ou-wo4" firstAttribute="top" secondItem="3fg-kj-BUh" secondAttribute="bottom" id="K0d-pU-HXc"/>
                             <constraint firstItem="dCb-RB-cmv" firstAttribute="leading" secondItem="FSr-xb-90C" secondAttribute="leadingMargin" constant="-16" id="SX4-c5-q2V"/>
                             <constraint firstItem="3fg-kj-BUh" firstAttribute="top" secondItem="sIh-zd-Lst" secondAttribute="bottom" constant="80" id="WB3-a8-rmF"/>
                             <constraint firstItem="NCP-Sg-pTJ" firstAttribute="top" secondItem="3fg-kj-BUh" secondAttribute="bottom" id="WNo-3c-evG"/>
                             <constraint firstItem="3fg-kj-BUh" firstAttribute="leading" secondItem="FSr-xb-90C" secondAttribute="leadingMargin" constant="-16" id="cbf-ii-cCF"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="AEi-Ou-wo4" secondAttribute="trailing" constant="-16" id="edp-Hd-qAK"/>
                             <constraint firstItem="dCb-RB-cmv" firstAttribute="top" secondItem="sIh-zd-Lst" secondAttribute="bottom" id="ekt-0y-ccN"/>
                             <constraint firstItem="3fg-kj-BUh" firstAttribute="top" secondItem="dCb-RB-cmv" secondAttribute="bottom" id="hOr-jp-KNO"/>
+                            <constraint firstItem="NCP-Sg-pTJ" firstAttribute="top" secondItem="AEi-Ou-wo4" secondAttribute="bottom" id="kiF-29-DT3"/>
+                            <constraint firstItem="AEi-Ou-wo4" firstAttribute="leading" secondItem="FSr-xb-90C" secondAttribute="leadingMargin" constant="-16" id="q9M-My-FHr"/>
                             <constraint firstItem="dCb-RB-cmv" firstAttribute="top" secondItem="FSr-xb-90C" secondAttribute="topMargin" constant="20" id="rMV-4A-SJk"/>
                             <constraint firstAttribute="trailingMargin" secondItem="dCb-RB-cmv" secondAttribute="trailing" constant="-16" id="zeK-yA-H73"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="ekt-0y-ccN"/>
+                                <exclude reference="WNo-3c-evG"/>
                             </mask>
                         </variation>
                     </view>
