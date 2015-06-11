@@ -277,10 +277,8 @@ static CGFloat const DetailButtonWidth = 40.0f;
 {
     if (item.isChecked) {
         [cell.checkButton setImage:[UIImage imageNamed:@"RadioButtonSelected"] forState:UIControlStateNormal];
-        cell.textView.textColor = [UIColor grayColor];
     }else{
         [cell.checkButton setImage:[UIImage imageNamed:@"RadioButton"] forState:UIControlStateNormal];
-        cell.textView.textColor = [UIColor blackColor];
     }
     
     //the distance between button edge and image edge
