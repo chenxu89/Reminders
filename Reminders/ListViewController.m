@@ -106,8 +106,18 @@ static CGFloat const DetailButtonWidth = 40.0f;
     
     Item *item1 = [[Item alloc] init];
     item1.text = @"ifAn assertion is raised if you return nil” means that returning nil instead of a valid UITableViewCell object will crash the app on purpose because you’re doing something you’re not supposed to. An assertion is a special debugging tool that is used to check rpose because you’re doing something you’re not supposed to. An assertion is a special debugging tool that is used to check";
-    item1.isChecked = YES;
+    item1.isChecked = NO;
     [_list.items addObject:item1];
+    
+    Item *item3 = [[Item alloc] init];
+    item3.text = @"ifAn is raised if you retur";
+    item3.isChecked = NO;
+    [_list.items addObject:item3];
+    
+    Item *item2 = [[Item alloc] init];
+    item2.text = @"ifAn assertion is raised if you return nil” means that returning nil instead of a valid UITableViewCell object will crash the app on purpose because you’re doing something you’re not supposed to. An assertion is a special debugging tool that is used to check rpose because you’re doing something you’re not supposed to. An assertion is a special debugging tool that is used to check";
+    item2.isChecked = YES;
+    [_list.items addObject:item2];
     
     [self updateNameLabel];
     [self updateItemsCountLabel];
@@ -160,10 +170,25 @@ static CGFloat const DetailButtonWidth = 40.0f;
 {
     if (_isItemEditing) {
         [self.doneOrEditButton setTitle:NSLocalizedString(@"Done", @"") forState:UIControlStateNormal];
+        [self.doneOrEditButton setTitleColor:self.doneOrEditButton.tintColor forState:UIControlStateNormal];
     }else if(_isListEditing){
-        [self.doneOrEditButton setTitle:[self updateDeleteButtonTitle] forState:UIControlStateNormal];
+        // Update the delete button's title, based on how many items are selected
+        NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
+        if (selectedRows.count == 0)
+        {
+            [self.doneOrEditButton setTitle:NSLocalizedString(@"Done", @"") forState:UIControlStateNormal];;
+            [self.doneOrEditButton setTitleColor:self.doneOrEditButton.tintColor forState:UIControlStateNormal];
+        }
+        else
+        {
+            NSString *title = [NSString stringWithFormat:NSLocalizedString(@"Delete(%d)",@""), selectedRows.count];
+            [self.doneOrEditButton setTitle:title forState:UIControlStateNormal];
+            [self.doneOrEditButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        }
+
     }else{
         [self.doneOrEditButton setTitle:NSLocalizedString(@"Edit", @"") forState:UIControlStateNormal];
+        [self.doneOrEditButton setTitleColor:self.doneOrEditButton.tintColor forState:UIControlStateNormal];
     }
     
     // in not editing status, Disable the edit button if there's nothing to edit.
@@ -375,7 +400,7 @@ static CGFloat const DetailButtonWidth = 40.0f;
     
     cell.textView.delegate = self;
     
-    //Ellipsis at the end of UITextView for truncate text
+    //Ellipsis at the end of UITextView for truncate text, 省略号
     cell.textView.textContainer.maximumNumberOfLines = 0;
     cell.textView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
     
@@ -652,7 +677,7 @@ shouldChangeTextInRange:(NSRange)range
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height + DefaltRowHeight, 0.0);
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
 }
