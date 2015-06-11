@@ -10,6 +10,8 @@
 
 @interface ItemDetailViewController ()
 
+- (IBAction)done:(id)sender;
+
 @end
 
 @implementation ItemDetailViewController
@@ -44,7 +46,13 @@
     }else{
         return 1;
     }
-    
+}
+
+#pragma mark - Action
+
+- (IBAction)done:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 /*
