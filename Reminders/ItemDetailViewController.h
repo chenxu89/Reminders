@@ -10,6 +10,8 @@
 
 @interface ItemDetailViewController : UITableViewController
 
+@property (nonatomic, weak) IBOutlet UIImageView *imageView;
+
 - (IBAction)done:(id)sender;
 
 @end
