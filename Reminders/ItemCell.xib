@@ -7,19 +7,13 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" id="KGk-i7-Jjw" customClass="ItemCell">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="ItemCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="100" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pMl-nz-k18">
-                        <rect key="frame" x="43" y="0.0" width="230" height="44"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
-                    </textView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zbK-2p-zQN">
                         <rect key="frame" x="0.0" y="0.0" width="43" height="43"/>
                         <constraints>
@@ -33,18 +27,34 @@
                             <action selector="clickCheckButton:" destination="-2" eventType="touchUpInside" id="4l6-7Q-HXh"/>
                         </connections>
                     </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WBh-y2-AU5">
+                        <rect key="frame" x="275" y="0.0" width="45" height="43"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="45" id="E5q-di-Xcm"/>
+                        </constraints>
+                    </imageView>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="100" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pMl-nz-k18">
+                        <rect key="frame" x="45" y="0.0" width="230" height="44"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                    </textView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="pMl-nz-k18" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="0Rl-Fl-ffQ"/>
                     <constraint firstAttribute="centerY" secondItem="zbK-2p-zQN" secondAttribute="centerY" id="4D7-53-YHJ"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="WBh-y2-AU5" secondAttribute="bottom" constant="-8" id="4T0-Xg-k7B"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="WBh-y2-AU5" secondAttribute="trailing" constant="-8" id="90j-6n-jE3"/>
                     <constraint firstItem="zbK-2p-zQN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="MvW-tg-2n2"/>
                     <constraint firstAttribute="bottomMargin" secondItem="pMl-nz-k18" secondAttribute="bottom" constant="-9" id="Yyr-n3-Sl1"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="pMl-nz-k18" secondAttribute="trailing" constant="-8" id="p4x-SF-osq"/>
-                    <constraint firstItem="pMl-nz-k18" firstAttribute="leading" secondItem="zbK-2p-zQN" secondAttribute="trailing" id="vKh-E5-57z"/>
+                    <constraint firstItem="WBh-y2-AU5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="mTm-3y-Tc9"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="pMl-nz-k18" secondAttribute="trailing" constant="37" id="p4x-SF-osq"/>
+                    <constraint firstItem="pMl-nz-k18" firstAttribute="leading" secondItem="zbK-2p-zQN" secondAttribute="trailing" constant="2" id="vKh-E5-57z"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="checkButton" destination="zbK-2p-zQN" id="h6k-yS-M5w"/>
+                <outlet property="photoImageView" destination="WBh-y2-AU5" id="aRQ-1G-0xa"/>
                 <outlet property="textView" destination="pMl-nz-k18" id="SCf-Ud-R7J"/>
             </connections>
         </tableViewCell>
