@@ -661,8 +661,13 @@ shouldChangeTextInRange:(NSRange)range
     cellFrame.size.height = textView.frame.size.height;
     cell.frame = cellFrame;
     
+    //fix the scoll down and up problem!
+    [UIView setAnimationsEnabled:NO];
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
+    [UIView setAnimationsEnabled:YES];
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
 }
 
 - (void)setCursorToEndOfTextView:(UITextView *)textView
