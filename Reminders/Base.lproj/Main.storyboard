@@ -132,30 +132,6 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
-                            <tableViewSection id="rBz-oC-Bx7">
-                                <cells>
-                                    <tableViewCell tag="2000" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TextCell" id="65H-HM-YdZ">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="65H-HM-YdZ" id="75E-AC-j3c">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1000" contentMode="scaleToFill" scrollEnabled="NO" text="sjajfalfafafaf" translatesAutoresizingMaskIntoConstraints="NO" id="jvR-nM-F4P">
-                                                    <rect key="frame" x="8" y="8" width="304" height="27"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                </textView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="jvR-nM-F4P" firstAttribute="leading" secondItem="75E-AC-j3c" secondAttribute="leadingMargin" id="8F4-o7-JrF"/>
-                                                <constraint firstItem="jvR-nM-F4P" firstAttribute="bottom" secondItem="75E-AC-j3c" secondAttribute="bottomMargin" id="Rv6-Hx-Ug2"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="jvR-nM-F4P" secondAttribute="trailing" id="aOR-SA-t5D"/>
-                                                <constraint firstItem="jvR-nM-F4P" firstAttribute="top" secondItem="75E-AC-j3c" secondAttribute="topMargin" id="lZr-e8-3dA"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection id="9pV-KC-qxM">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="EcA-iW-uKU">
@@ -204,10 +180,10 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zpU-wR-NRf" id="vAX-4Q-Hyx">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uh4-e6-9YB">
-                                                    <rect key="frame" x="15" y="11" width="46" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add photo" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uh4-e6-9YB">
+                                                    <rect key="frame" x="15" y="11" width="81" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="46" id="PVc-28-4Q8"/>
+                                                        <constraint firstAttribute="width" constant="81" id="PVc-28-4Q8"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -246,9 +222,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                    <connections>
-                        <outlet property="textView1" destination="jvR-nM-F4P" id="ZQ3-ea-e2s"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iy8-YN-03s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -8,9 +8,7 @@
 
 #import "ItemDetailViewController.h"
 
-@interface ItemDetailViewController ()<UITextViewDelegate>
-
-@property (nonatomic, weak) IBOutlet UITextView *textView1;
+@interface ItemDetailViewController ()
 
 - (IBAction)done:(id)sender;
 
@@ -23,31 +21,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.tableView.estimatedRowHeight = 44.0;
-    // Automatic dimensions to tell the table view to use dynamic height
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
-    
-    // Disable scrolling inside the text view so we enlarge to fitted size
-    self.textView1.scrollEnabled = NO;
-    self.textView1.delegate = self;
-    
-    self.textView1.text = @"Next create a custom UITableViewCell xib file and setup constraints to layout the UITextView. I have basically just wrapped the UITextView in constraints with zero constant to the container view as seen below. Next  create a custom UITableViewCell xib file and setup constraints to layout the UITextView. I have basically just wrapped the UITextView in constraints with zero constant to the container view as seen ew. I have basically just wrapped the UITextView in constraints with zero constant to the container view as seen ew.asically just wrapped the UITextView in constraints with zero constant to the container view as seen ew. I have basically just wrapped the UITextView in constraints with zero constant to the container view as seen ew.";
-    
-
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    [self.textView1 becomeFirstResponder];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,7 +32,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView
@@ -78,42 +51,6 @@
 #pragma mark - UITableViewDelegate
 
 
-#pragma mark - UITextViewDelegate
-
-- (void)textViewDidChange:(UITextView *)textView
-{
-    CGSize size = textView.bounds.size;
-    CGSize newSize = [textView sizeThatFits:CGSizeMake(size.width, CGFLOAT_MAX)];
-    if (size.height != newSize.height) {
-        [UIView setAnimationsEnabled:NO];
-        [self.tableView beginUpdates];
-        [self.tableView endUpdates];
-        [UIView setAnimationsEnabled:YES];
-        
-        UITableViewCell *cell = (UITableViewCell *)[[self.textView1 superview] superview];
-        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
-    }
-}
-
-
-//#pragma mark - keep keyboard not hidden editing text
-//- (void)keyboardWillShow:(NSNotification*)aNotification
-//{
-//    NSDictionary* info = [aNotification userInfo];
-//    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-//    
-//    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
-//    self.textView1.contentInset = contentInsets;
-//    self.textView1.scrollIndicatorInsets = contentInsets;
-//}
-//
-//- (void)keyboardWillHide:(NSNotification*)aNotification
-//{
-//    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
-//    self.tableView.contentInset = contentInsets;
-//    self.tableView.scrollIndicatorInsets = contentInsets;
-//}
 
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
