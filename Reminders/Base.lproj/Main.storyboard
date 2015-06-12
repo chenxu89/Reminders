@@ -165,22 +165,34 @@
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PgN-s0-uvz">
                                                     <rect key="frame" x="255" y="6" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="rEX-IC-QeH"/>
+                                                    </constraints>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remind me on a day" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sJh-2a-dt6">
                                                     <rect key="frame" x="15" y="0.0" width="159" height="43"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="159" id="pCO-Id-pkL"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="PgN-s0-uvz" secondAttribute="trailing" constant="8" id="3J8-fQ-zaD"/>
-                                                <constraint firstItem="PgN-s0-uvz" firstAttribute="top" secondItem="rak-hd-4ur" secondAttribute="topMargin" constant="-2" id="O7t-4y-Y6b"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="PgN-s0-uvz" secondAttribute="bottom" constant="-2" id="Oh9-RZ-j8q"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="sJh-2a-dt6" secondAttribute="bottom" constant="-8" id="fYr-hQ-7EB"/>
-                                                <constraint firstItem="sJh-2a-dt6" firstAttribute="leading" secondItem="rak-hd-4ur" secondAttribute="leadingMargin" constant="7" id="owT-Kd-Ywj"/>
-                                                <constraint firstItem="sJh-2a-dt6" firstAttribute="top" secondItem="rak-hd-4ur" secondAttribute="topMargin" constant="-8" id="yzk-eU-Efn"/>
+                                                <constraint firstItem="sJh-2a-dt6" firstAttribute="top" secondItem="rak-hd-4ur" secondAttribute="topMargin" constant="-8" id="CdY-Bn-gjK"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="PgN-s0-uvz" secondAttribute="bottom" constant="-2" id="Cje-hx-947"/>
+                                                <constraint firstItem="sJh-2a-dt6" firstAttribute="leading" secondItem="rak-hd-4ur" secondAttribute="leadingMargin" constant="7" id="NBG-FG-QBF"/>
+                                                <constraint firstItem="PgN-s0-uvz" firstAttribute="top" secondItem="rak-hd-4ur" secondAttribute="topMargin" constant="-2" id="VhT-kx-ENV"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="PgN-s0-uvz" secondAttribute="trailing" constant="8" id="YP8-cC-cYB"/>
+                                                <constraint firstItem="PgN-s0-uvz" firstAttribute="top" secondItem="rak-hd-4ur" secondAttribute="topMargin" constant="-2" id="iqq-Ff-zAc"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="sJh-2a-dt6" secondAttribute="bottom" constant="-8" id="jyQ-Zb-WPv"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="VhT-kx-ENV"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -192,25 +204,29 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zpU-wR-NRf" id="vAX-4Q-Hyx">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Mqo-DO-YHq">
-                                                    <rect key="frame" x="239" y="2" width="40" height="40"/>
-                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uh4-e6-9YB">
-                                                    <rect key="frame" x="17" y="11" width="46" height="21"/>
+                                                    <rect key="frame" x="15" y="11" width="46" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="46" id="PVc-28-4Q8"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Mqo-DO-YHq">
+                                                    <rect key="frame" x="239" y="2" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="gAX-k1-LPI"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Mqo-DO-YHq" firstAttribute="trailing" secondItem="vAX-4Q-Hyx" secondAttribute="trailingMargin" id="2dh-g8-9kL"/>
-                                                <constraint firstItem="uh4-e6-9YB" firstAttribute="top" secondItem="vAX-4Q-Hyx" secondAttribute="topMargin" constant="3" id="58J-2i-dqo"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="uh4-e6-9YB" secondAttribute="bottom" constant="3" id="6Ok-5j-xHL"/>
-                                                <constraint firstItem="uh4-e6-9YB" firstAttribute="leading" secondItem="vAX-4Q-Hyx" secondAttribute="leadingMargin" constant="9" id="7RN-D3-PJy"/>
-                                                <constraint firstItem="Mqo-DO-YHq" firstAttribute="top" secondItem="vAX-4Q-Hyx" secondAttribute="topMargin" constant="-6" id="D3A-SG-BcS"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="Mqo-DO-YHq" secondAttribute="bottom" constant="-7" id="ENr-tc-aXB"/>
-                                                <constraint firstItem="Mqo-DO-YHq" firstAttribute="leading" secondItem="uh4-e6-9YB" secondAttribute="trailing" constant="176" id="Qy2-G1-Tez"/>
-                                                <constraint firstItem="Mqo-DO-YHq" firstAttribute="leading" secondItem="uh4-e6-9YB" secondAttribute="trailing" constant="176" id="sTO-6K-6WG"/>
+                                                <constraint firstItem="Mqo-DO-YHq" firstAttribute="trailing" secondItem="vAX-4Q-Hyx" secondAttribute="trailingMargin" id="H2d-Iz-uS6"/>
+                                                <constraint firstItem="uh4-e6-9YB" firstAttribute="leading" secondItem="vAX-4Q-Hyx" secondAttribute="leadingMargin" constant="7" id="If1-0E-tSj"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Mqo-DO-YHq" secondAttribute="bottom" constant="-7" id="JaL-o6-8Tq"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="uh4-e6-9YB" secondAttribute="bottom" constant="3" id="LPe-fh-hlR"/>
+                                                <constraint firstItem="uh4-e6-9YB" firstAttribute="top" secondItem="vAX-4Q-Hyx" secondAttribute="topMargin" constant="3" id="Pry-Px-YDQ"/>
+                                                <constraint firstItem="Mqo-DO-YHq" firstAttribute="top" secondItem="vAX-4Q-Hyx" secondAttribute="topMargin" constant="-6" id="qT0-Wk-tZv"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
