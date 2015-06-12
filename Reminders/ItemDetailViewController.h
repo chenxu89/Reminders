@@ -11,6 +11,7 @@
 @interface ItemDetailViewController : UITableViewController
 
 @property (nonatomic, weak) IBOutlet UIImageView *imageView;
+@property (nonatomic, assign) BOOL allowEditPhoto;
 
 - (IBAction)done:(id)sender;
 

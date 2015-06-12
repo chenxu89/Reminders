@@ -10,6 +10,8 @@
 
 @interface ItemDetailViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
+@property (weak, nonatomic) IBOutlet UISwitch *editPhotoSwitch;
+
 @end
 
 @implementation ItemDetailViewController
@@ -20,6 +22,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.allowEditPhoto = NO;
+    self.editPhotoSwitch.on = self.allowEditPhoto;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,7 +43,7 @@
  numberOfRowsInSection:(NSInteger)section
 {
     if (section == 1) {
-        return 3;
+        return 4;
     }else{
         return 1;
     }
@@ -56,10 +61,10 @@
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 1 && indexPath.row == 0) {
+    if (indexPath.section == 1 && indexPath.row == 1) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         [self takePhoto];
-    }else if(indexPath.section == 1 && indexPath.row == 1) {
+    }else if(indexPath.section == 1 && indexPath.row == 2) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         [self choosePhotoFromLibrary];
     }
@@ -68,7 +73,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 - (CGFloat)tableView:(UITableView *)tableView
 heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 1 && indexPath.row == 2 && self.imageView.hidden) {
+    if (indexPath.section == 1 && indexPath.row == 3 && self.imageView.hidden) {
         return 0.0;
     }else{
         return [super tableView:tableView heightForRowAtIndexPath:indexPath];
@@ -82,7 +87,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
     imagePicker.delegate = self;
-    imagePicker.allowsEditing = YES;
+    imagePicker.allowsEditing = self.editPhotoSwitch.on;
     [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
@@ -91,7 +96,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     imagePicker.delegate = self;
-    imagePicker.allowsEditing = YES;
+    imagePicker.allowsEditing = self.editPhotoSwitch.on;
     [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
@@ -99,7 +104,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.imageView.image = image;
     self.imageView.hidden = NO;
-    //self.imageView.frame = CGRectMake(15, 0, 290, 290);
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -107,7 +111,11 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 - (void)imagePickerController:(UIImagePickerController *)picker
 didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    _image = info[UIImagePickerControllerEditedImage];
+    if (self.editPhotoSwitch.on) {
+        _image = info[UIImagePickerControllerEditedImage];
+    }else{
+        _image = info[UIImagePickerControllerOriginalImage];
+    }
     [self showImage:_image];
     [self.tableView reloadData];
     
