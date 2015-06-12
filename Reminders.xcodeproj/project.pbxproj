@@ -100,6 +100,8 @@
 				2DD74E321B169F78009373AE /* AppDelegate.m */,
 				2DD74E3C1B169F78009373AE /* LaunchScreen.xib */,
 				2DD74E3A1B169F78009373AE /* Images.xcassets */,
+				2DDF9CA91B21D25F005F53BB /* ItemDetailViewController.h */,
+				2DDF9CAA1B21D25F005F53BB /* ItemDetailViewController.m */,
 				2DD74E371B169F78009373AE /* Main.storyboard */,
 				2DD74E5B1B16DDD9009373AE /* ListViewController.h */,
 				2DD74E5C1B16DDD9009373AE /* ListViewController.m */,
@@ -110,8 +112,6 @@
 				2DD51EBC1B17E15700584A51 /* ItemCell.h */,
 				2DD51EBD1B17E15700584A51 /* ItemCell.m */,
 				2DD51EBE1B17E15700584A51 /* ItemCell.xib */,
-				2DDF9CA91B21D25F005F53BB /* ItemDetailViewController.h */,
-				2DDF9CAA1B21D25F005F53BB /* ItemDetailViewController.m */,
 			);
 			path = Reminders;
 			sourceTree = "<group>";
