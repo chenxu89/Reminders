@@ -17,6 +17,7 @@
 @implementation ItemDetailViewController
 {
     UIImage *_image;
+    UIImagePickerController *_imagePicker;
 }
 
 - (void)viewDidLoad
@@ -25,6 +26,21 @@
     
     self.allowEditPhoto = NO;
     self.editPhotoSwitch.on = self.allowEditPhoto;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+// when enter background, shun down the imagePicker.
+- (void)applicationDidEnterBackground
+{
+    if (_imagePicker != nil) {
+        [self dismissViewControllerAnimated:NO completion:nil]; _imagePicker = nil;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -84,20 +100,20 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 
 - (void)takePhoto
 {
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-    imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    imagePicker.delegate = self;
-    imagePicker.allowsEditing = self.editPhotoSwitch.on;
-    [self presentViewController:imagePicker animated:YES completion:nil];
+    _imagePicker = [[UIImagePickerController alloc] init];
+    _imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    _imagePicker.delegate = self;
+    _imagePicker.allowsEditing = self.editPhotoSwitch.on;
+    [self presentViewController:_imagePicker animated:YES completion:nil];
 }
 
 - (void)choosePhotoFromLibrary
 {
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-    imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    imagePicker.delegate = self;
-    imagePicker.allowsEditing = self.editPhotoSwitch.on;
-    [self presentViewController:imagePicker animated:YES completion:nil];
+    _imagePicker = [[UIImagePickerController alloc] init];
+    _imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    _imagePicker.delegate = self;
+    _imagePicker.allowsEditing = self.editPhotoSwitch.on;
+    [self presentViewController:_imagePicker animated:YES completion:nil];
 }
 
 - (void)showImage:(UIImage *)image
@@ -120,11 +136,15 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     [self.tableView reloadData];
     
     [self dismissViewControllerAnimated:YES completion:nil];
+    
+    _imagePicker = nil;
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+    
+    _imagePicker = nil;
 }
 
 @end
