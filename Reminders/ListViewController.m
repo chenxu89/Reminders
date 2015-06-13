@@ -434,23 +434,22 @@ static CGFloat const imageViewWidth = 43.0f;
     }
 }
 
--(void)openItemDetailViewControllerWithIndexPath:(NSIndexPath *)indexPath
+- (void)prepareForSegue:(UIStoryboardSegue *)segue
+                 sender:(id)sender
 {
-    UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"ItemNavigationController"];
+//    UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"ItemNavigationController"];
     //    ItemDetailViewController *controller = (ItemDetailViewController *)navigationController.topViewController;
     //
     //    controller.delegate = self;
     //    Checklist *checklist = self.dataModel.lists[indexPath.row];
     //    controller.checklistToEdit = checklist;
-    
-    [self presentViewController:navigationController animated:YES completion:nil];
 }
-
 
 - (void)tableView:(UITableView *)tableView
 accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-    [self openItemDetailViewControllerWithIndexPath:indexPath];
+    Item *item = _list.items[indexPath.row];
+    [self performSegueWithIdentifier:@"EditItem" sender:item];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView
@@ -515,7 +514,8 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewRowAction *moreAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:NSLocalizedString(@"More" , @"") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
         // maybe show an action sheet with more options
-        [self openItemDetailViewControllerWithIndexPath:indexPath];
+        Item *item = _list.items[indexPath.row];
+        [self performSegueWithIdentifier:@"EditItem" sender:item];
     }];
     moreAction.backgroundColor = [UIColor lightGrayColor];
     

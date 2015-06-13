@@ -117,6 +117,7 @@
                         <outlet property="menuButton" destination="sfK-Yv-k2c" id="Gxl-l0-7as"/>
                         <outlet property="nameLabel" destination="kSr-hw-XN2" id="uMh-aH-MUS"/>
                         <outlet property="tableView" destination="3fg-kj-BUh" id="XWD-44-3y3"/>
+                        <segue destination="FuH-1N-Pyy" kind="presentation" identifier="EditItem" id="7Gh-64-EGn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cO4-uv-O7G" userLabel="First Responder" sceneMemberID="firstResponder"/>

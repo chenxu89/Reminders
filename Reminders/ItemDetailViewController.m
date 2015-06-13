@@ -7,6 +7,7 @@
 //
 
 #import "ItemDetailViewController.h"
+#import "Item.h"
 
 @interface ItemDetailViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -69,6 +70,7 @@
 
 - (IBAction)done:(id)sender
 {
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
