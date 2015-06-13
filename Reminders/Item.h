@@ -7,12 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface Item : NSObject
 
 @property (nonatomic, copy) NSString *text;
 @property (nonatomic, assign) BOOL isChecked;
+@property (nonatomic, retain) NSNumber * photoId;
 
 - (void)toggleChecked;
+
++ (NSInteger)nextPhotoId;
+
+- (BOOL)hasPhoto;
+- (NSString *)photoPath;
+- (UIImage *)photoImage;
 
 @end

@@ -9,6 +9,7 @@
 #import "ItemDetailViewController.h"
 #import "Item.h"
 
+
 @interface ItemDetailViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UISwitch *editPhotoSwitch;
@@ -19,6 +20,7 @@
 {
     UIImage *_image;
     UIImagePickerController *_imagePicker;
+    Item *_item;
 }
 
 - (void)viewDidLoad
@@ -29,6 +31,9 @@
     self.editPhotoSwitch.on = self.allowEditPhoto;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    
+    _item = [[Item alloc] init];
+    _item.photoId = @-1;
 }
 
 - (void)dealloc
@@ -70,7 +75,18 @@
 
 - (IBAction)done:(id)sender
 {
-    
+    if (_image != nil) {
+        if (![_item hasPhoto]) {
+            _item.photoId = @([Item nextPhotoId]);
+        }
+        
+        NSData *data = UIImageJPEGRepresentation(_image, 1.0);
+        NSError *error;
+        if (![data writeToFile:[_item photoPath] options:NSDataWritingAtomic error:&error]) {
+            NSLog(@"Error writing file: %@", error);
+        }
+    }
+
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -140,6 +156,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     [self dismissViewControllerAnimated:YES completion:nil];
     
     _imagePicker = nil;
+    
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
