@@ -14,6 +14,6 @@
 @property (nonatomic, weak) IBOutlet UITextView *textView;
 @property (nonatomic, weak) IBOutlet UIImageView *photoImageView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *checkButtonWidthConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *imageViewWidthConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *photoImageViewWidthConstraint;
 
 @end

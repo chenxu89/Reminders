@@ -14,6 +14,8 @@
 
 static CGFloat const DefaltRowHeight = 44.0f;
 static CGFloat const DetailButtonWidth = 40.0f;
+static CGFloat const checkButtonWidth = 43.0f;
+static CGFloat const imageViewWidth = 43.0f;
 
 @interface ListViewController () <UITableViewDataSource, UITableViewDelegate,UITextViewDelegate>
 
@@ -386,17 +388,17 @@ static CGFloat const DetailButtonWidth = 40.0f;
         cell.selectionStyle = UITableViewCellSelectionStyleDefault;
         //make textview unselectable while cell selectable
         cell.textView.userInteractionEnabled = NO;
-        cell.checkButton.hidden = YES;
         cell.showsReorderControl =YES;  //我们添加一个重新排序控件
         //hide the check button
+        cell.checkButton.hidden = YES;
         cell.checkButtonWidthConstraint.constant = 0.0;
 
     }else{
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.textView.userInteractionEnabled = YES;
-        cell.checkButton.hidden = NO;
         cell.showsReorderControl = NO;
         //show the check button
+        cell.checkButton.hidden = NO;
         cell.checkButtonWidthConstraint.constant = 43.0;
     }
     
@@ -547,10 +549,17 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
     //the first time editing or change editing row
     ItemCell *cell = (ItemCell *)textView.superview.superview;
     cell.accessoryType = UITableViewCellAccessoryDetailButton;
+    
+    //hide checkButton
+    cell.checkButton.hidden = YES;
+    cell.checkButtonWidthConstraint.constant = 0.0;
+    //hide imageView
+    cell.photoImageView.hidden = YES;
+    cell.photoImageViewWidthConstraint.constant = 0.0;
 
     //dynamic height
     _editingIndexPath = [self.tableView indexPathForCell:cell];
-    CGFloat fixedWidth = _notEditingTextViewWidth - DetailButtonWidth;
+    CGFloat fixedWidth = _notEditingTextViewWidth - DetailButtonWidth + checkButtonWidth + imageViewWidth;
     CGSize newSize = [textView sizeThatFits:CGSizeMake(fixedWidth, CGFLOAT_MAX)];
     CGFloat newHeight = newSize.height;
     if (newSize.height > DefaltRowHeight) {
@@ -569,6 +578,13 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ItemCell *cell = (ItemCell *)textView.superview.superview;
     cell.accessoryType = UITableViewCellAccessoryNone;
+    
+    //show checkButton
+    cell.checkButton.hidden = NO;
+    cell.checkButtonWidthConstraint.constant = checkButtonWidth;
+    //show imageView
+    cell.photoImageView.hidden = NO;
+    cell.photoImageViewWidthConstraint.constant = imageViewWidth;
 
     Item *item = _list.items[_editingIndexPath.row];
     
@@ -633,7 +649,7 @@ shouldChangeTextInRange:(NSRange)range
 - (void)textViewDidChange:(UITextView *)textView
 {
     //dynamic height
-    CGFloat fixedWidth = _notEditingTextViewWidth - DetailButtonWidth;
+    CGFloat fixedWidth = _notEditingTextViewWidth - DetailButtonWidth + checkButtonWidth + imageViewWidth;
     CGFloat oldHeight = textView.frame.size.height;
     CGSize newSize = [textView sizeThatFits:CGSizeMake(fixedWidth, CGFLOAT_MAX)];
     CGFloat newHeight = newSize.height;
