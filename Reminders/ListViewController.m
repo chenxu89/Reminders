@@ -399,7 +399,7 @@ static CGFloat const imageViewWidth = 43.0f;
         cell.showsReorderControl = NO;
         //show the check button
         cell.checkButton.hidden = NO;
-        cell.checkButtonWidthConstraint.constant = 43.0;
+        cell.checkButtonWidthConstraint.constant = checkButtonWidth;
     }
     
     //解决换行时候行往上跳的问题
@@ -550,16 +550,13 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
     ItemCell *cell = (ItemCell *)textView.superview.superview;
     cell.accessoryType = UITableViewCellAccessoryDetailButton;
     
-    //hide checkButton
-    cell.checkButton.hidden = YES;
-    cell.checkButtonWidthConstraint.constant = 0.0;
     //hide imageView
     cell.photoImageView.hidden = YES;
     cell.photoImageViewWidthConstraint.constant = 0.0;
 
     //dynamic height
     _editingIndexPath = [self.tableView indexPathForCell:cell];
-    CGFloat fixedWidth = _notEditingTextViewWidth - DetailButtonWidth + checkButtonWidth + imageViewWidth;
+    CGFloat fixedWidth = _notEditingTextViewWidth - DetailButtonWidth + imageViewWidth;
     CGSize newSize = [textView sizeThatFits:CGSizeMake(fixedWidth, CGFLOAT_MAX)];
     CGFloat newHeight = newSize.height;
     if (newSize.height > DefaltRowHeight) {
@@ -579,9 +576,6 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
     ItemCell *cell = (ItemCell *)textView.superview.superview;
     cell.accessoryType = UITableViewCellAccessoryNone;
     
-    //show checkButton
-    cell.checkButton.hidden = NO;
-    cell.checkButtonWidthConstraint.constant = checkButtonWidth;
     //show imageView
     cell.photoImageView.hidden = NO;
     cell.photoImageViewWidthConstraint.constant = imageViewWidth;
@@ -649,7 +643,7 @@ shouldChangeTextInRange:(NSRange)range
 - (void)textViewDidChange:(UITextView *)textView
 {
     //dynamic height
-    CGFloat fixedWidth = _notEditingTextViewWidth - DetailButtonWidth + checkButtonWidth + imageViewWidth;
+    CGFloat fixedWidth = _notEditingTextViewWidth - DetailButtonWidth + imageViewWidth;
     CGFloat oldHeight = textView.frame.size.height;
     CGSize newSize = [textView sizeThatFits:CGSizeMake(fixedWidth, CGFLOAT_MAX)];
     CGFloat newHeight = newSize.height;
