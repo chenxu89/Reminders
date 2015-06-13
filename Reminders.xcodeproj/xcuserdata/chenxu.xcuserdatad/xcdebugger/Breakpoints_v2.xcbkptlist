@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Reminders/ListViewController.m"
-            timestampString = "455853202.059269"
+            timestampString = "455854356.950715"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "768"
-            endingLineNumber = "768">
+            startingLineNumber = "764"
+            endingLineNumber = "764">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -24,12 +24,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Reminders/ListViewController.m"
-            timestampString = "455851765.496896"
+            timestampString = "455854356.950715"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "480"
-            endingLineNumber = "480"
-            landmarkName = "-tableView:didDeselectRowAtIndexPath:"
+            startingLineNumber = "482"
+            endingLineNumber = "482"
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
