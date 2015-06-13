@@ -13,6 +13,7 @@
 @property (nonatomic, weak) IBOutlet UIButton *checkButton;
 @property (nonatomic, weak) IBOutlet UITextView *textView;
 @property (nonatomic, weak) IBOutlet UIImageView *photoImageView;
-
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *checkButtonWidthConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *imageViewWidthConstraint;
 
 @end

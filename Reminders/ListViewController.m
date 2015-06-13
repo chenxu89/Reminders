@@ -388,11 +388,16 @@ static CGFloat const DetailButtonWidth = 40.0f;
         cell.textView.userInteractionEnabled = NO;
         cell.checkButton.hidden = YES;
         cell.showsReorderControl =YES;  //我们添加一个重新排序控件
+        //hide the check button
+        cell.checkButtonWidthConstraint.constant = 0.0;
+
     }else{
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.textView.userInteractionEnabled = YES;
         cell.checkButton.hidden = NO;
         cell.showsReorderControl = NO;
+        //show the check button
+        cell.checkButtonWidthConstraint.constant = 43.0;
     }
     
     //解决换行时候行往上跳的问题
@@ -542,7 +547,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
     //the first time editing or change editing row
     ItemCell *cell = (ItemCell *)textView.superview.superview;
     cell.accessoryType = UITableViewCellAccessoryDetailButton;
-    
+
     //dynamic height
     _editingIndexPath = [self.tableView indexPathForCell:cell];
     CGFloat fixedWidth = _notEditingTextViewWidth - DetailButtonWidth;
@@ -564,6 +569,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ItemCell *cell = (ItemCell *)textView.superview.superview;
     cell.accessoryType = UITableViewCellAccessoryNone;
+
     Item *item = _list.items[_editingIndexPath.row];
     
     if ([textView.text length] == 0) {
