@@ -411,6 +411,9 @@ static CGFloat const imageViewWidth = 43.0f;
     cell.textView.textContainer.maximumNumberOfLines = 0;
     cell.textView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
     
+    //make the text vertical center
+    cell.textView.contentInset = UIEdgeInsetsMake(3, 0, 0, 0);
+    
     //hide cell
     if (_isCompletedItemsHidden && item.isChecked) {
         cell.hidden = YES;
@@ -566,7 +569,6 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
     }
     
     [self performSelector:@selector(setCursorToEndOfTextView:) withObject:textView afterDelay:0.01];
-    
     [self updateCompletedBarButtonTitle];
 }
 
