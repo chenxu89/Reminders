@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+@class Item;
 
 @interface ItemDetailViewController : UITableViewController
 
 @property (nonatomic, weak) IBOutlet UIImageView *imageView;
 @property (nonatomic, assign) BOOL allowEditPhoto;
+@property (nonatomic, strong) Item *item;
 
 - (IBAction)done:(id)sender;
 

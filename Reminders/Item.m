@@ -24,6 +24,7 @@
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths lastObject];
+    NSLog(@"document: %@", documentsDirectory);
     return documentsDirectory;
 }
 

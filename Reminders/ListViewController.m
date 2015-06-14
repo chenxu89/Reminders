@@ -109,16 +109,19 @@ static CGFloat const imageViewWidth = 43.0f;
     Item *item1 = [[Item alloc] init];
     item1.text = @"ifAn assertion is raised if you return nil” means that returning nil instead of a valid UITableViewCell object will crash the app on purpose because you’re doing something you’re not supposed to. An assertion is a special debugging tool that is used to check rpose because you’re doing something you’re not supposed to. An assertion is a special debugging tool that is used to check";
     item1.isChecked = NO;
+    item1.photoId = @-1;
     [_list.items addObject:item1];
     
     Item *item3 = [[Item alloc] init];
     item3.text = @"ifAn is raised if you retur";
     item3.isChecked = NO;
+    item3.photoId = @-1;
     [_list.items addObject:item3];
     
     Item *item2 = [[Item alloc] init];
     item2.text = @"ifAn assertion is raised if you return nil” means that returning nil instead of a valid UITableViewCell object will crash the app on purpose because you’re doing something you’re not supposed to. An assertion is a special debugging tool that is used to check rpose because you’re doing something you’re not supposed to. An assertion is a special debugging tool that is used to check";
     item2.isChecked = YES;
+    item2.photoId = @-1;
     [_list.items addObject:item2];
     
     [self updateNameLabel];
@@ -249,6 +252,7 @@ static CGFloat const imageViewWidth = 43.0f;
         Item *item = [[Item alloc] init];
         item.text = @"";
         item.isChecked = NO;
+        item.photoId = @-1;
         [_list.items addObject:item];
         
         [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationNone];
@@ -440,12 +444,14 @@ static CGFloat const imageViewWidth = 43.0f;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue
                  sender:(id)sender
 {
-//    UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"ItemNavigationController"];
-    //    ItemDetailViewController *controller = (ItemDetailViewController *)navigationController.topViewController;
-    //
-    //    controller.delegate = self;
-    //    Checklist *checklist = self.dataModel.lists[indexPath.row];
-    //    controller.checklistToEdit = checklist;
+    if ([segue.identifier isEqualToString:@"EditItem"]) {
+        UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"ItemNavigationController"];
+        ItemDetailViewController *controller = (ItemDetailViewController *)navigationController.topViewController;
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+        Item *item = _list.items[indexPath.row];
+        controller.item = item;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView
