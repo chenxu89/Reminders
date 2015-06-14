@@ -22,5 +22,6 @@
 - (BOOL)hasPhoto;
 - (NSString *)photoPath;
 - (UIImage *)photoImage;
+- (void)removePhotoFile;
 
 @end

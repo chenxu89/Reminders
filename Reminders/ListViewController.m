@@ -318,6 +318,10 @@ static CGFloat const imageViewWidth = 43.0f;
         NSMutableIndexSet *indicesOfItemsToDelete = [NSMutableIndexSet new];
         for (NSIndexPath *selectionIndex in selectedRows)
         {
+            //delete photo
+            Item *item = _list.items[selectionIndex.row];
+            [item removePhotoFile];
+            
             [indicesOfItemsToDelete addIndex:selectionIndex.row];
         }
         // Delete the objects from our data model.
@@ -445,12 +449,11 @@ static CGFloat const imageViewWidth = 43.0f;
                  sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"EditItem"]) {
-        UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"ItemNavigationController"];
+        UINavigationController *navigationController = segue.destinationViewController;
         ItemDetailViewController *controller = (ItemDetailViewController *)navigationController.topViewController;
         
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-        Item *item = _list.items[indexPath.row];
-        controller.item = item;
+        controller.item = _list.items[indexPath.row];
     }
 }
 
@@ -529,8 +532,15 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
     moreAction.backgroundColor = [UIColor lightGrayColor];
     
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:NSLocalizedString(@"Delete" , @"") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
-        //delete a row
+        
+        //delete photo
+        Item *item = _list.items[indexPath.row];
+        [item removePhotoFile];
+        
+        //delete object
         [_list.items removeObjectAtIndex:indexPath.row];
+
+        //delete row
         NSArray *indexPaths = @[indexPath];
         [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
         [self updateDoneOrEditButtonTitle];
@@ -539,9 +549,6 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
     
     return @[deleteAction, moreAction];
 }
-
-
-
 
 #pragma mark - UITextViewDelegate
 

@@ -10,6 +10,7 @@
 
 @class ListHeadView;
 
-@interface ListViewController : UIViewController 
+@interface ListViewController : UIViewController
+
 
 @end

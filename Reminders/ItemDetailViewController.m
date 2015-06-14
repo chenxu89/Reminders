@@ -20,7 +20,6 @@
 {
     UIImage *_image;
     UIImagePickerController *_imagePicker;
-    Item *_item;
 }
 
 - (void)viewDidLoad
@@ -32,8 +31,13 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
     
-    _item = [[Item alloc] init];
-    _item.photoId = @-1;
+    if ([self.item hasPhoto]) {
+        UIImage *existingImage = [self.item photoImage];
+        if (existingImage != nil) {
+            //The call to if (existingImage != nil) is a bit of defensive programming.
+            [self showImage:existingImage];
+        }
+    }
 }
 
 - (void)dealloc
@@ -75,14 +79,18 @@
 
 - (IBAction)done:(id)sender
 {
+    //don't forget init
+    Item *item = [[Item alloc] init];
+    item = self.item;
+    NSLog(@"item.text: %@", item.text);
     if (_image != nil) {
-        if (![_item hasPhoto]) {
-            _item.photoId = @([Item nextPhotoId]);
+        if (![item hasPhoto]) {
+            item.photoId = @([Item nextPhotoId]);
         }
         
         NSData *data = UIImageJPEGRepresentation(_image, 1.0);
         NSError *error;
-        if (![data writeToFile:[_item photoPath] options:NSDataWritingAtomic error:&error]) {
+        if (![data writeToFile:[item photoPath] options:NSDataWritingAtomic error:&error]) {
             NSLog(@"Error writing file: %@", error);
         }
     }
