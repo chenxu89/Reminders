@@ -8,7 +8,8 @@
 
 #import "ImageViewController.h"
 
-@interface ImageViewController () <UIGestureRecognizerDelegate>
+@interface ImageViewController () <UIGestureRecognizerDelegate, UIScrollViewAccessibilityDelegate>
+
 
 @end
 
@@ -17,11 +18,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.view.backgroundColor = [UIColor blackColor];
     
+    //tap to close
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(close:)];
     gestureRecognizer.cancelsTouchesInView = NO;
     gestureRecognizer.delegate = self;
     [self.view addGestureRecognizer:gestureRecognizer];
+    
+    self.scrollView.minimumZoomScale = 1;
+    self.scrollView.maximumZoomScale = 3.0;
+    self.scrollView.contentSize = CGSizeMake(320, 480);
+    self.scrollView.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,7 +43,7 @@
     
     //Animation
     self.view.backgroundColor = [UIColor clearColor];
-    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         self.fullScreenImageView.transform = CGAffineTransformMakeScale(0.01, 0.01);
     } completion:^(BOOL finished){
         // if you want to do something once the animation finishes, put it here
@@ -46,6 +54,11 @@
 
 - (void)dealloc {
     NSLog(@"dealloc %@", self);
+}
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+{
+    return self.fullScreenImageView;
 }
 
 /*
