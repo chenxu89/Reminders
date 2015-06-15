@@ -22,8 +22,6 @@
     gestureRecognizer.cancelsTouchesInView = NO;
     gestureRecognizer.delegate = self;
     [self.view addGestureRecognizer:gestureRecognizer];
-    
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,10 +32,16 @@
 - (IBAction)close:(id)sender
 {
     [self willMoveToParentViewController:nil];
-    [self.view removeFromSuperview];
-    [self removeFromParentViewController];
     
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    //Animation
+    self.view.backgroundColor = [UIColor clearColor];
+    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        self.fullScreenImageView.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    } completion:^(BOOL finished){
+        // if you want to do something once the animation finishes, put it here
+        [self.view removeFromSuperview];
+        [self removeFromParentViewController];
+    }];
 }
 
 - (void)dealloc {
