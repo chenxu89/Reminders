@@ -363,6 +363,7 @@ static CGFloat const imageViewWidth = 43.0f;
     
     //the distance between button edge and image edge
     cell.checkButton.imageEdgeInsets = UIEdgeInsetsMake(8, 8, 8, 8);
+    cell.separatorInset = UIEdgeInsetsMake(0, 50, 0, 0);
 }
 
 - (void)configureTextForCell:(ItemCell *)cell
@@ -379,6 +380,8 @@ static CGFloat const imageViewWidth = 43.0f;
         image = [item photoImage];
         if (image != nil) {
             image = [image resizedImageWithBounds:CGSizeMake(42, 42)];
+            UITapGestureRecognizer *imageTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickImage:)];
+            [cell.photoImageView addGestureRecognizer:imageTap];
         }
     }
     cell.photoImageView.image = image;
@@ -386,8 +389,16 @@ static CGFloat const imageViewWidth = 43.0f;
     //make the thumbnails rounded
     cell.photoImageView.layer.cornerRadius = cell.photoImageView.image.size.width / 2.0f;
     cell.photoImageView.clipsToBounds = YES;
+    cell.photoImageView.userInteractionEnabled = YES;
+}
 
-    cell.separatorInset = UIEdgeInsetsMake(0, 50, 0, 0);
+- (void)clickImage:(UIGestureRecognizer *)gestureRecognizer
+{
+    UIImageView *imageView = (UIImageView *)gestureRecognizer.view;
+    ItemCell *cell = (ItemCell *)[[imageView superview] superview];
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSLog(@"row: %ld", (long)indexPath.row);
+    NSLog(@"图片被点击!");
 }
 
 - (NSInteger)tableView:(UITableView *)tableView
