@@ -92,6 +92,8 @@
             NSLog(@"Error writing file: %@", error);
         }
     }
+    
+    self.allowEditPhoto = self.editPhotoSwitch.on;
 
     [self.delegate itemDetailViewController:self didFinishEditingItem:self.item];
 }
@@ -101,17 +103,22 @@
     [self.delegate itemDetailViewControllerDidCancel:self];
 }
 
+
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     if (indexPath.section == 1 && indexPath.row == 1) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
         [self takePhoto];
+        
     }else if(indexPath.section == 1 && indexPath.row == 2) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
         [self choosePhotoFromLibrary];
+        
+    }else if(indexPath.section == 1 && indexPath.row == 0){
+        self.editPhotoSwitch.on = !self.editPhotoSwitch.on;
     }
 }
 
