@@ -125,6 +125,17 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView
+heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 20;
+    }else{
+        return tableView.sectionHeaderHeight;
+    }
+}
+
+
 #pragma mark - Add photo
 
 - (void)takePhoto
