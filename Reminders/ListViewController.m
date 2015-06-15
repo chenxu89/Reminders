@@ -51,11 +51,6 @@ static CGFloat const imageViewWidth = 43.0f;
 
 #pragma mark - init and load
 
-- (UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleLightContent;
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -90,12 +85,6 @@ static CGFloat const imageViewWidth = 43.0f;
     UIView *seperatorView = [[UIView alloc] initWithFrame:seperatorFrame];
     seperatorView.backgroundColor = [self.tableView separatorColor];
     [self.view addSubview:seperatorView];
-    
-    //change the background color of status bar to black
-    CGRect statusViewFrame = CGRectMake(0, 0, self.view.bounds.size.width, 20);
-    UIView *statusView = [[UIView alloc] initWithFrame:statusViewFrame];
-    statusView.backgroundColor = [UIColor blackColor];
-    [self.view addSubview:statusView];
     
     UINib *ItemCell = [UINib nibWithNibName:@"ItemCell" bundle:nil];
     [self.tableView registerNib:ItemCell forCellReuseIdentifier:@"ItemCell"];
