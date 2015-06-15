@@ -12,6 +12,7 @@
 #import "Item.h"
 #import "ItemDetailViewController.h"
 #import "UIImage+Resize.h"
+#import "ImageViewController.h"
 
 static CGFloat const DefaltRowHeight = 44.0f;
 static CGFloat const DetailButtonWidth = 40.0f;
@@ -399,6 +400,9 @@ static CGFloat const imageViewWidth = 43.0f;
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSLog(@"row: %ld", (long)indexPath.row);
     NSLog(@"图片被点击!");
+    
+    ImageViewController *controller = [[ImageViewController alloc] initWithNibName:@"ImageViewController" bundle:nil];
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView

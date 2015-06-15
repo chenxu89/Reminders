@@ -19,6 +19,8 @@
 		2DD74E5D1B16DDD9009373AE /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD74E5C1B16DDD9009373AE /* ListViewController.m */; };
 		2DD74E6F1B174E52009373AE /* List.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD74E6E1B174E52009373AE /* List.m */; };
 		2DD96BE91B2E6BDF008F519A /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD96BE81B2E6BDF008F519A /* UIImage+Resize.m */; };
+		2DD96BED1B2E8741008F519A /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD96BEB1B2E8741008F519A /* ImageViewController.m */; };
+		2DD96BEE1B2E8741008F519A /* ImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DD96BEC1B2E8741008F519A /* ImageViewController.xib */; };
 		2DDF9CAB1B21D25F005F53BB /* ItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DDF9CAA1B21D25F005F53BB /* ItemDetailViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +57,9 @@
 		2DD74E6E1B174E52009373AE /* List.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = List.m; sourceTree = "<group>"; };
 		2DD96BE71B2E6BDF008F519A /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		2DD96BE81B2E6BDF008F519A /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
+		2DD96BEA1B2E8741008F519A /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
+		2DD96BEB1B2E8741008F519A /* ImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
+		2DD96BEC1B2E8741008F519A /* ImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageViewController.xib; sourceTree = "<group>"; };
 		2DDF9CA91B21D25F005F53BB /* ItemDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemDetailViewController.h; sourceTree = "<group>"; };
 		2DDF9CAA1B21D25F005F53BB /* ItemDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemDetailViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,6 +112,9 @@
 				2DDF9CAA1B21D25F005F53BB /* ItemDetailViewController.m */,
 				2DD74E5B1B16DDD9009373AE /* ListViewController.h */,
 				2DD74E5C1B16DDD9009373AE /* ListViewController.m */,
+				2DD96BEA1B2E8741008F519A /* ImageViewController.h */,
+				2DD96BEB1B2E8741008F519A /* ImageViewController.m */,
+				2DD96BEC1B2E8741008F519A /* ImageViewController.xib */,
 				2DD51EC11B17F7F600584A51 /* Item.h */,
 				2DD51EC21B17F7F600584A51 /* Item.m */,
 				2DD74E371B169F78009373AE /* Main.storyboard */,
@@ -227,6 +235,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DD96BEE1B2E8741008F519A /* ImageViewController.xib in Resources */,
 				2DD51EC01B17E15700584A51 /* ItemCell.xib in Resources */,
 				2DD74E391B169F78009373AE /* Main.storyboard in Resources */,
 				2DD74E3E1B169F78009373AE /* LaunchScreen.xib in Resources */,
@@ -254,6 +263,7 @@
 				2DD74E331B169F78009373AE /* AppDelegate.m in Sources */,
 				2DD74E6F1B174E52009373AE /* List.m in Sources */,
 				2DD74E5D1B16DDD9009373AE /* ListViewController.m in Sources */,
+				2DD96BED1B2E8741008F519A /* ImageViewController.m in Sources */,
 				2DD74E301B169F78009373AE /* main.m in Sources */,
 				2DDF9CAB1B21D25F005F53BB /* ItemDetailViewController.m in Sources */,
 			);
