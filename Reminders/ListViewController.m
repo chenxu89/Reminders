@@ -361,12 +361,6 @@ static CGFloat const imageViewWidth = 43.0f;
         cell.textView.textColor = [UIColor blackColor];
     }
     
-//    if (_isCompletedItemsHidden) {
-//        cell.checkButton.hidden = YES;
-//    }else{
-//        cell.checkButton.hidden = NO;
-//    }
-    
     //the distance between button edge and image edge
     cell.checkButton.imageEdgeInsets = UIEdgeInsetsMake(8, 8, 8, 8);
 }
@@ -384,10 +378,16 @@ static CGFloat const imageViewWidth = 43.0f;
     if ([item hasPhoto]) {
         image = [item photoImage];
         if (image != nil) {
-            image = [image resizedImageWithBounds:CGSizeMake(43, 43)];
+            image = [image resizedImageWithBounds:CGSizeMake(42, 42)];
         }
     }
     cell.photoImageView.image = image;
+    
+    //make the thumbnails rounded
+    cell.photoImageView.layer.cornerRadius = cell.photoImageView.image.size.width / 2.0f;
+    cell.photoImageView.clipsToBounds = YES;
+
+    cell.separatorInset = UIEdgeInsetsMake(0, 50, 0, 0);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView
