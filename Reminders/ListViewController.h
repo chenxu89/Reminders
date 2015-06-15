@@ -13,7 +13,5 @@
 
 @interface ListViewController : UIViewController <ItemDetailViewControllerDelegate>
 
-@property (nonatomic, retain) IBOutlet UIView *myViewFromNib;
-@property (nonatomic, weak) IBOutlet UIImageView *imageviewFromNib;
 
 @end

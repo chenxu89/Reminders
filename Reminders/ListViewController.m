@@ -12,6 +12,7 @@
 #import "Item.h"
 #import "ItemDetailViewController.h"
 #import "UIImage+Resize.h"
+#import "ImageViewController.h"
 
 static CGFloat const DefaltRowHeight = 44.0f;
 static CGFloat const DetailButtonWidth = 40.0f;
@@ -150,8 +151,6 @@ static CGFloat const imageViewWidth = 43.0f;
     self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, DefaltRowHeight, 0.0);
     
     [self updateCompletedBarButtonTitle];
-    
-    [[NSBundle mainBundle] loadNibNamed:@"ImageView" owner:self options:nil];
 }
 
 #pragma mark - update label and button title
@@ -399,16 +398,11 @@ static CGFloat const imageViewWidth = 43.0f;
     UIImageView *imageView = (UIImageView *)gestureRecognizer.view;
     ItemCell *cell = (ItemCell *)[[imageView superview] superview];
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    Item *item = _list.items[indexPath.row];
-    
-    self.myViewFromNib.bounds = self.view.bounds;
-    [self.view addSubview:self.myViewFromNib];
-    self.imageviewFromNib.image = [item photoImage];
-    
-    
     NSLog(@"row: %ld", (long)indexPath.row);
     NSLog(@"图片被点击!");
     
+    ImageViewController *controller = [[ImageViewController alloc] initWithNibName:@"ImageViewController" bundle:nil];
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView
