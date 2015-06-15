@@ -8,7 +8,7 @@
 
 #import "ImageViewController.h"
 
-@interface ImageViewController ()
+@interface ImageViewController () <UIGestureRecognizerDelegate>
 
 @end
 
@@ -17,6 +17,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(close:)];
+    gestureRecognizer.cancelsTouchesInView = NO;
+    gestureRecognizer.delegate = self;
+    [self.view addGestureRecognizer:gestureRecognizer];
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -26,7 +33,15 @@
 
 - (IBAction)close:(id)sender
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self willMoveToParentViewController:nil];
+    [self.view removeFromSuperview];
+    [self removeFromParentViewController];
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+}
+
+- (void)dealloc {
+    NSLog(@"dealloc %@", self);
 }
 
 /*

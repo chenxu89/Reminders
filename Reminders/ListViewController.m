@@ -77,6 +77,12 @@ static CGFloat const imageViewWidth = 43.0f;
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
+
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
     
     //add a seperator at the top of the table view and seperate the top view with the table view
     //if put these lines in viewDidLoad, then self.tableview.frame.size will not work
@@ -84,15 +90,6 @@ static CGFloat const imageViewWidth = 43.0f;
     UIView *seperatorView = [[UIView alloc] initWithFrame:seperatorFrame];
     seperatorView.backgroundColor = [self.tableView separatorColor];
     [self.view addSubview:seperatorView];
-    
-    CGRect statusViewFrame = CGRectMake(0, 0, self.view.bounds.size.width, 20);
-    UIView *statusView = [[UIView alloc] initWithFrame:statusViewFrame];
-    statusView.backgroundColor = [UIColor blackColor];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
     
     //change the background color of status bar to black
     CGRect statusViewFrame = CGRectMake(0, 0, self.view.bounds.size.width, 20);
@@ -398,11 +395,18 @@ static CGFloat const imageViewWidth = 43.0f;
     UIImageView *imageView = (UIImageView *)gestureRecognizer.view;
     ItemCell *cell = (ItemCell *)[[imageView superview] superview];
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    NSLog(@"row: %ld", (long)indexPath.row);
-    NSLog(@"图片被点击!");
+    Item *item = _list.items[indexPath.row];
     
     ImageViewController *controller = [[ImageViewController alloc] initWithNibName:@"ImageViewController" bundle:nil];
-    [self presentViewController:controller animated:YES completion:nil];
+    
+    controller.view.frame = self.view.frame;
+    controller.fullScreenImageView.image = [item photoImage];
+    controller.fullScreenImageView.userInteractionEnabled = YES;
+    
+    [self.view addSubview:controller.view];
+    [self addChildViewController:controller];
+    [controller didMoveToParentViewController:self];
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView

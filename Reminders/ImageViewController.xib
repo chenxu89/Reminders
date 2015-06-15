@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImageViewController">
             <connections>
+                <outlet property="fullScreenImageView" destination="i6B-Vh-A3N" id="LUR-be-fd0"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,10 +21,10 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="i6B-Vh-A3N" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="HqW-x6-W1c"/>
-                <constraint firstAttribute="trailing" secondItem="i6B-Vh-A3N" secondAttribute="trailing" id="qc8-6n-c4L"/>
-                <constraint firstItem="i6B-Vh-A3N" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="tJm-WA-xOz"/>
-                <constraint firstAttribute="bottom" secondItem="i6B-Vh-A3N" secondAttribute="bottom" id="vjH-XJ-hmO"/>
+                <constraint firstAttribute="trailing" secondItem="i6B-Vh-A3N" secondAttribute="trailing" id="0Lv-6O-A6J"/>
+                <constraint firstItem="i6B-Vh-A3N" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="2gA-UC-mjq"/>
+                <constraint firstAttribute="bottom" secondItem="i6B-Vh-A3N" secondAttribute="bottom" id="LTy-RG-U5A"/>
+                <constraint firstItem="i6B-Vh-A3N" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="cNh-0b-Q8P"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
