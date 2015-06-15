@@ -80,22 +80,25 @@
 - (IBAction)done:(id)sender
 {
     //don't forget init
-    Item *item = [[Item alloc] init];
-    item = self.item;
-    NSLog(@"item.text: %@", item.text);
+
     if (_image != nil) {
-        if (![item hasPhoto]) {
-            item.photoId = @([Item nextPhotoId]);
+        if (![self.item hasPhoto]) {
+            self.item.photoId = @([Item nextPhotoId]);
         }
         
         NSData *data = UIImageJPEGRepresentation(_image, 1.0);
         NSError *error;
-        if (![data writeToFile:[item photoPath] options:NSDataWritingAtomic error:&error]) {
+        if (![data writeToFile:[self.item photoPath] options:NSDataWritingAtomic error:&error]) {
             NSLog(@"Error writing file: %@", error);
         }
     }
 
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.delegate itemDetailViewController:self didFinishEditingItem:self.item];
+}
+
+- (IBAction)cancel:(id)sender
+{
+    [self.delegate itemDetailViewControllerDidCancel:self];
 }
 
 #pragma mark - UITableViewDelegate

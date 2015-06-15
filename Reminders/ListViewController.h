@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ItemDetailViewController.h"
 
 @class ListHeadView;
 
-@interface ListViewController : UIViewController
+@interface ListViewController : UIViewController <ItemDetailViewControllerDelegate>
 
 
 @end

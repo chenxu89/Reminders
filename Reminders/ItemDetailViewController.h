@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 @class Item;
+@class ItemDetailViewController;
+
+@protocol ItemDetailViewControllerDelegate <NSObject>
+
+- (void)itemDetailViewControllerDidCancel:(ItemDetailViewController *)controller;
+
+- (void)itemDetailViewController:(ItemDetailViewController *)controller
+      didFinishEditingItem:(Item *)item;
+
+@end
 
 @interface ItemDetailViewController : UITableViewController
 
@@ -15,6 +25,9 @@
 @property (nonatomic, assign) BOOL allowEditPhoto;
 @property (nonatomic, strong) Item *item;
 
+@property (nonatomic, weak) id <ItemDetailViewControllerDelegate> delegate;
+
 - (IBAction)done:(id)sender;
+- (IBAction)cancel:(id)sender;
 
 @end

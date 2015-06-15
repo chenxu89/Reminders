@@ -277,6 +277,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Details" id="uvu-cH-E7g">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="dN8-yp-omr">
+                            <connections>
+                                <action selector="cancel:" destination="wWv-g0-Vz8" id="pJy-NW-hik"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="75k-sE-xa2">
                             <connections>
                                 <action selector="done:" destination="wWv-g0-Vz8" id="dgI-Kh-VOJ"/>

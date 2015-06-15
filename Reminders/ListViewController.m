@@ -11,6 +11,7 @@
 #import "ItemCell.h"
 #import "Item.h"
 #import "ItemDetailViewController.h"
+#import "UIImage+Resize.h"
 
 static CGFloat const DefaltRowHeight = 44.0f;
 static CGFloat const DetailButtonWidth = 40.0f;
@@ -376,6 +377,19 @@ static CGFloat const imageViewWidth = 43.0f;
     cell.textView.text = item.text;
 }
 
+- (void)configureImageForCell:(ItemCell *)cell
+                     withItem:(Item *)item
+{
+    UIImage *image = nil;
+    if ([item hasPhoto]) {
+        image = [item photoImage];
+        if (image != nil) {
+            image = [image resizedImageWithBounds:CGSizeMake(43, 43)];
+        }
+    }
+    cell.photoImageView.image = image;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section
 {
@@ -390,6 +404,8 @@ static CGFloat const imageViewWidth = 43.0f;
     
     [self configureCheckButtonForCell:cell withItem:item];
     [self configureTextForCell:cell withItem:item];
+    [self configureImageForCell:cell withItem:item];
+    
     cell.accessoryType = UITableViewCellAccessoryNone;
     
     if (_isListEditing) {
@@ -450,10 +466,12 @@ static CGFloat const imageViewWidth = 43.0f;
 {
     if ([segue.identifier isEqualToString:@"EditItem"]) {
         UINavigationController *navigationController = segue.destinationViewController;
+        
         ItemDetailViewController *controller = (ItemDetailViewController *)navigationController.topViewController;
         
-        NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-        controller.item = _list.items[indexPath.row];
+        controller.delegate = self;
+        
+        controller.item = sender;
     }
 }
 
@@ -462,6 +480,7 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     Item *item = _list.items[indexPath.row];
     [self performSegueWithIdentifier:@"EditItem" sender:item];
+    NSLog(@"row: %ld", (long)indexPath.row);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView
@@ -725,7 +744,23 @@ shouldChangeTextInRange:(NSRange)range
     self.tableView.scrollIndicatorInsets = contentInsets;
 }
 
+#pragma mark - ItemDetailViewControllerDelegate method
 
+- (void)itemDetailViewController:(ItemDetailViewController *)controller didFinishEditingItem:(Item *)item
+{
+    NSInteger index = [_list.items indexOfObject:item];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    ItemCell *cell = (ItemCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    
+    [self configureImageForCell:cell withItem:item];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)itemDetailViewControllerDidCancel:(ItemDetailViewController *)controller
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 /*
 #pragma mark - Navigation
