@@ -8,7 +8,7 @@
 
 #import "ItemDetailViewController.h"
 #import "Item.h"
-
+#import "ImageViewController.h"
 
 @interface ItemDetailViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -119,6 +119,14 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
         
     }else if(indexPath.section == 1 && indexPath.row == 0){
         self.editPhotoSwitch.on = !self.editPhotoSwitch.on;
+        
+    }else if(indexPath.section == 1 && indexPath.row == 3){
+        ImageViewController *controller = [[ImageViewController alloc] initWithNibName:@"ImageViewController" bundle:nil];
+        if (_image != nil) {
+            [controller showFullImageInViewController:self withImage:_image];
+        }else{
+            [controller showFullImageInViewController:self withImage:[self.item photoImage]];
+        }
     }
 }
 

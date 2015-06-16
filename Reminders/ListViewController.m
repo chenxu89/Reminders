@@ -387,6 +387,8 @@ static CGFloat const imageViewWidth = 43.0f;
 //if have image, then show full image
 - (void)clickImage:(UIGestureRecognizer *)gestureRecognizer
 {
+    [self.tableView endEditing:YES];//dismiss the keyboard
+    
     UIImageView *imageView = (UIImageView *)gestureRecognizer.view;
     ItemCell *cell = (ItemCell *)[[imageView superview] superview];
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
