@@ -8,28 +8,68 @@
 
 #import "ImageViewController.h"
 
-@interface ImageViewController () <UIGestureRecognizerDelegate, UIScrollViewAccessibilityDelegate>
-
+@interface ImageViewController () <UIGestureRecognizerDelegate, UIScrollViewAccessibilityDelegate, UIScrollViewDelegate>
+{
+    CGFloat currentScale;//当前倍率
+    CGFloat minScale;//最小倍率
+    CGFloat maxScale;
+}
 
 @end
 
 @implementation ImageViewController
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.view.backgroundColor = [UIColor blackColor];
+    self.scrollView.backgroundColor = [UIColor blackColor];
     
-    //tap to close
-    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(close:)];
-    gestureRecognizer.cancelsTouchesInView = NO;
-    gestureRecognizer.delegate = self;
-    [self.view addGestureRecognizer:gestureRecognizer];
+    //最大放大倍数(默认值)
+    maxScale=2.0;
+    //设置最小倍率为1.0
+    minScale=1.0;
+    //设置当前的放大倍数
+    currentScale=1.0;
     
-    self.scrollView.minimumZoomScale = 1;
-    self.scrollView.maximumZoomScale = 3.0;
-    self.scrollView.contentSize = CGSizeMake(320, 480);
+    //控制器
+    self.scrollView.userInteractionEnabled = YES;
+    self.scrollView.minimumZoomScale = 1.0;//最小倍率（默认倍率）
+    self.scrollView.maximumZoomScale = 2.0;//最大倍率（默认倍率）
+    self.scrollView.decelerationRate = 1.0;//减速倍率（默认倍率）
     self.scrollView.delegate = self;
+    self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleHeight;
+    
+    //图片
+    
+    self.imageView.userInteractionEnabled=YES;
+    self.imageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleHeight;
+    
+    
+    // what object is going to handle the gesture when it gets recognised ?
+    // the argument for tap is the gesture that caused this message to be sent
+    UITapGestureRecognizer *tapOnce = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(close:)];
+    UITapGestureRecognizer *tapTwice=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleGesture:)];
+    
+    // set number of taps required
+    tapOnce.numberOfTapsRequired = 1;
+    tapTwice.numberOfTapsRequired = 2;
+    
+    // now add the gesture recogniser to a view
+    // this will be the view that recognises the gesture
+    [self.imageView addGestureRecognizer:tapOnce];
+    [self.imageView addGestureRecognizer:tapTwice];
+    
+    //other
+    [self.scrollView setContentSize:CGSizeMake(self.imageView.bounds.size.width * 2.0, self.imageView.bounds.size.height *2.0)];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -42,12 +82,12 @@
     [self willMoveToParentViewController:nil];
     
     //Animation
-    self.view.backgroundColor = [UIColor clearColor];
+    self.scrollView.backgroundColor = [UIColor clearColor];
     [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-        self.fullScreenImageView.transform = CGAffineTransformMakeScale(0.01, 0.01);
+        self.imageView.transform = CGAffineTransformMakeScale(0.01, 0.01);
     } completion:^(BOOL finished){
         // if you want to do something once the animation finishes, put it here
-        [self.view removeFromSuperview];
+        [self.scrollView removeFromSuperview];
         [self removeFromParentViewController];
     }];
 }
@@ -55,20 +95,20 @@
 - (void)showFullImageInViewController:(UIViewController *)controller
                             withImage:(UIImage *)image
 {
-    self.view.frame = controller.view.frame;
-    self.fullScreenImageView.image = image;
-    self.fullScreenImageView.userInteractionEnabled = YES;
+    self.scrollView.frame = controller.view.frame;
+    self.imageView.image = image;
+    self.imageView.userInteractionEnabled = YES;
     
-    [controller.view addSubview:self.view];
+    [controller.view addSubview:self.scrollView];
     [controller addChildViewController:self];
     [self didMoveToParentViewController:controller];
     
     //Animation
     // instantaneously make the image view small (scaled to 1% of its actual size)
-    self.fullScreenImageView.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    self.imageView.transform = CGAffineTransformMakeScale(0.01, 0.01);
     [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         // animate it to the identity transform (100% scale)
-        self.fullScreenImageView.transform = CGAffineTransformIdentity;
+        self.imageView.transform = CGAffineTransformIdentity;
     } completion:^(BOOL finished){
         // if you want to do something once the animation finishes, put it here
     }];
@@ -78,19 +118,55 @@
     NSLog(@"dealloc %@", self);
 }
 
+
+#pragma mark -UIScrollView delegate
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
-    return self.fullScreenImageView;
+    return self.imageView;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(double)scale
+{
+    currentScale=scale;
 }
-*/
+
+#pragma mark -DoubleGesture Action
+-(void)doubleGesture:(UIGestureRecognizer *)sender
+{
+    
+    //当前倍数等于最大放大倍数
+    //双击默认为缩小到原图
+    if (currentScale==maxScale) {
+        currentScale=minScale;
+        [self.scrollView setZoomScale:currentScale animated:YES];
+        return;
+    }
+    //当前等于最小放大倍数
+    //双击默认为放大到最大倍数
+    if (currentScale==minScale) {
+        currentScale=maxScale;
+        [self.scrollView setZoomScale:currentScale animated:YES];
+        return;
+    }
+    
+    CGFloat aveScale =minScale+(maxScale-minScale)/2.0;//中间倍数
+    
+    //当前倍数大于平均倍数
+    //双击默认为放大最大倍数
+    if (currentScale>=aveScale) {
+        currentScale=maxScale;
+        [self.scrollView setZoomScale:currentScale animated:YES];
+        return;
+    }
+    
+    //当前倍数小于平均倍数
+    //双击默认为缩小到原图
+    if (currentScale<aveScale) {
+        currentScale=minScale;
+        [self.scrollView setZoomScale:currentScale animated:YES];
+        return;
+    }
+}
+
 
 @end
