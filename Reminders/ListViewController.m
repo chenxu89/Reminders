@@ -144,6 +144,7 @@ static CGFloat const imageViewWidth = 43.0f;
 - (void)updateNameLabel
 {
     self.nameLabel.text = _list.name;
+    self.nameLabel.textColor = self.view.tintColor;
 }
 
 - (void)updateItemsCountLabel
@@ -157,6 +158,8 @@ static CGFloat const imageViewWidth = 43.0f;
     }else{
         self.itemsCountLabel.text = NSLocalizedString(@"No item", @"");
     }
+    
+    self.itemsCountLabel.textColor = self.view.tintColor;
 }
 
 - (void)updateDoneOrEditButtonTitle
