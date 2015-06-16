@@ -241,20 +241,20 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="290" id="bjs-4x-sWY">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="260" id="bjs-4x-sWY">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bjs-4x-sWY" id="tAG-7P-1sN">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RCF-em-A0y">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="289"/>
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RCF-em-A0y">
+                                                    <rect key="frame" x="8" y="0.0" width="304" height="259"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="RCF-em-A0y" firstAttribute="top" secondItem="tAG-7P-1sN" secondAttribute="topMargin" constant="-8" id="2hq-jZ-L7D"/>
-                                                <constraint firstItem="RCF-em-A0y" firstAttribute="leading" secondItem="tAG-7P-1sN" secondAttribute="leadingMargin" constant="-8" id="X4m-EL-TbH"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="RCF-em-A0y" secondAttribute="bottom" constant="-8" id="dgN-6W-wdC"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="RCF-em-A0y" secondAttribute="trailing" constant="-8" id="pFt-gV-5HK"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="RCF-em-A0y" secondAttribute="bottom" constant="-8" id="9cf-0s-Q20"/>
+                                                <constraint firstItem="RCF-em-A0y" firstAttribute="trailing" secondItem="tAG-7P-1sN" secondAttribute="trailingMargin" id="B22-OZ-uXp"/>
+                                                <constraint firstItem="RCF-em-A0y" firstAttribute="leading" secondItem="tAG-7P-1sN" secondAttribute="leadingMargin" id="cRy-hl-s3D"/>
+                                                <constraint firstItem="RCF-em-A0y" firstAttribute="top" secondItem="tAG-7P-1sN" secondAttribute="topMargin" constant="-8" id="mae-2J-A2M"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>

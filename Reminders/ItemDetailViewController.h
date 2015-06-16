@@ -24,6 +24,8 @@
 @property (nonatomic, weak) IBOutlet UIImageView *imageView;
 @property (nonatomic, assign) BOOL allowEditPhoto;
 @property (nonatomic, strong) Item *item;
+@property (nonatomic, weak) IBOutlet UISwitch *reminderSwitchControl;
+@property (nonatomic, weak) IBOutlet UILabel *dueDateLabel;
 
 @property (nonatomic, weak) id <ItemDetailViewControllerDelegate> delegate;
 
