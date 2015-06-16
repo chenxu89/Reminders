@@ -471,6 +471,8 @@ static CGFloat const imageViewWidth = 43.0f;
     //make the separator empty at the left and right
     cell.separatorInset = UIEdgeInsetsMake(0, 50, 0, 50);
     
+    NSLog(@"itemId: %ld", (long)item.itemId);
+    
     return cell;
 }
 

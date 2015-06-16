@@ -10,6 +10,22 @@
 
 @implementation Item
 
+- (id)init {
+    if (self = [super init]) {
+        self.itemId = [Item nextItemId];
+    }
+    return self;
+}
+
+- (void)registerDefaults
+{
+    NSDictionary *dictionary = @
+    {
+        @"ItemId" : @0,
+    };
+    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
+}
+
 - (void)toggleChecked
 {
     self.isChecked = !self.isChecked;
@@ -60,6 +76,15 @@
         if (![fileManager removeItemAtPath:path error:&error]) {
             NSLog(@"Error removing file: %@", error); }
     }
+}
+
++ (NSInteger)nextItemId
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSInteger itemId = [userDefaults integerForKey:@"ItemId"];
+    [userDefaults setInteger:itemId + 1 forKey:@"ItemId"];
+    [userDefaults synchronize];
+    return itemId;
 }
 
 

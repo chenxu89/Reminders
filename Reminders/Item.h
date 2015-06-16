@@ -14,10 +14,15 @@
 @property (nonatomic, copy) NSString *text;
 @property (nonatomic, assign) BOOL isChecked;
 @property (nonatomic, retain) NSNumber * photoId;
+@property (nonatomic, copy) NSDate *dueDate;
+@property (nonatomic, assign) BOOL shouldRemind;
+@property (nonatomic, assign) NSInteger itemId;
+
 
 - (void)toggleChecked;
 
 + (NSInteger)nextPhotoId;
++ (NSInteger)nextItemId;
 
 - (BOOL)hasPhoto;
 - (NSString *)photoPath;
