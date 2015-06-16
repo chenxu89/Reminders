@@ -394,23 +394,7 @@ static CGFloat const imageViewWidth = 43.0f;
     
     ImageViewController *controller = [[ImageViewController alloc] initWithNibName:@"ImageViewController" bundle:nil];
     
-    controller.view.frame = self.view.frame;
-    controller.fullScreenImageView.image = [item photoImage];
-    controller.fullScreenImageView.userInteractionEnabled = YES;
-    
-    [self.view addSubview:controller.view];
-    [self addChildViewController:controller];
-    [controller didMoveToParentViewController:self];
-    
-    //Animation
-    // instantaneously make the image view small (scaled to 1% of its actual size)
-    controller.fullScreenImageView.transform = CGAffineTransformMakeScale(0.01, 0.01);
-    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        // animate it to the identity transform (100% scale)
-        controller.fullScreenImageView.transform = CGAffineTransformIdentity;
-    } completion:^(BOOL finished){
-        // if you want to do something once the animation finishes, put it here
-    }];
+    [controller showFullImageInViewController:self withImage:[item photoImage]];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView

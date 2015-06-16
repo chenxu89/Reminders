@@ -14,4 +14,7 @@
 
 @property (nonatomic, weak) IBOutlet UIImageView *fullScreenImageView;
 
+- (void)showFullImageInViewController:(UIViewController *)controller
+                            withImage:(UIImage *)image;
+
 @end

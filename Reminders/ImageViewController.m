@@ -52,6 +52,28 @@
     }];
 }
 
+- (void)showFullImageInViewController:(UIViewController *)controller
+                            withImage:(UIImage *)image
+{
+    self.view.frame = controller.view.frame;
+    self.fullScreenImageView.image = image;
+    self.fullScreenImageView.userInteractionEnabled = YES;
+    
+    [controller.view addSubview:self.view];
+    [controller addChildViewController:self];
+    [self didMoveToParentViewController:controller];
+    
+    //Animation
+    // instantaneously make the image view small (scaled to 1% of its actual size)
+    self.fullScreenImageView.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        // animate it to the identity transform (100% scale)
+        self.fullScreenImageView.transform = CGAffineTransformIdentity;
+    } completion:^(BOOL finished){
+        // if you want to do something once the animation finishes, put it here
+    }];
+}
+
 - (void)dealloc {
     NSLog(@"dealloc %@", self);
 }
