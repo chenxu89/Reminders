@@ -12,7 +12,7 @@
 
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 
-@property (nonatomic, weak) IBOutlet UIImageView *fullScreenImageView;
+@property (nonatomic, weak) IBOutlet UIImageView *imageView;
 
 - (void)showFullImageInViewController:(UIViewController *)controller
                             withImage:(UIImage *)image;

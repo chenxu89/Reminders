@@ -6,7 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImageViewController">
             <connections>
-                <outlet property="fullScreenImageView" destination="DdZ-fR-Kfe" id="iVB-Ea-azv"/>
+                <outlet property="imageView" destination="DdZ-fR-Kfe" id="DLx-HE-pOJ"/>
                 <outlet property="scrollView" destination="aYb-v9-qZV" id="tqp-bO-lqR"/>
                 <outlet property="view" destination="aYb-v9-qZV" id="coI-bu-BKk"/>
             </connections>

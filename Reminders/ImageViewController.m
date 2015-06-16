@@ -21,14 +21,14 @@
     self.view.backgroundColor = [UIColor blackColor];
     
     //tap to close
-    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(close:)];
-    gestureRecognizer.cancelsTouchesInView = NO;
-    gestureRecognizer.delegate = self;
-    [self.view addGestureRecognizer:gestureRecognizer];
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
+    singleTap.cancelsTouchesInView = NO;
+    singleTap.delegate = self;
+    [self.view addGestureRecognizer:singleTap];
     
-    self.scrollView.minimumZoomScale = 1;
-    self.scrollView.maximumZoomScale = 3.0;
-    self.scrollView.contentSize = CGSizeMake(self.fullScreenImageView.bounds.size.width, self.fullScreenImageView.bounds.size.height);
+    self.scrollView.minimumZoomScale = 1.0;
+    self.scrollView.maximumZoomScale = 2.0;
+    self.scrollView.contentSize = CGSizeMake(self.imageView.bounds.size.width, self.imageView.bounds.size.height);
     self.scrollView.delegate = self;
     
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
@@ -36,10 +36,11 @@
     [self.scrollView addGestureRecognizer:doubleTap];
     
     //防止单击干扰双击
-    [gestureRecognizer requireGestureRecognizerToFail:doubleTap];
+    [singleTap requireGestureRecognizerToFail:doubleTap];
 }
 
-- (void)handleDoubleTap:(UIGestureRecognizer *)gestureRecognizer {
+- (void)handleDoubleTap:(UIGestureRecognizer *)gestureRecognizer
+{
     
     if(self.scrollView.zoomScale > self.scrollView.minimumZoomScale)
         [self.scrollView setZoomScale:self.scrollView.minimumZoomScale animated:YES];
@@ -49,14 +50,14 @@
 }
 
 
-- (void)close:(UIGestureRecognizer *)gestureRecognizer
+- (void)handleSingleTap:(UIGestureRecognizer *)gestureRecognizer
 {
     [self willMoveToParentViewController:nil];
     
     //Animation
     self.view.backgroundColor = [UIColor clearColor];
     [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-        self.fullScreenImageView.transform = CGAffineTransformMakeScale(0.01, 0.01);
+        self.imageView.transform = CGAffineTransformMakeScale(0.01, 0.01);
     } completion:^(BOOL finished){
         // if you want to do something once the animation finishes, put it here
         [self.view removeFromSuperview];
@@ -68,8 +69,8 @@
                             withImage:(UIImage *)image
 {
     self.view.frame = controller.view.frame;
-    self.fullScreenImageView.image = image;
-    self.fullScreenImageView.userInteractionEnabled = YES;
+    self.imageView.image = image;
+    self.imageView.userInteractionEnabled = YES;
     
     [controller.view addSubview:self.view];
     [controller addChildViewController:self];
@@ -77,10 +78,10 @@
     
     //Animation
     // instantaneously make the image view small (scaled to 1% of its actual size)
-    self.fullScreenImageView.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    self.imageView.transform = CGAffineTransformMakeScale(0.01, 0.01);
     [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         // animate it to the identity transform (100% scale)
-        self.fullScreenImageView.transform = CGAffineTransformIdentity;
+        self.imageView.transform = CGAffineTransformIdentity;
     } completion:^(BOOL finished){
         // if you want to do something once the animation finishes, put it here
     }];
@@ -92,7 +93,7 @@
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
-    return self.fullScreenImageView;
+    return self.imageView;
 }
 
 /*
