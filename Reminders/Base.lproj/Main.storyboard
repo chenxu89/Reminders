@@ -32,21 +32,12 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sfK-Yv-k2c">
-                                        <rect key="frame" x="269" y="41" width="43" height="33"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <state key="normal" title="menu">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="sfK-Yv-k2c" firstAttribute="top" secondItem="4yY-Hj-Bz7" secondAttribute="top" id="0eR-pz-zaa"/>
                                     <constraint firstItem="4yY-Hj-Bz7" firstAttribute="top" secondItem="dCb-RB-cmv" secondAttribute="top" constant="41" id="AtH-qA-Zfy"/>
                                     <constraint firstItem="kSr-hw-XN2" firstAttribute="leading" secondItem="dCb-RB-cmv" secondAttribute="leading" constant="15" id="Hbi-uw-a5O"/>
                                     <constraint firstItem="4yY-Hj-Bz7" firstAttribute="leading" secondItem="kSr-hw-XN2" secondAttribute="leading" id="PPh-Lv-Irh"/>
                                     <constraint firstItem="kSr-hw-XN2" firstAttribute="top" secondItem="dCb-RB-cmv" secondAttribute="top" constant="8" id="QU3-64-Hab"/>
-                                    <constraint firstItem="sfK-Yv-k2c" firstAttribute="trailing" secondItem="dCb-RB-cmv" secondAttribute="trailingMargin" id="lgw-VX-UHo"/>
                                     <constraint firstAttribute="bottom" secondItem="4yY-Hj-Bz7" secondAttribute="bottom" constant="6" id="n4C-sq-wge"/>
                                 </constraints>
                             </view>
@@ -114,7 +105,6 @@
                         <outlet property="doneOrEditButton" destination="YLy-qJ-Pjq" id="3Yy-eJ-Jc1"/>
                         <outlet property="headView" destination="dCb-RB-cmv" id="nLX-L4-37a"/>
                         <outlet property="itemsCountLabel" destination="4yY-Hj-Bz7" id="6ZW-3V-GBS"/>
-                        <outlet property="menuButton" destination="sfK-Yv-k2c" id="Gxl-l0-7as"/>
                         <outlet property="nameLabel" destination="kSr-hw-XN2" id="uMh-aH-MUS"/>
                         <outlet property="tableView" destination="3fg-kj-BUh" id="XWD-44-3y3"/>
                         <segue destination="FuH-1N-Pyy" kind="presentation" identifier="EditItem" id="7Gh-64-EGn"/>
