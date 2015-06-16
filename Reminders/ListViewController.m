@@ -349,8 +349,7 @@ static CGFloat const imageViewWidth = 43.0f;
     }
     
     //the distance between button edge and image edge
-    cell.checkButton.imageEdgeInsets = UIEdgeInsetsMake(8, 8, 8, 8);
-    cell.separatorInset = UIEdgeInsetsMake(0, 50, 0, 0);
+    cell.checkButton.imageEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6);
 }
 
 - (void)configureTextForCell:(ItemCell *)cell
@@ -376,9 +375,16 @@ static CGFloat const imageViewWidth = 43.0f;
     //make the thumbnails rounded
     cell.photoImageView.layer.cornerRadius = cell.photoImageView.image.size.width / 2.0f;
     cell.photoImageView.clipsToBounds = YES;
-    cell.photoImageView.userInteractionEnabled = YES;
+    
+    if (_isListEditing) {
+        cell.photoImageView.userInteractionEnabled = NO;
+    }else{
+        cell.photoImageView.userInteractionEnabled = YES;
+    }
 }
 
+
+//if have image, then show full image
 - (void)clickImage:(UIGestureRecognizer *)gestureRecognizer
 {
     UIImageView *imageView = (UIImageView *)gestureRecognizer.view;
@@ -462,6 +468,8 @@ static CGFloat const imageViewWidth = 43.0f;
         cell.hidden = NO;
     }
     
+    //make the separator empty at the left and right
+    cell.separatorInset = UIEdgeInsetsMake(0, 50, 0, 50);
     
     return cell;
 }
@@ -497,7 +505,6 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     Item *item = _list.items[indexPath.row];
     [self performSegueWithIdentifier:@"EditItem" sender:item];
-    NSLog(@"row: %ld", (long)indexPath.row);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView
