@@ -28,14 +28,26 @@
     
     self.scrollView.minimumZoomScale = 1;
     self.scrollView.maximumZoomScale = 3.0;
-    self.scrollView.contentSize = CGSizeMake(320, 480);
+    self.scrollView.contentSize = CGSizeMake(self.fullScreenImageView.bounds.size.width, self.fullScreenImageView.bounds.size.height);
     self.scrollView.delegate = self;
+    
+    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
+    [doubleTap setNumberOfTapsRequired:2];
+    [self.scrollView addGestureRecognizer:doubleTap];
+    
+    //防止单击干扰双击
+    [gestureRecognizer requireGestureRecognizerToFail:doubleTap];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)handleDoubleTap:(UIGestureRecognizer *)gestureRecognizer {
+    
+    if(self.scrollView.zoomScale > self.scrollView.minimumZoomScale)
+        [self.scrollView setZoomScale:self.scrollView.minimumZoomScale animated:YES];
+    else
+        [self.scrollView setZoomScale:self.scrollView.maximumZoomScale animated:YES];
+    
 }
+
 
 - (void)close:(UIGestureRecognizer *)gestureRecognizer
 {
