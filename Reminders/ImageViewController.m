@@ -77,7 +77,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)close:(UIGestureRecognizer *)gestureRecognizer
+- (IBAction)close:(id)sender
 {
     [self willMoveToParentViewController:nil];
     
