@@ -6,8 +6,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImageViewController">
             <connections>
-                <outlet property="imageView" destination="DdZ-fR-Kfe" id="yAq-S3-XjV"/>
+                <outlet property="fullScreenImageView" destination="DdZ-fR-Kfe" id="iVB-Ea-azv"/>
                 <outlet property="scrollView" destination="aYb-v9-qZV" id="tqp-bO-lqR"/>
+                <outlet property="view" destination="aYb-v9-qZV" id="coI-bu-BKk"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
