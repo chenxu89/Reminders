@@ -45,30 +45,35 @@
 
 - (void)handleDoubleTap:(UIGestureRecognizer *)recognizer
 {
-    CGPoint pointInView = [recognizer locationInView:self.imageView];
+
     
     if(self.scrollView.zoomScale > self.scrollView.minimumZoomScale){
        [self.scrollView setZoomScale:self.scrollView.minimumZoomScale animated:YES];
     }
     else{
-        CGRect zoomRect = [self zoomRectForScale:self.scrollView.maximumZoomScale withCenter:pointInView];
-        [self.scrollView zoomToRect:zoomRect animated:YES];
+        //点击任何位置都从中心缩放
+        [self.scrollView setZoomScale:self.scrollView.maximumZoomScale animated:YES];
+        
+//        //以双击点为中心缩放
+//        CGPoint pointInView = [recognizer locationInView:self.imageView];
+//        CGRect zoomRect = [self zoomRectForScale:self.scrollView.maximumZoomScale withCenter:pointInView];
+//        [self.scrollView zoomToRect:zoomRect animated:YES];
     }
 }
 
-//以双击点为中心缩放
-- (CGRect)zoomRectForScale:(float)scale withCenter:(CGPoint)center
-{
-    // the zoom rect is in the content view's coordinates.
-    CGRect zoomRect;
-    zoomRect.size.height = self.scrollView.frame.size.height / scale;
-    zoomRect.size.width  = self.scrollView.frame.size.width  / scale;
-    
-    zoomRect.origin.x = center.x - (zoomRect.size.width  /2.0);
-    zoomRect.origin.y = center.y - (zoomRect.size.height /2.0);
-
-    return zoomRect;
-}
+////以双击点为中心缩放
+//- (CGRect)zoomRectForScale:(float)scale withCenter:(CGPoint)center
+//{
+//    // the zoom rect is in the content view's coordinates.
+//    CGRect zoomRect;
+//    zoomRect.size.height = self.scrollView.frame.size.height / scale;
+//    zoomRect.size.width  = self.scrollView.frame.size.width  / scale;
+//    
+//    zoomRect.origin.x = center.x - (zoomRect.size.width  /2.0);
+//    zoomRect.origin.y = center.y - (zoomRect.size.height /2.0);
+//
+//    return zoomRect;
+//}
 
 - (void)handleSingleTap:(UIGestureRecognizer *)gestureRecognizer
 {
