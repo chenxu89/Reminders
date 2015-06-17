@@ -74,6 +74,10 @@
 {
     [self willMoveToParentViewController:nil];
     
+    //show navigation bar and status bar
+    [[UIApplication sharedApplication] setStatusBarHidden: NO withAnimation: UIStatusBarAnimationFade];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    
     //Animation
     self.view.backgroundColor = [UIColor clearColor];
     [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
@@ -88,6 +92,10 @@
 - (void)showFullImageInViewController:(UIViewController *)controller
                             withImage:(UIImage *)image
 {
+    //hide navigation bar and status bar
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+    [controller.navigationController setNavigationBarHidden:YES animated:NO];
+    
     self.view.frame = controller.view.frame;
     self.imageView.image = image;
     self.imageView.userInteractionEnabled = YES;
