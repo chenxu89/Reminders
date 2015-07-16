@@ -20,6 +20,7 @@
 {
     UIImage *_image;
     UIImagePickerController *_imagePicker;
+    NSDate *_dueDate;
 }
 
 - (void)viewDidLoad
@@ -37,6 +38,14 @@
             //The call to if (existingImage != nil) is a bit of defensive programming.
             [self showImage:existingImage];
         }
+    }
+    
+    if (self.item.dueDate != nil) {
+        self.reminderSwitchControl.on = self.item.shouldRemind;
+        _dueDate = self.item.dueDate;
+    }else{
+        self.reminderSwitchControl.on = NO;
+        _dueDate = [NSDate date];
     }
 }
 
@@ -71,7 +80,7 @@
     if (section == 1) {
         return 4;
     }else{
-        return 1;
+        return 2;
     }
 }
 
@@ -96,6 +105,9 @@
     self.allowEditPhoto = self.editPhotoSwitch.on;
 
     [self.delegate itemDetailViewController:self didFinishEditingItem:self.item];
+    
+    self.item.shouldRemind = self.reminderSwitchControl.on;
+    self.item.dueDate = _dueDate;
 }
 
 - (IBAction)cancel:(id)sender
@@ -201,6 +213,16 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     [self dismissViewControllerAnimated:YES completion:nil];
     
     _imagePicker = nil;
+}
+
+#pragma mark - Date picker
+
+- (void)updateDueDateLabel
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    self.dueDateLabel.text = [formatter stringFromDate:_dueDate];
 }
 
 @end
