@@ -167,19 +167,19 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yIf-mL-ng3" id="BrT-Iq-NbV">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aZU-af-RQV">
+                                                    <rect key="frame" x="118" y="11" width="187" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Due Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ATH-d4-Rup">
-                                                    <rect key="frame" x="18" y="11" width="72" height="21"/>
+                                                    <rect key="frame" x="15" y="11" width="72" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="72" id="wuT-Jl-mNQ"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aZU-af-RQV">
-                                                    <rect key="frame" x="261" y="11" width="44" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -189,8 +189,8 @@
                                                 <constraint firstItem="aZU-af-RQV" firstAttribute="top" secondItem="BrT-Iq-NbV" secondAttribute="topMargin" constant="3" id="XeF-Mq-5KY"/>
                                                 <constraint firstItem="ATH-d4-Rup" firstAttribute="top" secondItem="BrT-Iq-NbV" secondAttribute="topMargin" constant="3" id="fSj-U9-7or"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="aZU-af-RQV" secondAttribute="bottom" constant="3" id="mal-tl-77h"/>
-                                                <constraint firstItem="ATH-d4-Rup" firstAttribute="leading" secondItem="BrT-Iq-NbV" secondAttribute="leadingMargin" constant="10" id="woh-L1-ryO"/>
-                                                <constraint firstItem="aZU-af-RQV" firstAttribute="leading" secondItem="ATH-d4-Rup" secondAttribute="trailing" constant="171" id="wxx-yo-Q6o"/>
+                                                <constraint firstItem="ATH-d4-Rup" firstAttribute="leading" secondItem="BrT-Iq-NbV" secondAttribute="leadingMargin" constant="7" id="woh-L1-ryO"/>
+                                                <constraint firstItem="aZU-af-RQV" firstAttribute="leading" secondItem="ATH-d4-Rup" secondAttribute="trailing" constant="31" id="wxx-yo-Q6o"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
