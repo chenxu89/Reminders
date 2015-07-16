@@ -107,11 +107,16 @@
     }
     
     self.allowEditPhoto = self.editPhotoSwitch.on;
+    
+    
 
     [self.delegate itemDetailViewController:self didFinishEditingItem:self.item];
     
     self.item.shouldRemind = self.reminderSwitchControl.on;
     self.item.dueDate = _dueDate;
+    
+    [self.item scheduleNotification];
+
 }
 
 - (IBAction)cancel:(id)sender

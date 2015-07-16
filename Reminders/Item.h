@@ -29,4 +29,6 @@
 - (UIImage *)photoImage;
 - (void)removePhotoFile;
 
+- (void)scheduleNotification;   
+
 @end
