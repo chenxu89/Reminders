@@ -193,6 +193,8 @@ heightForHeaderInSection:(NSInteger)section
 
 - (void)takePhoto
 {
+    
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) return;
     _imagePicker = [[UIImagePickerController alloc] init];
     _imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
     _imagePicker.delegate = self;
@@ -202,6 +204,7 @@ heightForHeaderInSection:(NSInteger)section
 
 - (void)choosePhotoFromLibrary
 {
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) return;
     _imagePicker = [[UIImagePickerController alloc] init];
     _imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     _imagePicker.delegate = self;
